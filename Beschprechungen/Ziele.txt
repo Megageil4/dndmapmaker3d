@@ -1,4 +1,4 @@
-﻿Fernziele:
+Fernziele:
 - Karte erstellen
 	- Rastergröße (3-Achsen)
 	- Terrain durch zb. extrude tools einfüge
@@ -20,8 +20,17 @@
 
 Nahziele:
 - Karte erstellen
-	- Rastergröße
+	- Rastergröße änderbar
 	- Terrain durch zb. extrude tools einfüge
+	- Anfangs nur graue Quadrate als Terrain
 - Ändern von Objekten/Figuren
 	- Bewegen auf X,Y,Z
-- Verbindung zum Server
+	- Über Drag and Drop und/oder Achsen move pfeile
+	- Auf Z bewegbar um Objekte auf höheres Tarrain zu verschieben und fliegende Objekte darzustellen
+- Verbindung zum Server kann durch ip eingabe hergetstellt
+- Daten werden noch nicht gespeichert
+- Bei neustart des Programs wird aus dem Cache des Servers geladen.
+
+Webserver: ASP.NET (Einfach umsetzbar)
+Websocket: C# (Einheitlich mit Webserver)
+DB: MySQL (Einfach Einsetzbar)
