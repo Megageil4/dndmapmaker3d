@@ -1,0 +1,27 @@
+﻿Fernziele:
+- Karte erstellen
+	- Rastergröße (3-Achsen)
+	- Terrain durch zb. extrude tools einfüge
+	- Boden Texturen änderbar
+	- Verschidene Tools für zum bearbeiten
+- Ändern von Objekten/Figuren
+	- Bewegen auf X,Y,Z
+	- Scale 
+	- Rotation
+- Sync zwischen Benutzern auf selber Karte
+- User verwaltung
+	- Rechte auf Karte / Campaings
+	- Verwaltung von Karten (in Campaigns(Gruppen))
+	- Dinge auf Karte sichtbar oder nicht
+- Vorgefertigte Models
+- Import von eignenen Models für Objekte/Figuren
+- Hinzufügen von Stat blocks für Figuren
+- Web version (vielleicht?)
+
+Nahziele:
+- Karte erstellen
+	- Rastergröße
+	- Terrain durch zb. extrude tools einfüge
+- Ändern von Objekten/Figuren
+	- Bewegen auf X,Y,Z
+- Verbindung zum Server
