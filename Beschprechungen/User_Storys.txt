@@ -1,7 +1,8 @@
 - Map Größe ändern
-    
+    User kommt in map screen. Wenn map nicht auf Server vorhanden ist öffnet sich ein popup in dem der User die X und Y Größe der Map angeben   muss. Wenn map auf Server vorhanden ist und geladen ist kann user am oberen Bildschirmrand via einer Menu bar die Größe der Map ändern. Neu hinzugefügte teile werden mit der standart höhe initialisiert und abgeschnittene Teile gelöscht.
 
 - Höhe ändern
+User kann am linken Bildschirmrand in einer Toolbox zwischen einen Erhöhungs und Ernidrigungs tool auswählen. Sobald es ausgewählt wurde ändert sich der Hintergrund des Icons zudass man sieht das es ausgewählt ist. Wenn der User auf die Map klickt herhöht bzw. ernidrigt sich der Breich der Map. Bei merhmaligen klicken erhöht bzw. ernidrigt es sich weiter.
 
 
 - Server verbinden
