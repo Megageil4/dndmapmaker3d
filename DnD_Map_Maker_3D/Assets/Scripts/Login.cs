@@ -15,8 +15,8 @@ public class Login : MonoBehaviour
         try
         {
             Debug.Log("http://" + inF.text + ":5180/GameObject/TestConnection");
-            using var v = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection").GetResponse();
-            StreamReader r = new StreamReader(v.GetResponseStream()!);
+            WebRequest webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
+            StreamReader r = new StreamReader(webRequest.GetResponse().GetResponseStream()!);
             var s = r.ReadLine();
             // Debug.Log(s);
             if ("Connection erstellt" == s)
