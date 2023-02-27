@@ -7,4 +7,4 @@ User kann am linken Bildschirmrand in einer Toolbox zwischen einen Erhöhungs un
 
 - Server verbinden
 Nach start des Proamms wird dem Benutzer ein Kleines Fenster angezeigt in dem er die Server IP angibt und sich per Knopfdruck verbinden kann. Ist die Eingabe ungültig
-wird der User darüber Benachrichtigt, ansonsten wird er Verbunden und kann mit dem Arbeiten Beginnen.
+wird der User darüber Benachrichtigt, ansonsten wird er Verbunden und die aktuelle Map wird angezeigt.
