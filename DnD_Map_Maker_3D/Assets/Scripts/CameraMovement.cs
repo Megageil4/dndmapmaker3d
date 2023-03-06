@@ -29,10 +29,9 @@ public class CameraMovement : MonoBehaviour
             Vector3 delta = camera.ScreenToViewportPoint(Input.mousePosition) - _lastPosition;
             // Vertikales drehen
             camera.transform.Rotate(new Vector3(1,0,0),  -delta.y * 360);
-            // todo Qaternion limitieren, limits herausfinden 
-            Debug.Log(camera.transform.eulerAngles);
-            camera.transform.eulerAngles = new Vector3( Mathf.Clamp(camera.transform.eulerAngles.x, -60f, 60f),
-                camera.transform.eulerAngles.y, camera.transform.eulerAngles.z);
+            // todo Qaternion limitieren, aaaaa das sollte doch gehen 
+            // camera.transform.rotation = new Quaternion( Mathf.Clamp(camera.transform.rotation.x, -90, 90),
+                // camera.transform.rotation.y, camera.transform.rotation.z, camera.transform.rotation.w);
             // Debug.Log(camera.transform.eulerAngles.x);
             
             // Horizontales drehen
