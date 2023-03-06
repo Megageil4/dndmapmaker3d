@@ -31,4 +31,9 @@ public class MenuBarController : MonoBehaviour
     {
         GridSizePopUp.SetActive(true);
     }
+
+    public void MapFromJSON(string jsonString)
+    {
+        
+    }
 }
