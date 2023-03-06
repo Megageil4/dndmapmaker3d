@@ -13,21 +13,26 @@ using ThreadPriority = System.Threading.ThreadPriority;
 
 public class Login : MonoBehaviour
 {
+    // Was ist inF??? -> bessere Namen
     [FormerlySerializedAs("InF")] public TMP_InputField inF;
 
     public void SubmitName()
     {
-        Thread t = new Thread(() =>
+        Thread thread = new Thread(() =>
         {
             try
             {
+                // Bitte bessere Variablen Namen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                // Kein v / v1 / t !!!!!!!!
+                // Und bitte keinen code mit syntax error pushen, findet unity nicht toll
                 Debug.Log("http://" + inF.text + ":5180/GameObject/TestConnection");
-                var v = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection").Proxy = null;
-                var v1 = v.GetResponse();
-                StreamReader r = new StreamReader(v.GetResponseStream()!);
-                var s = r.ReadLine();
+                var webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
+                webRequest.Proxy = null;
+                var response = webRequest.GetResponse();
+                StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
+                var responseString = streamReader.ReadLine();
                 // Debug.Log(s);
-                if ("Connection erstellt" == s)
+                if ("Connection erstellt" == responseString)
                 {
                     inF.image.color = Color.green;
                     SceneManager.LoadScene("SampleScene");
@@ -42,8 +47,8 @@ public class Login : MonoBehaviour
                 inF.image.color = Color.red;
             }
         });
-        t.Name = "Conn";
-        t.Priority = ThreadPriority.AboveNormal;
-        t.Start();
+        thread.Name = "Conn";
+        thread.Priority = ThreadPriority.AboveNormal;
+        thread.Start();
     }
 }
