@@ -3,7 +3,6 @@ using UnityEngine.UIElements;
 
 public class CameraMovement : MonoBehaviour
 {
-    private Vector3 _center;
     public new Camera camera;
     private Vector3 _lastPosition;
     private float _currentZ;
@@ -12,27 +11,24 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         _currentZ = camera.transform.position.z;
-        _center = new Vector3(0, 0, 0);
-        transform.position = new Vector3(_center.x, _center.y, _center.z + _currentZ);
+        transform.position = new Vector3(1, 0, 0 + _currentZ);
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetMouseButtonDown((int) MouseButton.LeftMouse) || Input.GetMouseButtonDown((int) MouseButton.RightMouse))
+        if (Input.GetMouseButtonDown((int) MouseButton.MiddleMouse) || Input.GetMouseButtonDown((int) MouseButton.RightMouse))
         {
             _lastPosition = camera.ScreenToViewportPoint(Input.mousePosition);
         }
 
-        if (Input.GetMouseButton((int) MouseButton.LeftMouse))
+        if (Input.GetMouseButton((int) MouseButton.MiddleMouse))
         {
-            Vector3 delta = _lastPosition - camera.ScreenToViewportPoint(Input.mousePosition);
-
-            transform.position = _center;
-            camera.transform.Rotate(new Vector3(1,0,0), delta.y * 360);
-            camera.transform.transform.Rotate(new Vector3(_center.x, 100, _center.y), delta.x * 360, Space.World);
-            camera.transform.Translate(new Vector3(0,0, _currentZ));
+            Vector3 delta = camera.ScreenToViewportPoint(Input.mousePosition) - _lastPosition;
+            // Vertikales drehen
+            camera.transform.Rotate(new Vector3(1,0,0), -delta.y * 360);
+            // Horizontales drehen
+            camera.transform.transform.Rotate(new Vector3(camera.transform.position.x, 100, camera.transform.position.y), delta.x * 360, Space.World);
             _lastPosition = camera.ScreenToViewportPoint(Input.mousePosition);
         }
 
@@ -46,7 +42,6 @@ public class CameraMovement : MonoBehaviour
         {
             Vector3 delta = _lastPosition - camera.ScreenToViewportPoint(Input.mousePosition);
             camera.transform.Translate(new Vector3(delta.x * 5, delta.y * 5, 0));
-            _center += new Vector3(delta.x * 5, delta.y * 5,0);
             _lastPosition = camera.ScreenToViewportPoint(Input.mousePosition);
         }
     }
