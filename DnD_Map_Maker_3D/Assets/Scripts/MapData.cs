@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace DefaultNamespace
 {
     public class MapData
     {
-        public List<float[]> vertices { get; set; }
-        public int[] triangles { get; set; }
+        public float[,] Vertices;
+        public int[] Triangles;
 
         public MapData()
         {
-            this.vertices = new List<float[]>();
-            this.triangles = triangles;
+            
         }
     }
 }

@@ -5,8 +5,10 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DefaultNamespace;
+using Palmmedia.ReportGenerator.Core.Common;
 using TMPro;
 using UnityEngine;
 
@@ -45,10 +47,15 @@ public class MenuBarController : MonoBehaviour
         var mesh = MeshSpawner.GetComponent<MeshFilter>().mesh;
 
         MapData mapData = new MapData();
-        mapData.triangles = mapData.triangles;
+        mapData.Triangles = mesh.triangles;
+        mapData.Vertices = new float[mesh.vertices.GetLength(0),3];
+        int i = 0;
         foreach (var vertex in mesh.vertices)
         {
-            mapData.vertices.Add(new float[] {vertex.x,vertex.y,vertex.x});
+            mapData.Vertices[i,0] = vertex.x;
+            mapData.Vertices[i,1] = vertex.y;
+            mapData.Vertices[i,2] = vertex.z;
+            i++;
         }
 
         var json = JsonUtility.ToJson(mapData);
