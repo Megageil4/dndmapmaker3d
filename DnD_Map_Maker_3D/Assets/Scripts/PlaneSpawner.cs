@@ -22,16 +22,17 @@ public class PlaneSpawner : MonoBehaviour
     {
         CreateVertices();
         CreateTriangles();
-        ReloadMesh();        
+        ReloadMesh();
     }
     
-    private void ReloadMesh()
+    public void ReloadMesh()
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
         _mesh.vertices = _vertices;
         _mesh.triangles = _triangles;
         _mesh.RecalculateNormals();
+        GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
 
     private void CreateVertices()

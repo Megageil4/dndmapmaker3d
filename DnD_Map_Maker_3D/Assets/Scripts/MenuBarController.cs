@@ -23,7 +23,7 @@ public class MenuBarController : MonoBehaviour
         _spawner.sizeY = Convert.ToInt32(ZSize.text);
         _spawner.RegenerateMeshFromStart();
 
-            ServerKomm.tellServer(MeshSpawner);
+        ServerKomm.tellServer(MeshSpawner);
         
         GridSizePopUp.SetActive(false);
     }
