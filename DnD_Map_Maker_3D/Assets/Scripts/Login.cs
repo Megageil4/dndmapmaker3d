@@ -42,7 +42,7 @@ public class Login : MonoBehaviour
                     inF.image.color = Color.red;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 inF.image.color = Color.red;
             }
