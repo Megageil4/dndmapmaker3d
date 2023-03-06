@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Startup : MonoBehaviour
 {
     public GameObject MenuController;
+
+    public GameObject MeshSpawner;
     // Start is called before the first frame update
     void Start()
     {
         if (ServerKomm.existsMap())
         {
-            ServerKomm.fetchMap();
+            MenuController.GetComponent<MenuBarController>().MapFromMash((ServerKomm.MapFromJson(ServerKomm.fetchMap(), MeshSpawner)));
         }
         else
         {

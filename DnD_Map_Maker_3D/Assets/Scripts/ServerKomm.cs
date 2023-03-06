@@ -5,7 +5,7 @@ using DefaultNamespace;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public static class ServerKomm 
+public class ServerKomm
 {
     public static void tellServer(GameObject meshSpawner)
     {
@@ -49,5 +49,20 @@ public static class ServerKomm
         request.Method = "GET";
         request.Proxy = null;
         return new StreamReader(request.GetResponse().GetResponseStream()).ReadToEndAsync().Result == "true";
+    }
+    public static Mesh MapFromJson(string jsonString, GameObject meshSpawner)
+    {
+        MapData md = JsonConvert.DeserializeObject<MapData>(jsonString);
+        var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
+        
+        mesh.triangles = md.Triangles;
+        mesh.vertices = new Vector3[md.Vertices.Count];
+        int i = 0;
+        foreach (var v in md.Vertices)
+        {
+            mesh.vertices[i] = new Vector3(v[0], v[1], v[2]);
+            i++;
+        }
+        return mesh;
     }
 }
