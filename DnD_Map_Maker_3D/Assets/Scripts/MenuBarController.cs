@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ public class MenuBarController : MonoBehaviour
         _spawner.sizeY = Convert.ToInt32(ZSize.text);
         _spawner.RegenerateMeshFromStart();
 
-        tellServer();
+            tellServer();
         
         GridSizePopUp.SetActive(false);
     }
@@ -40,24 +41,32 @@ public class MenuBarController : MonoBehaviour
 
     private void tellServer()
     {
-        var request = (HttpWebRequest)WebRequest.Create("$http://{DataContainer.ServerIP}:5180/GameObject/TestConnection");
-        
-        
-        var postData = "vertices=[";
-        var data = Encoding.UTF8.GetBytes(postData);
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange");
+        var mesh = MeshSpawner.GetComponent<MeshFilter>().mesh;
+
+        MapData mapData = new MapData();
+        mapData.triangles = mapData.triangles;
+        foreach (var vertex in mesh.vertices)
+        {
+            mapData.vertices.Add(new float[] {vertex.x,vertex.y,vertex.x});
+        }
+
+        var json = JsonUtility.ToJson(mapData);
+
+        var data = Encoding.UTF8.GetBytes(json);
 
         request.Method = "POST";
         request.ContentType = "application/json";
         request.ContentLength = data.Length;
+        request.Proxy = null;
 
         using (var stream = request.GetRequestStream())
         {
             stream.Write(data, 0, data.Length);
         }
 
-        var response = (HttpWebResponse)request.GetResponse();
+         var response = (HttpWebResponse)request.GetResponse();
 
         var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
     }
 }
