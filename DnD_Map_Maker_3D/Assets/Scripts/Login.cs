@@ -28,6 +28,7 @@ public class Login : MonoBehaviour
             if ("Connection erstellt" == responseString)
             {
                 inF.image.color = Color.green;
+                DataContainer.ServerIP = inF.text;
                 SceneManager.LoadScene("SampleScene");
             }
             else
