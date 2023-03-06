@@ -1,15 +1,10 @@
 using System;
-using System.Threading.Tasks;
 using System.IO;
 using System.Net;
-using System.Threading;
 using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
-using Task = UnityEditor.VersionControl.Task;
-using ThreadPriority = System.Threading.ThreadPriority;
 
 public class Login : MonoBehaviour
 {
@@ -18,37 +13,32 @@ public class Login : MonoBehaviour
 
     public void SubmitName()
     {
-        Thread thread = new Thread(() =>
+        try
         {
-            try
+            // Bitte bessere Variablen Namen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // Kein v / v1 / t !!!!!!!!
+            // Und bitte keinen code mit syntax error pushen, findet unity nicht toll
+            // doch
+            var webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
+            webRequest.Proxy = null;
+            var response = webRequest.GetResponse();
+            StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
+            var responseString = streamReader.ReadLine();
+            // Debug.Log(s);
+            if ("Connection erstellt" == responseString)
             {
-                // Bitte bessere Variablen Namen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                // Kein v / v1 / t !!!!!!!!
-                // Und bitte keinen code mit syntax error pushen, findet unity nicht toll
-                Debug.Log("http://" + inF.text + ":5180/GameObject/TestConnection");
-                var webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
-                webRequest.Proxy = null;
-                var response = webRequest.GetResponse();
-                StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
-                var responseString = streamReader.ReadLine();
-                // Debug.Log(s);
-                if ("Connection erstellt" == responseString)
-                {
-                    inF.image.color = Color.green;
-                    SceneManager.LoadScene("SampleScene");
-                }
-                else
-                {
-                    inF.image.color = Color.red;
-                }
+                inF.image.color = Color.green;
+                SceneManager.LoadScene("SampleScene");
             }
-            catch (Exception)
+            else
             {
                 inF.image.color = Color.red;
             }
-        });
-        thread.Name = "Conn";
-        thread.Priority = ThreadPriority.AboveNormal;
-        thread.Start();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            inF.image.color = Color.red;
+        }
     }
 }
