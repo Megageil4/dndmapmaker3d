@@ -15,11 +15,16 @@ public class PlaneSpawner : MonoBehaviour
     private int[] _triangles;
     void Start()
     {
-        CreateVertices();
-        CreateTriangles();
-        ReloadMesh();
+        RegenerateMeshFromStart();
     }
 
+    public void RegenerateMeshFromStart()
+    {
+        CreateVertices();
+        CreateTriangles();
+        ReloadMesh();        
+    }
+    
     private void ReloadMesh()
     {
         _mesh = new Mesh();
@@ -71,9 +76,12 @@ public class PlaneSpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        for (int i = 0; i < _vertices.GetLength(0); i++)
+        if (_vertices != null)
         {
-            Gizmos.DrawSphere(_vertices[i],0.1f);
+            for (int i = 0; i < _vertices.GetLength(0); i++)
+            {
+                Gizmos.DrawSphere(_vertices[i],0.1f);
+            }
         }
     }
 }
