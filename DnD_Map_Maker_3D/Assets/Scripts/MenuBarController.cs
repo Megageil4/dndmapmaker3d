@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using DefaultNamespace;
-using Palmmedia.ReportGenerator.Core.Common;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 
@@ -48,17 +45,13 @@ public class MenuBarController : MonoBehaviour
 
         MapData mapData = new MapData();
         mapData.Triangles = mesh.triangles;
-        mapData.Vertices = new float[mesh.vertices.GetLength(0),3];
-        int i = 0;
+        mapData.Vertices = new();
         foreach (var vertex in mesh.vertices)
         {
-            mapData.Vertices[i,0] = vertex.x;
-            mapData.Vertices[i,1] = vertex.y;
-            mapData.Vertices[i,2] = vertex.z;
-            i++;
+            mapData.Vertices.Add(new []{vertex.x,vertex.y,vertex.z});
         }
 
-        var json = JsonUtility.ToJson(mapData);
+        var json = JsonConvert.SerializeObject(mapData);
 
         var data = Encoding.UTF8.GetBytes(json);
 
@@ -71,9 +64,5 @@ public class MenuBarController : MonoBehaviour
         {
             stream.Write(data, 0, data.Length);
         }
-
-         var response = (HttpWebResponse)request.GetResponse();
-
-        var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
     }
 }
