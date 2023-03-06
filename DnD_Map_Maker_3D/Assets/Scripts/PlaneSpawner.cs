@@ -11,7 +11,7 @@ public class PlaneSpawner : MonoBehaviour
     public int sizeX;
     public int sizeY;
     private Mesh _mesh;
-    private Vector3[] _vertices;
+    public Vector3[] Vertices;
     private int[] _triangles;
     void Start()
     {
@@ -29,7 +29,7 @@ public class PlaneSpawner : MonoBehaviour
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
-        _mesh.vertices = _vertices;
+        _mesh.vertices = Vertices;
         _mesh.triangles = _triangles;
         _mesh.RecalculateNormals();
         GetComponent<MeshCollider>().sharedMesh = _mesh;
@@ -37,13 +37,13 @@ public class PlaneSpawner : MonoBehaviour
 
     private void CreateVertices()
     {
-        _vertices = new Vector3[(sizeX + 1) * (sizeY + 1)];
+        Vertices = new Vector3[(sizeX + 1) * (sizeY + 1)];
         int i = 0;
         for (int y = 0; y <= sizeY; y++)
         {
             for (int x = 0; x <= sizeX; x++)
             {
-                _vertices[i] = new Vector3(x, 0, y);
+                Vertices[i] = new Vector3(x, 0, y);
                 i++;
             }
         }
@@ -77,11 +77,11 @@ public class PlaneSpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_vertices != null)
+        if (Vertices != null)
         {
-            for (int i = 0; i < _vertices.GetLength(0); i++)
+            for (int i = 0; i < Vertices.GetLength(0); i++)
             {
-                Gizmos.DrawSphere(_vertices[i],0.1f);
+                Gizmos.DrawSphere(Vertices[i],0.1f);
             }
         }
     }

@@ -18,7 +18,7 @@ namespace DefaultNamespace
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse))
+            if (Input.GetMouseButton((int)MouseButton.LeftMouse))
             {
                 Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -40,7 +40,7 @@ namespace DefaultNamespace
                         }
                         catch (Exception e)
                         {
-                            Console.WriteLine(e);
+                            Debug.Log(e);
                         }
                     
                         Debug.Log($"Mouse position on mesh: {Mathf.RoundToInt(mousePosition.x)} / {Mathf.RoundToInt(mousePosition.z)}");

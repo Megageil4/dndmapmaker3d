@@ -14,6 +14,6 @@ public class Toolbar : MonoBehaviour
 
     public void onErniedrigen()
     {
-        
+        MapTool = new Intrude(PlaneSpawner);
     }
 }
