@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿
+using System;
+using System.Collections.Generic;
 
 namespace DefaultNamespace
 {
+    [Serializable]
     public class MapData
     {
-        public float[,] Vertices;
+        public List<float[]> Vertices;
         public int[] Triangles;
-
-        public MapData()
-        {
-            
-        }
     }
 }
