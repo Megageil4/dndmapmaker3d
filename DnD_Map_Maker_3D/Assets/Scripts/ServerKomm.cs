@@ -43,7 +43,8 @@ public class ServerKomm
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
         request.Method = "GET";
         request.Proxy = null!;
-        return new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync().Result;
+        using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        return re.Result;
     }
 
     public static bool ExistsMap()
@@ -51,6 +52,7 @@ public class ServerKomm
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
         request.Method = "GET";
         request.Proxy = null!;
-        return new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync().Result == "true";
+        using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        return v.Result == "true";
     }
 }

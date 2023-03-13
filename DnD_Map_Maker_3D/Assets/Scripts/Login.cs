@@ -42,8 +42,12 @@ public class Login : MonoBehaviour
     }
     public string Connect(WebRequest webRequest)
     {
-        var response = webRequest.GetResponse();
-        StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
-        return streamReader.ReadLine();
+        using (var response = webRequest.GetResponse())
+        {
+            using (StreamReader streamReader = new StreamReader(response.GetResponseStream()!))
+            {
+                return streamReader.ReadLine();   
+            }
+        }
     }
 }
