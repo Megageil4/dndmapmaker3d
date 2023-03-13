@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using DefaultNamespace;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -84,5 +85,20 @@ public class PlaneSpawner : MonoBehaviour
                 Gizmos.DrawSphere(Vertices[i],0.1f);
             }
         }
+    }
+
+    public void setNewMap(MapData map)
+    {
+        int i = 0;
+        foreach (var v in map.Vertices)
+        {
+            Vertices[i] = new Vector3(v[0], v[1], v[2]);
+            i++;
+        }
+        _triangles = map.Triangles;
+        sizeX = Vertices.GetLength(0)-1;
+        sizeY = Vertices.GetLength(1)-1;
+        Debug.Log(sizeX);
+        Debug.Log(sizeY);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ public class MenuBarController : MonoBehaviour
         _spawner.sizeY = Convert.ToInt32(ZSize.text);
         _spawner.RegenerateMeshFromStart();
 
-        ServerKomm.tellServer(MeshSpawner);
+        ServerKomm.TellServer(MeshSpawner);
         
         GridSizePopUp.SetActive(false);
     }
@@ -31,6 +32,9 @@ public class MenuBarController : MonoBehaviour
     {
         GridSizePopUp.SetActive(true);
     }
-    public void MapFromMash(Mesh mesh)
-    {}
+
+    public void MapFromMapData(MapData map)
+    {
+        MeshSpawner.GetComponent<PlaneSpawner>().setNewMap(map);
+    }
 }

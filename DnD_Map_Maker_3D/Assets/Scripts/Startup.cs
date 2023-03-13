@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Startup : MonoBehaviour
@@ -6,11 +7,13 @@ public class Startup : MonoBehaviour
 
     public GameObject MeshSpawner;
     // Start is called before the first frame update
-    void Start()
+    async Task Start()
     {
-        if (ServerKomm.existsMap())
+        var ex = ServerKomm.ExistsMap();
+        if (await ex)
         {
-            MenuController.GetComponent<MenuBarController>().MapFromMash((ServerKomm.MapFromJson(ServerKomm.fetchMap(), MeshSpawner)));
+            var map = ServerKomm.FetchMap();
+            MenuController.GetComponent<MenuBarController>().MapFromMapData(ServerKomm.MapFromJson(await map, MeshSpawner));
         }
         else
         {
