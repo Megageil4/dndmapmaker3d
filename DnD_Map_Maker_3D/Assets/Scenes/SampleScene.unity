@@ -2575,6 +2575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlaneSpawner: {fileID: 1346602129}
+  buttons:
+  - {fileID: 456078505}
+  - {fileID: 1639915459}
 --- !u!114 &1838519650
 MonoBehaviour:
   m_ObjectHideFlags: 0
