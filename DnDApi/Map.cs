@@ -2,6 +2,8 @@ namespace DnDApi;
 
 public class Map
 {
+    public int SizeX { get; set; }
+    public int SizeY { get; set; }
     public List<float[]> Vertices { get; set; }
     public int[] Triangles { get; set; }
 
@@ -13,6 +15,6 @@ public class Map
 
     public override string ToString()
     {
-        return $"{Vertices.Count} {Triangles.Length}";
+        return $"{SizeY} {SizeX}";
     }
 }
