@@ -34,7 +34,6 @@ public class ServerKomm
 
         using var stream = request.GetRequestStream();
         stream.Write(data, 0, data.Length);
-        stream.Close();
     }
 
     public static string FetchMap()
@@ -42,14 +41,16 @@ public class ServerKomm
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
         request.Method = "GET";
         request.Proxy = null!;
-        return new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync().Result;
+        using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        return re.Result;
     }
 
     public static bool ExistsMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
         request.Method = "GET";
-        request.Proxy = null;
-        return new StreamReader(request.GetResponse().GetResponseStream()).ReadToEndAsync().Result == "true";
+        request.Proxy = null!;
+        using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        return v.Result == "true";
     }
 }

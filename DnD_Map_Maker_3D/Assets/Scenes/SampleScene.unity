@@ -149,7 +149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 80768216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0da2df76f2f46004d9b118300b69f813, type: 3}
+  m_Script: {fileID: 11500000, guid: 95ef9e0ff557d8c4ea02af4577da2b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MenuController: {fileID: 1465804799}
@@ -902,7 +902,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1838519649}
         m_TargetAssemblyTypeName: Toolbar, Assembly-CSharp
-        m_MethodName: onErhoehen
+        m_MethodName: OnErhoehen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2644,7 +2644,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1838519649}
         m_TargetAssemblyTypeName: Toolbar, Assembly-CSharp
-        m_MethodName: onErniedrigen
+        m_MethodName: OnErniedrigen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

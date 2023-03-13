@@ -1,12 +1,13 @@
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlaneSpawner : MonoBehaviour
 {
     public int sizeX;
     public int sizeY;
     private Mesh _mesh;
-    public Vector3[] Vertices;
+    [FormerlySerializedAs("Vertices")] public Vector3[] vertices;
     private int[] _triangles;
     private Vector2[] _uvs;
     void Start()
@@ -26,7 +27,7 @@ public class PlaneSpawner : MonoBehaviour
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
-        _mesh.vertices = Vertices;
+        _mesh.vertices = vertices;
         _mesh.triangles = _triangles;
         GenerateUVs();
         _mesh.uv = _uvs;
@@ -36,13 +37,13 @@ public class PlaneSpawner : MonoBehaviour
 
     private void CreateVertices()
     {
-        Vertices = new Vector3[(sizeX + 1) * (sizeY + 1)];
+        vertices = new Vector3[(sizeX + 1) * (sizeY + 1)];
         int i = 0;
         for (int y = 0; y <= sizeY; y++)
         {
             for (int x = 0; x <= sizeX; x++)
             {
-                Vertices[i] = new Vector3(x, 0, y);
+                vertices[i] = new Vector3(x, 0, y);
                 i++;
             }
         }
@@ -76,7 +77,7 @@ public class PlaneSpawner : MonoBehaviour
 
     private void GenerateUVs()
     {
-        _uvs = new Vector2[Vertices.Length];
+        _uvs = new Vector2[vertices.Length];
         int i = 0;
         for (int y = 0; y <= sizeY; y++)
         {
@@ -90,25 +91,24 @@ public class PlaneSpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (Vertices != null)
+        if (vertices != null)
         {
-            for (int i = 0; i < Vertices.GetLength(0); i++)
+            for (int i = 0; i < vertices.GetLength(0); i++)
             {
-                Gizmos.DrawSphere(Vertices[i],0.1f);
+                Gizmos.DrawSphere(vertices[i],0.1f);
             }
         }
     }
-
-    public void setNewMap(MapData map)
+    public void SetNewMap(MapData map)
     {
         sizeX = map.sizeX;
         sizeY = map.sizeY;
-        Vertices = new Vector3[(sizeX + 1) * (sizeY + 1)];
+        vertices = new Vector3[(sizeX + 1) * (sizeY + 1)];
         int i = 0;
         foreach (var v in map.Vertices)
         {
             Debug.Log(i);
-            Vertices[i] = new Vector3(v[0], v[1], v[2]);
+            vertices[i] = new Vector3(v[0], v[1], v[2]);
             i++;
         }
         _triangles = map.Triangles;

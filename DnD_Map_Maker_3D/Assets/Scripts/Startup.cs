@@ -1,12 +1,13 @@
 using DefaultNamespace;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Startup : MonoBehaviour
 {
-    public GameObject MenuController;
+    [FormerlySerializedAs("MenuController")] public GameObject menuController;
 
-    public GameObject MeshSpawner;
+    [FormerlySerializedAs("MeshSpawner")] public GameObject meshSpawner;
     // Start is called before the first frame update
 
     public void Start()
@@ -15,11 +16,11 @@ public class Startup : MonoBehaviour
         if (ex)
         {
             var map = ServerKomm.FetchMap();
-            MenuController.GetComponent<MenuBarController>().MapFromMapData(JsonConvert.DeserializeObject<MapData>(map));
+            menuController.GetComponent<MenuBarController>().MapFromMapData(JsonConvert.DeserializeObject<MapData>(map));
         }
         else
         {
-            MenuController.GetComponent<MenuBarController>().MakeGridSizePopUpVisible();
+            menuController.GetComponent<MenuBarController>().MakeGridSizePopUpVisible();
         }
     }
 }
