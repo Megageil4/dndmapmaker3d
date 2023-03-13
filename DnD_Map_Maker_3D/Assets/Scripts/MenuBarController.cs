@@ -1,7 +1,5 @@
 using System;
 using System.Net.Http;
-using DefaultNamespace;
-using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 
