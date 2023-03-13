@@ -18,7 +18,7 @@ namespace DefaultNamespace
 
         private void Update()
         {
-            if (Input.GetMouseButton((int)MouseButton.LeftMouse))
+            if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse))
             {
                 Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
