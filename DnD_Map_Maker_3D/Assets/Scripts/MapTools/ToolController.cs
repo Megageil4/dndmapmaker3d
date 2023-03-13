@@ -43,7 +43,7 @@ namespace DefaultNamespace
                             Debug.Log(e);
                         }
                     
-                        Debug.Log($"Mouse position on mesh: {Mathf.RoundToInt(mousePosition.x)} / {Mathf.RoundToInt(mousePosition.z)}");
+                        Debug.Log($"Mouse position on mesh: {Mathf.FloorToInt(mousePosition.x)} / {Mathf.FloorToInt(mousePosition.z)}");
                     }
                 }
             }
