@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,12 @@ public class Login : MonoBehaviour
     // Was ist inF??? -> bessere Namen
     [FormerlySerializedAs("InF")] public TMP_InputField inF;
 
-    public void SubmitName()
+    public void login()
+    {
+        SubmitName();
+    }
+
+    public async Task SubmitName()
     {
         try
         {
@@ -21,10 +27,9 @@ public class Login : MonoBehaviour
             // doch
             var webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
             webRequest.Proxy = null;
-            var response = webRequest.GetResponse();
-            StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
-            var responseString = streamReader.ReadLine();
-            // Debug.Log(s);
+            StreamReader streamReader;
+            Task<string> d = connect(webRequest);
+            var responseString = await d;
             if ("Connection erstellt" == responseString)
             {
                 inF.image.color = Color.green;
@@ -41,5 +46,11 @@ public class Login : MonoBehaviour
             Debug.Log(e.Message);
             inF.image.color = Color.red;
         }
+    }
+    public async Task<string> connect(WebRequest webRequest)
+    {
+        var response = webRequest.GetResponse();
+        StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
+        return streamReader.ReadLine();
     }
 }

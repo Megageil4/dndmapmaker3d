@@ -1,13 +1,14 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using DefaultNamespace;
 using Newtonsoft.Json;
 using UnityEngine;
 
 public class ServerKomm
 {
-    public static void tellServer(GameObject meshSpawner)
+    public static async void TellServer(GameObject meshSpawner)
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange");
         var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
@@ -27,7 +28,7 @@ public class ServerKomm
         request.Method = "POST";
         request.ContentType = "application/json";
         request.ContentLength = data.Length;
-        request.Proxy = null;
+        request.Proxy = null!;
 
         using (var stream = request.GetRequestStream())
         {
@@ -35,34 +36,24 @@ public class ServerKomm
         }
     }
 
-    public static string fetchMap()
+    public static async Task<string> FetchMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
         request.Method = "GET";
-        request.Proxy = null;
-        return new StreamReader(request.GetResponse().GetResponseStream()).ReadToEndAsync().Result;
+        request.Proxy = null!;
+        return new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync().Result;
     }
 
-    public static bool existsMap()
+    public static async Task<bool> ExistsMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
         request.Method = "GET";
         request.Proxy = null;
         return new StreamReader(request.GetResponse().GetResponseStream()).ReadToEndAsync().Result == "true";
     }
-    public static Mesh MapFromJson(string jsonString, GameObject meshSpawner)
+    public static MapData MapFromJson(string jsonString, GameObject meshSpawner)
     {
-        MapData md = JsonConvert.DeserializeObject<MapData>(jsonString);
-        var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
         
-        mesh.triangles = md.Triangles;
-        mesh.vertices = new Vector3[md.Vertices.Count];
-        int i = 0;
-        foreach (var v in md.Vertices)
-        {
-            mesh.vertices[i] = new Vector3(v[0], v[1], v[2]);
-            i++;
-        }
-        return mesh;
+        return JsonConvert.DeserializeObject<MapData>(jsonString);
     }
 }
