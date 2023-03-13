@@ -767,7 +767,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1838519649}
         m_TargetAssemblyTypeName: Toolbar, Assembly-CSharp
-        m_MethodName: onErhoehen
+        m_MethodName: OnErhoehen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2372,7 +2372,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1838519649}
         m_TargetAssemblyTypeName: Toolbar, Assembly-CSharp
-        m_MethodName: onErniedrigen
+        m_MethodName: OnErniedrigen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

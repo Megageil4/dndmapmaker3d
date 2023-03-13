@@ -1,20 +1,21 @@
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Toolbar : MonoBehaviour
 {
-    public PlaneSpawner PlaneSpawner;
+    [FormerlySerializedAs("PlaneSpawner")] public PlaneSpawner planeSpawner;
     public static IMapTool MapTool;
     public List<Button> buttons;
-    public void onErhoehen()
+    public void OnErhoehen()
     {
-        MapTool = new Extrude(PlaneSpawner);
+        MapTool = new Extrude(planeSpawner);
     }
 
-    public void onErniedrigen()
+    public void OnErniedrigen()
     {
-        MapTool = new Intrude(PlaneSpawner);
+        MapTool = new Intrude(planeSpawner);
     }
 }

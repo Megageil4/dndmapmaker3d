@@ -50,7 +50,7 @@ public class ServerKomm
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
         request.Method = "GET";
-        request.Proxy = null;
-        return new StreamReader(request.GetResponse().GetResponseStream()).ReadToEndAsync().Result == "true";
+        request.Proxy = null!;
+        return new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync().Result == "true";
     }
 }
