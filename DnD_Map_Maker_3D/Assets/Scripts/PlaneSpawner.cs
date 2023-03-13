@@ -111,7 +111,5 @@ public class PlaneSpawner : MonoBehaviour
             i++;
         }
         _triangles = map.Triangles;
-        Debug.Log(sizeX);
-        Debug.Log(sizeY);
     }
 }
