@@ -64,6 +64,6 @@ public class GameObjectController : ControllerBase
     {
         
         Map = map;
-        Console.WriteLine("map");
+        Console.WriteLine(map);
     }
 }
