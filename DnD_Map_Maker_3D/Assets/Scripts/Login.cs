@@ -17,7 +17,7 @@ public class Login : MonoBehaviour
         SubmitName();
     }
 
-    public async Task SubmitName()
+    public void SubmitName()
     {
         try
         {
@@ -28,8 +28,8 @@ public class Login : MonoBehaviour
             var webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
             webRequest.Proxy = null;
             StreamReader streamReader;
-            Task<string> d = connect(webRequest);
-            var responseString = await d;
+            // Task<string> d = ;
+            var responseString =  connect(webRequest);
             if ("Connection erstellt" == responseString)
             {
                 inF.image.color = Color.green;
@@ -47,7 +47,7 @@ public class Login : MonoBehaviour
             inF.image.color = Color.red;
         }
     }
-    public async Task<string> connect(WebRequest webRequest)
+    public string /*async Task<string>*/ connect(WebRequest webRequest)
     {
         var response = webRequest.GetResponse();
         StreamReader streamReader = new StreamReader(response.GetResponseStream()!);

@@ -1492,7 +1492,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69e545e5452aa3c4197ef7ea545472c5, type: 3}
+  m_Script: {fileID: 11500000, guid: caee32ac801df27488c610c438925d07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 963194227}
@@ -1861,7 +1861,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1346602128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aebee059a5db2a9439864101905154f4, type: 3}
+  m_Script: {fileID: 11500000, guid: c7873a6c3caee1645987621e6947e803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sizeX: 10
@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1465804799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a73ce2afabe66f345a6354c86c0a654a, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bef0b7bae77c58408496d4103d6b6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GridSizePopUp: {fileID: 1750221630}
@@ -2571,7 +2571,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838519647}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb9ff9585091c5a45a912a511b1629f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c672403c8bb94e47b549c3ff24c283c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlaneSpawner: {fileID: 1346602129}

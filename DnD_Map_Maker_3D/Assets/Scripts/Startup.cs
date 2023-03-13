@@ -1,4 +1,5 @@
-using System.Threading.Tasks;
+using DefaultNamespace;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class Startup : MonoBehaviour
@@ -7,13 +8,14 @@ public class Startup : MonoBehaviour
 
     public GameObject MeshSpawner;
     // Start is called before the first frame update
-    async Task Start()
+
+    public void Start()
     {
         var ex = ServerKomm.ExistsMap();
-        if (await ex)
+        if (ex)
         {
             var map = ServerKomm.FetchMap();
-            MenuController.GetComponent<MenuBarController>().MapFromMapData(ServerKomm.MapFromJson(await map, MeshSpawner));
+            MenuController.GetComponent<MenuBarController>().MapFromMapData(JsonConvert.DeserializeObject<MapData>(map));
         }
         else
         {

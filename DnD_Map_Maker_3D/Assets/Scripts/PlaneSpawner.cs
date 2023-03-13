@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using DefaultNamespace;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlaneSpawner : MonoBehaviour
 {
@@ -106,16 +100,16 @@ public class PlaneSpawner : MonoBehaviour
 
     public void setNewMap(MapData map)
     {
+        sizeX = map.sizeX;
+        sizeY = map.sizeY;
+        Vertices = new Vector3[(sizeX + 1) * (sizeY + 1)];
         int i = 0;
         foreach (var v in map.Vertices)
         {
+            Debug.Log(i);
             Vertices[i] = new Vector3(v[0], v[1], v[2]);
             i++;
         }
         _triangles = map.Triangles;
-        sizeX = Vertices.GetLength(0)-1;
-        sizeY = Vertices.GetLength(1)-1;
-        Debug.Log(sizeX);
-        Debug.Log(sizeY);
     }
 }

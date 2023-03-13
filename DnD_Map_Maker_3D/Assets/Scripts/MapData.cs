@@ -9,5 +9,7 @@ namespace DefaultNamespace
     {
         public List<float[]> Vertices;
         public int[] Triangles;
+        public int sizeX;
+        public int sizeY;
     }
 }
