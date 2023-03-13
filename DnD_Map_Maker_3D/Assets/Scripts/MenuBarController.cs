@@ -35,7 +35,6 @@ public class MenuBarController : MonoBehaviour
 
     public void MapFromMapData(MapData map)
     {
-        Debug.Log("auf zum planespawner");
         MeshSpawner.GetComponent<PlaneSpawner>().setNewMap(map);
     }
 }

@@ -1,14 +1,13 @@
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using DefaultNamespace;
 using Newtonsoft.Json;
 using UnityEngine;
 
 public class ServerKomm
 {
-    public static async void TellServer(GameObject meshSpawner)
+    public static void TellServer(GameObject meshSpawner)
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange");
         var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
@@ -20,6 +19,9 @@ public class ServerKomm
         {
             mapData.Vertices.Add(new []{vertex.x,vertex.y,vertex.z});
         }
+
+        mapData.sizeX = meshSpawner.GetComponent<PlaneSpawner>().sizeX;
+        mapData.sizeY = meshSpawner.GetComponent<PlaneSpawner>().sizeY;
 
         var json = JsonConvert.SerializeObject(mapData);
 
@@ -36,16 +38,15 @@ public class ServerKomm
         }
     }
 
-    public static async Task<string> FetchMap()
+    public static string FetchMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
         request.Method = "GET";
         request.Proxy = null!;
-        Debug.Log("fetched");
         return new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync().Result;
     }
 
-    public static async Task<bool> ExistsMap()
+    public static bool ExistsMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
         request.Method = "GET";
