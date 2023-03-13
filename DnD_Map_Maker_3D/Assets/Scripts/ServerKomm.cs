@@ -32,10 +32,9 @@ public class ServerKomm
         request.ContentLength = data.Length;
         request.Proxy = null!;
 
-        using (var stream = request.GetRequestStream())
-        {
-            stream.Write(data, 0, data.Length);
-        }
+        using var stream = request.GetRequestStream();
+        stream.Write(data, 0, data.Length);
+        stream.Close();
     }
 
     public static string FetchMap()

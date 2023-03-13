@@ -11,7 +11,7 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         _currentZ = camera.transform.position.z;
-        transform.position = new Vector3(1, 0, 0 + _currentZ);
+        transform.position = new Vector3(1, 5, 0 + _currentZ);
     }
 
     // Update is called once per frame

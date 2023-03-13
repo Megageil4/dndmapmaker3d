@@ -37,4 +37,10 @@ public class MenuBarController : MonoBehaviour
     {
         MeshSpawner.GetComponent<PlaneSpawner>().setNewMap(map);
     }
+
+    public void onExit()
+    {
+        ServerKomm.TellServer(MeshSpawner);
+        Application.Quit();
+    }
 }

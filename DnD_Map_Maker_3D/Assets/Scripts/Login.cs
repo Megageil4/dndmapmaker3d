@@ -27,7 +27,6 @@ public class Login : MonoBehaviour
             // doch
             var webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
             webRequest.Proxy = null;
-            StreamReader streamReader;
             // Task<string> d = ;
             var responseString =  connect(webRequest);
             if ("Connection erstellt" == responseString)

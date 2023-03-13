@@ -11,7 +11,7 @@ public class PlaneSpawner : MonoBehaviour
     private Vector2[] _uvs;
     void Start()
     {
-        RegenerateMeshFromStart();
+        //RegenerateMeshFromStart();
     }
 
     public void RegenerateMeshFromStart()
@@ -28,6 +28,7 @@ public class PlaneSpawner : MonoBehaviour
         GetComponent<MeshFilter>().mesh = _mesh;
         _mesh.vertices = Vertices;
         _mesh.triangles = _triangles;
+        GenerateUVs();
         _mesh.uv = _uvs;
         _mesh.RecalculateNormals();
         GetComponent<MeshCollider>().sharedMesh = _mesh;
@@ -111,5 +112,6 @@ public class PlaneSpawner : MonoBehaviour
             i++;
         }
         _triangles = map.Triangles;
+        ReloadMesh();
     }
 }
