@@ -13,6 +13,7 @@ public class PlaneSpawner : MonoBehaviour
     private Mesh _mesh;
     public Vector3[] Vertices;
     private int[] _triangles;
+    private Vector2[] _uvs;
     void Start()
     {
         RegenerateMeshFromStart();
@@ -22,6 +23,7 @@ public class PlaneSpawner : MonoBehaviour
     {
         CreateVertices();
         CreateTriangles();
+        GenerateUVs();
         ReloadMesh();
     }
     
@@ -31,6 +33,7 @@ public class PlaneSpawner : MonoBehaviour
         GetComponent<MeshFilter>().mesh = _mesh;
         _mesh.vertices = Vertices;
         _mesh.triangles = _triangles;
+        _mesh.uv = _uvs;
         _mesh.RecalculateNormals();
         GetComponent<MeshCollider>().sharedMesh = _mesh;
     }
@@ -72,6 +75,20 @@ public class PlaneSpawner : MonoBehaviour
             }
 
             vert++;
+        }
+    }
+
+    private void GenerateUVs()
+    {
+        _uvs = new Vector2[Vertices.Length];
+        int i = 0;
+        for (int y = 0; y <= sizeY; y++)
+        {
+            for (int x = 0; x <= sizeX; x++)
+            {
+                _uvs[i] = new Vector2(x % 2, y % 2);
+                i++;
+            }
         }
     }
 
