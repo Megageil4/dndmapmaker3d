@@ -89,11 +89,15 @@ public class PlaneSpawner : MonoBehaviour
 
     public void setNewMap(MapData map)
     {
+        Debug.Log("setting map");
         int i = 0;
         foreach (var v in map.Vertices)
         {
+            Debug.Log("1 : " + i);
             Vertices[i] = new Vector3(v[0], v[1], v[2]);
+            Debug.Log("2 : " + i);
             i++;
+            Debug.Log("3 : " + i);
         }
         _triangles = map.Triangles;
         sizeX = Vertices.GetLength(0)-1;

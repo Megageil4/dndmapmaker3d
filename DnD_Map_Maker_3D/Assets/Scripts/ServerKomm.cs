@@ -41,6 +41,7 @@ public class ServerKomm
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
         request.Method = "GET";
         request.Proxy = null!;
+        Debug.Log("fetched");
         return new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync().Result;
     }
 
@@ -50,10 +51,5 @@ public class ServerKomm
         request.Method = "GET";
         request.Proxy = null;
         return new StreamReader(request.GetResponse().GetResponseStream()).ReadToEndAsync().Result == "true";
-    }
-    public static MapData MapFromJson(string jsonString, GameObject meshSpawner)
-    {
-        
-        return JsonConvert.DeserializeObject<MapData>(jsonString);
     }
 }
