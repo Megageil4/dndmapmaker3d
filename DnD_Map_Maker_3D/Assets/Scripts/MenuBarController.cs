@@ -41,7 +41,7 @@ public class MenuBarController : MonoBehaviour
 
     public void onExit()
     {
-        ServerKomm.TellServer(MeshSpawner);
+        ServerKomm.TellServer(meshSpawner);
         Application.Quit();
     }
 }

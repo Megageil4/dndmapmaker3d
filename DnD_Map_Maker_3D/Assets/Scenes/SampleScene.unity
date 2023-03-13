@@ -149,11 +149,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 80768216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95ef9e0ff557d8c4ea02af4577da2b74, type: 3}
+  m_Script: {fileID: 11500000, guid: 0da2df76f2f46004d9b118300b69f813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuController: {fileID: 1465804799}
-  MeshSpawner: {fileID: 1346602128}
+  menuController: {fileID: 1465804799}
+  meshSpawner: {fileID: 1346602128}
 --- !u!4 &80768218
 Transform:
   m_ObjectHideFlags: 0
@@ -902,7 +902,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1838519649}
         m_TargetAssemblyTypeName: Toolbar, Assembly-CSharp
-        m_MethodName: OnErhoehen
+        m_MethodName: onErhoehen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2138,7 +2138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeX: 10
   sizeY: 10
-  Vertices: []
+  vertices: []
 --- !u!4 &1346602130
 Transform:
   m_ObjectHideFlags: 0
@@ -2403,10 +2403,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a73ce2afabe66f345a6354c86c0a654a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridSizePopUp: {fileID: 1750221630}
-  XSize: {fileID: 1865245533}
-  ZSize: {fileID: 2004112836}
-  MeshSpawner: {fileID: 1346602128}
+  gridSizePopUp: {fileID: 1750221630}
+  xSize: {fileID: 1865245533}
+  zSize: {fileID: 2004112836}
+  meshSpawner: {fileID: 1346602128}
 --- !u!4 &1465804801
 Transform:
   m_ObjectHideFlags: 0
@@ -2644,7 +2644,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1838519649}
         m_TargetAssemblyTypeName: Toolbar, Assembly-CSharp
-        m_MethodName: OnErniedrigen
+        m_MethodName: onErniedrigen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

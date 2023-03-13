@@ -16,10 +16,10 @@ namespace DefaultNamespace
         {
             var posX = Mathf.FloorToInt(location.x);
             var posZ = Mathf.FloorToInt(location.z);
-            Spawner.Vertices[(posZ * (Spawner.sizeX + 1)) + posX].y += 0.5f;
-            Spawner.Vertices[(posZ * (Spawner.sizeX + 1)) + posX + 1].y += 0.5f;
-            Spawner.Vertices[((posZ + 1) * (Spawner.sizeX + 1)) + posX].y += 0.5f;
-            Spawner.Vertices[((posZ + 1) * (Spawner.sizeX + 1)) + posX + 1].y += 0.5f;
+            Spawner.vertices[(posZ * (Spawner.sizeX + 1)) + posX].y += 0.5f;
+            Spawner.vertices[(posZ * (Spawner.sizeX + 1)) + posX + 1].y += 0.5f;
+            Spawner.vertices[((posZ + 1) * (Spawner.sizeX + 1)) + posX].y += 0.5f;
+            Spawner.vertices[((posZ + 1) * (Spawner.sizeX + 1)) + posX + 1].y += 0.5f;
             Debug.Log(posZ * Spawner.sizeY + posX);
             Spawner.ReloadMesh();
         }
