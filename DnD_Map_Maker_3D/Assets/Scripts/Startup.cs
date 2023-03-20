@@ -12,8 +12,7 @@ public class Startup : MonoBehaviour
 
     public void Start()
     {
-        var ex = ServerKomm.ExistsMap();
-        if (ex)
+        if (DataContainer.Conn.MapExists())
         {
             var map = ServerKomm.FetchMap();
             menuController.GetComponent<MenuBarController>().MapFromMapData(JsonConvert.DeserializeObject<MapData>(map));
