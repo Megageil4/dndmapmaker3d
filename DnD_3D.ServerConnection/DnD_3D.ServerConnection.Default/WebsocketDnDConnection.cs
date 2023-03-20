@@ -15,7 +15,7 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
     HttpClient client = new HttpClient();
     public WebsocketDnDConnection(string uri)
     {
-        
+        client.BaseAddress = new Uri("http://10.0.207.7:5180/GameObject");
         guid = Guid.NewGuid().ToString();
         ws = new(uri);
      
@@ -24,11 +24,21 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
             Message? message = JsonConvert.DeserializeObject<Message>(e.Data);
             if (message is not null)
             {
-                switch (message)
-                {
-                    default:
-                        break;
-                }
+                if(message.Guid != guid)
+                    switch (message.MessageType)
+                    {
+                        case "ngo":
+                            OnGetGameobjects();
+                            break;
+                        case "nm":
+                            OnGetMap();
+                            break;
+                        case "me":
+                            
+                            break;
+                        default:
+                            break;
+                    }
             }
             
         };
@@ -41,7 +51,7 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
 
     public async void AddGameObject(GameObject gameObject)
     {
-        
+        //client.GetAsync("/")
 
 
 
@@ -55,9 +65,10 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
         return connected;
     }
 
-    public void MapExists()
+    public bool MapExists()
     {
         ws.Send("3");
+        return true;
     }
 
     public void SendMap(Map map)
@@ -65,17 +76,21 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
         ws.Send('2' + JsonConvert.SerializeObject(map));
     }
 
-    protected virtual void OnGetMap()
+    protected async virtual void OnGetMap()
     {
+        var resp = await client.GetAsync("/GetMap");
+        var cont = resp.Content;
+        string json = await cont.ReadAsStringAsync();
+        var map = JsonConvert.DeserializeObject<Map>(json);
         //JsonConvert.DeserializeObject<Message>(data);
         //Map? map = JsonConvert.DeserializeObject<Map>(data);
         //this.GetMap?.Invoke(this, new MapEventArgs(map));
     }
 
-    protected virtual void OnGetGameobjects(string data)
+    protected virtual void OnGetGameobjects()
     {
-        List < GameObject > objects = JsonConvert.DeserializeObject<List<GameObject>>(data);
-        this.GetGameObjects?.Invoke(this, new GameObjectEventArgs(objects));
+        //List < GameObject > objects = JsonConvert.DeserializeObject<List<GameObject>>(data);
+        //this.GetGameObjects?.Invoke(this, new GameObjectEventArgs(objects));
     }
 
     protected virtual void OnMapAntwort(bool wert)
@@ -85,5 +100,15 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
     public void Dispose()
     {
         ws.Close();
+    }
+
+    public List<GameObject> OnConnectGO()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Map OnConnectMap()
+    {
+        throw new NotImplementedException();
     }
 }
