@@ -1,5 +1,4 @@
-using DefaultNamespace;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,12 +9,13 @@ public class Startup : MonoBehaviour
     [FormerlySerializedAs("MeshSpawner")] public GameObject meshSpawner;
     // Start is called before the first frame update
 
-    public void Start()
+    public async void Start()
     {
-        if (DataContainer.Conn.MapExists())
+        DataContainer.Conn.GetMap += (_,e) => menuController.GetComponent<MenuBarController>().MapFromMapData(e.Map);
+        if (await DataContainer.Conn.MapExists())
         {
-            var map = ServerKomm.FetchMap();
-            menuController.GetComponent<MenuBarController>().MapFromMapData(JsonConvert.DeserializeObject<MapData>(map));
+            var map = DataContainer.Conn.OnConnectMap();
+            menuController.GetComponent<MenuBarController>().MapFromMapData(map);
         }
         else
         {

@@ -23,7 +23,21 @@ public class MenuBarController : MonoBehaviour
         spawner.sizeY = Convert.ToInt32(zSize.text);
         spawner.RegenerateMeshFromStart();
 
-        ServerKomm.TellServer(meshSpawner);
+        var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
+
+        MapData mapData = new()
+        {
+            Triangles = mesh.triangles,
+            Vertices = new()
+        };
+        foreach (var vertex in mesh.vertices)
+        {
+            mapData.Vertices.Add(new []{vertex.x,vertex.y,vertex.z});
+        }
+
+        mapData.sizeX = meshSpawner.GetComponent<PlaneSpawner>().sizeX;
+        mapData.sizeY = meshSpawner.GetComponent<PlaneSpawner>().sizeY;
+        DataContainer.Conn.SendMap(mapData);
         
         gridSizePopUp.SetActive(false);
     }
@@ -37,9 +51,25 @@ public class MenuBarController : MonoBehaviour
         meshSpawner.GetComponent<PlaneSpawner>().SetNewMap(map);
     }
 
-    public void onExit()
+    public void OnExit()
     {
-        ServerKomm.TellServer(meshSpawner);
+        var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
+
+        MapData mapData = new()
+        {
+            Triangles = mesh.triangles,
+            Vertices = new()
+        };
+        foreach (var vertex in mesh.vertices)
+        {
+            mapData.Vertices.Add(new []{vertex.x,vertex.y,vertex.z});
+        }
+
+        mapData.sizeX = meshSpawner.GetComponent<PlaneSpawner>().sizeX;
+        mapData.sizeY = meshSpawner.GetComponent<PlaneSpawner>().sizeY;
+        DataContainer.Conn.SendMap(mapData);
+        // ServerKomm.TellServer(meshSpawner);
+        DataContainer.Conn.Dispose();
         Application.Quit();
     }
 }
