@@ -22,7 +22,7 @@ namespace DefaultNamespace
             {
                 Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                Debug.DrawRay(ray.origin,ray.direction,Color.red,10f);
+                Debug.DrawRay(ray.origin,ray.direction,Color.red,100f);
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     // Check if the raycast hit the mesh

@@ -8,6 +8,7 @@ public class Toolbar : MonoBehaviour
     public PlaneSpawner PlaneSpawner;
     public static IMapTool MapTool;
     public List<Button> Buttons;
+    public ObjectController Controller;
     public void onErhoehen()
     {
         MapTool = new Extrude(PlaneSpawner);
@@ -22,6 +23,13 @@ public class Toolbar : MonoBehaviour
         Buttons[1].GetComponent<Image>().color = Color.gray;
     }
 
+    public void onPlace()
+    {
+        MapTool = new Place(Controller);
+        ClearButtons();
+        Buttons[2].GetComponent<Image>().color = Color.gray;
+    }
+    
     private void ClearButtons()
     {
         for (var index = 0; index < Buttons.Count; index++)
