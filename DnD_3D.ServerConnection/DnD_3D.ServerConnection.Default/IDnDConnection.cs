@@ -6,9 +6,13 @@ public interface IDnDConnection
     event EventHandler<MapEventArgs> GetMap;
     void AddGameObject(GameObject gameObject);
     event EventHandler<GameObjectEventArgs> GetGameObjects;
-    void MapExists();
-    event EventHandler<BoolEventArgs> MapExistsAntwort;
+    bool MapExists();
 
+    List<GameObject> OnConnectGO();
+
+    Map OnConnectMap();
 
     bool Connected();
+
+    void Dispose();
 }
