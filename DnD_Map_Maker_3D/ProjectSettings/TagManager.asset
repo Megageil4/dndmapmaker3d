@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - LoginBTN
+  - X
+  - Y
+  - Z
+  - All
+  - PrefabObject
   layers:
   - Default
   - TransparentFX
