@@ -4,7 +4,7 @@ namespace DnD_3D.ServerConnection.Default;
 
 public class MapEventArgs
 {
-    Map Map { get; set; }
+    public Map Map { get; set; }
 
     public MapEventArgs(Map map) : base()
     {
