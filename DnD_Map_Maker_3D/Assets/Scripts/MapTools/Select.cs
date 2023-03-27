@@ -59,7 +59,7 @@ namespace DefaultNamespace
                     return;
                 }
                 _delay = 0;
-                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.transform.position.y));
+                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(Selected.transform.position, Camera.transform.position)));
                 Vector3 delta = mousePosition - Selected.transform.position;
                 switch (_lastHit)
                 {
