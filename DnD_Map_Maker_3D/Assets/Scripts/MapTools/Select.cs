@@ -59,29 +59,21 @@ namespace DefaultNamespace
                     return;
                 }
                 _delay = 0;
-                Vector3 delta = Camera.ScreenToViewportPoint(Input.mousePosition) - _lastPosition;
-                if (delta.x == 0 && delta.y == 0)
-                {
-                    return;
-                }
-                float camx = Camera.transform.right.x;
-                float camy = Camera.transform.forward.x;
-                int newpos = Mathf.RoundToInt((camx + camy) * Mathf.Sign(delta.x));
+                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.transform.position.y));
+                Vector3 delta = mousePosition - Selected.transform.position;
                 switch (_lastHit)
                 {
                     case "X":
-                        Selected.transform.Translate(newpos,0,0);
+                        Selected.transform.Translate(Mathf.CeilToInt(delta.x), 0, 0);
                         break;
                     case "Y":
-                        Selected.transform.Translate(0, Mathf.Sign(delta.y),0);
+                        Selected.transform.Translate(0, Mathf.CeilToInt(delta.y), 0);
                         break;
                     case "Z":
-                        Selected.transform.Translate(0,0,-newpos);
+                        Selected.transform.Translate(0, 0, Mathf.CeilToInt(delta.z));
                         break;
                     case "All":
                     case "PrefabObject":
-                        Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.transform.position.y));
-                        delta = mousePosition - Selected.transform.position;
                         Selected.transform.Translate(Mathf.CeilToInt(delta.x), 0, Mathf.CeilToInt(delta.z));
                         break;
                 }
