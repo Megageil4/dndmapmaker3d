@@ -42,7 +42,8 @@ namespace DefaultNamespace
                     }
 
                     if (hit.transform.CompareTag("X") || hit.transform.CompareTag("Y") 
-                        || hit.transform.CompareTag("Z") || hit.transform.CompareTag("All"))
+                        || hit.transform.CompareTag("Z") || hit.transform.CompareTag("All")
+                        || hit.transform.CompareTag("PrefabObject"))
                     {
                         _lastHit = hit.transform.tag;
                         _isHoldingDown = true;
@@ -63,9 +64,9 @@ namespace DefaultNamespace
                 {
                     return;
                 }
-                float x = Camera.transform.right.x;
-                float y = Camera.transform.forward.x;
-                int newpos = Mathf.RoundToInt((x + y) * Mathf.Sign(delta.x));
+                float camx = Camera.transform.right.x;
+                float camy = Camera.transform.forward.x;
+                int newpos = Mathf.RoundToInt((camx + camy) * Mathf.Sign(delta.x));
                 switch (_lastHit)
                 {
                     case "X":
@@ -78,7 +79,10 @@ namespace DefaultNamespace
                         Selected.transform.Translate(0,0,-newpos);
                         break;
                     case "All":
-                        Selected.transform.Translate(newpos,newpos,newpos);
+                    case "PrefabObject":
+                        Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.transform.position.y));
+                        delta = mousePosition - Selected.transform.position;
+                        Selected.transform.Translate(Mathf.CeilToInt(delta.x), 0, Mathf.CeilToInt(delta.z));
                         break;
                 }
 

@@ -43,7 +43,10 @@ public class Toolbar : MonoBehaviour
     {
         if (MapTool is Select select)
         {
-            select.Selected.transform.GetChild(1).transform.gameObject.SetActive(false);
+            if (select.Selected != null)
+            {
+                select.Selected.transform.GetChild(1).transform.gameObject.SetActive(false);       
+            }
         }
         for (var index = 0; index < Buttons.Count; index++)
         {
