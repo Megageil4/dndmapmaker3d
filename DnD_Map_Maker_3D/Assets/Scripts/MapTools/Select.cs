@@ -11,8 +11,8 @@ namespace DefaultNamespace
         private string _lastHit;
         private bool _isHoldingDown;
         public GameObject Selected;
-        private const int _modifier = 10;
         private int _delay = 0;
+        private const double _AREAOFDEATH = 0.08;
 
         public Select(Camera camera)
         {
@@ -59,8 +59,13 @@ namespace DefaultNamespace
                     return;
                 }
                 _delay = 0;
-                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(Selected.transform.position, Camera.transform.position)));
+                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(Selected.transform.position, Camera.transform.position ) -1));
                 Vector3 delta = mousePosition - Selected.transform.position;
+                
+                if ((delta.x < _AREAOFDEATH && delta.x > -_AREAOFDEATH) && (delta.y < _AREAOFDEATH && delta.y > -_AREAOFDEATH))
+                {
+                    return;
+                }
                 switch (_lastHit)
                 {
                     case "X":
