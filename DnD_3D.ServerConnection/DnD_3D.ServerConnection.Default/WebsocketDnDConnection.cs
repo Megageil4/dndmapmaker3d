@@ -1,6 +1,7 @@
 ﻿using WebSocketSharp;
 using Newtonsoft.Json;
 using DnD_3D.ServerConnection.Entity;
+using System.Net;
 
 namespace DnD_3D.ServerConnection.Default;
 
@@ -52,7 +53,7 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
     public async void AddGameObject(GameObject gameObject)
     {
         //client.GetAsync("/")
-
+        WebRequest
 
 
 
@@ -65,10 +66,13 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
         return connected;
     }
 
-    public bool MapExists()
+    public async Task<bool> MapExists()
     {
-        ws.Send("3");
-        return true;
+        var resp = await client.GetAsync("/GetMap");
+        var cont = resp.Content;
+        string json = await cont.ReadAsStringAsync();
+        bool rueck = JsonConvert.DeserializeObject<bool>(json);
+        return rueck;
     }
 
     public void SendMap(Map map)
@@ -78,19 +82,14 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
 
     protected async virtual void OnGetMap()
     {
-        var resp = await client.GetAsync("/GetMap");
-        var cont = resp.Content;
-        string json = await cont.ReadAsStringAsync();
-        var map = JsonConvert.DeserializeObject<Map>(json);
-        //JsonConvert.DeserializeObject<Message>(data);
-        //Map? map = JsonConvert.DeserializeObject<Map>(data);
-        //this.GetMap?.Invoke(this, new MapEventArgs(map));
+        var map = MapQuery().Result;
+        this.GetMap?.Invoke(this, new MapEventArgs(map));
     }
 
-    protected virtual void OnGetGameobjects()
+    protected async virtual void OnGetGameobjects()
     {
-        //List < GameObject > objects = JsonConvert.DeserializeObject<List<GameObject>>(data);
-        //this.GetGameObjects?.Invoke(this, new GameObjectEventArgs(objects));
+        var go = GOQuery().Result;
+        this.GetGameObjects?.Invoke(this, new GameObjectEventArgs(go));
     }
 
     protected virtual void OnMapAntwort(bool wert)
@@ -104,11 +103,29 @@ public class WebsocketDnDConnection : IDnDConnection, IDisposable
 
     public List<GameObject> OnConnectGO()
     {
-        throw new NotImplementedException();
+        return GOQuery().Result;   
     }
 
     public Map OnConnectMap()
     {
-        throw new NotImplementedException();
+        return MapQuery().Result;
+    }
+
+    private async Task<Map> MapQuery()
+    {
+        var resp = await client.GetAsync("/GetMap");
+        var cont = resp.Content;
+        string json = await cont.ReadAsStringAsync();
+        var map = JsonConvert.DeserializeObject<Map>(json);
+        return map;
+    }
+
+    private async Task<List<GameObject>> GOQuery()
+    {
+        var resp = await client.GetAsync("/GetAll");
+        var cont = resp.Content;
+        string json = await cont.ReadAsStringAsync();
+        var go = JsonConvert.DeserializeObject<List<GameObject>>(json);
+        return go;
     }
 }

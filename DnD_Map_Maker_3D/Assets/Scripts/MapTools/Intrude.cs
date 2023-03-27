@@ -14,8 +14,8 @@ namespace DefaultNamespace
 
         public void ChangeMap(Vector3 location)
         {
-            var posX = Mathf.RoundToInt(location.x);
-            var posZ = Mathf.RoundToInt(location.z);
+            var posX = Mathf.FloorToInt(location.x);
+            var posZ = Mathf.FloorToInt(location.z);
             Spawner.vertices[(posZ * (Spawner.sizeX + 1)) + posX].y += -0.5f;
             Spawner.vertices[(posZ * (Spawner.sizeX + 1)) + posX + 1].y += -0.5f;
             Spawner.vertices[((posZ + 1) * (Spawner.sizeX + 1)) + posX].y += -0.5f;

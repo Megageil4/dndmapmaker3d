@@ -5,5 +5,9 @@ using UnityEngine;
 public class DataContainer
 {
     public static string ServerIP { get; set; }
-    public static IDnDConnection Conn { get; }
+
+    static DataContainer()
+    {
+        ServerIP = "10.0.207.3";
+    }
 }
