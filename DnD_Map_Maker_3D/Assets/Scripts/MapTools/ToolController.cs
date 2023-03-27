@@ -9,6 +9,7 @@ namespace DefaultNamespace
         public MeshFilter meshFilter;
         private Camera _camera;
         private Mesh _mesh;
+        private int _delay;
 
         private void Start()
         {
@@ -18,11 +19,23 @@ namespace DefaultNamespace
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse))
+            _delay++;
+            if (Input.GetMouseButton((int)MouseButton.LeftMouse))
             {
                 Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 Debug.DrawRay(ray.origin,ray.direction,Color.red,100f);
+                if (Toolbar.MapTool is Select)
+                {
+                    Toolbar.MapTool.ChangeMap(new Vector3(0,0,0));
+                    return;
+                }
+                if (_delay < 4500 * Time.deltaTime)
+                {
+                    return;
+                }
+
+                _delay = 0;
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                 {
                     // Check if the raycast hit the mesh
@@ -33,7 +46,6 @@ namespace DefaultNamespace
 
                         // Convert the mouse position to local space
                         mousePosition = meshFilter.transform.InverseTransformPoint(mousePosition);
-
                         try
                         {
                             Toolbar.MapTool.ChangeMap(mousePosition);

@@ -9,38 +9,42 @@ public class Toolbar : MonoBehaviour
     public PlaneSpawner PlaneSpawner;
     public static IMapTool MapTool;
     public List<Button> Buttons;
-    public ObjectController Controller; //TODO: add to mehtods
+    public ObjectController Controller;
     
     public void OnSelect(Camera playerCamera)
     {
-        MapTool = new Select(playerCamera);
         ClearButtons();
+        MapTool = new Select(playerCamera);
         Buttons[0].GetComponent<Image>().color = Color.gray;
     }
 
     public void onErhoehen()
     {
-        MapTool = new Extrude(PlaneSpawner);
         ClearButtons();
+        MapTool = new Extrude(PlaneSpawner);
         Buttons[1].GetComponent<Image>().color = Color.gray;
     }
 
     public void onErniedrigen()
     {
-        MapTool = new Intrude(PlaneSpawner);
         ClearButtons();
+        MapTool = new Intrude(PlaneSpawner);
         Buttons[2].GetComponent<Image>().color = Color.gray;
     }
 
     public void onPlace()
     {
-        MapTool = new Place(Controller);
         ClearButtons();
+        MapTool = new Place(Controller);
         Buttons[3].GetComponent<Image>().color = Color.gray;
     }
     
     private void ClearButtons()
     {
+        if (MapTool is Select select)
+        {
+            select.Selected.transform.GetChild(1).transform.gameObject.SetActive(false);
+        }
         for (var index = 0; index < Buttons.Count; index++)
         {
             var button = Buttons[index];
