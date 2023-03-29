@@ -53,7 +53,7 @@ namespace DefaultNamespace
             }
             else if (Input.GetMouseButton((int)MouseButton.LeftMouse) && _isHoldingDown)
             {
-                if (_delay < 2300 * Time.deltaTime)
+                if (_delay < 1)
                 {
                     _delay++;
                     return;

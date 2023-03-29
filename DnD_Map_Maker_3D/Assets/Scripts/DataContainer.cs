@@ -8,6 +8,6 @@ public class DataContainer
 
     static DataContainer()
     {
-        ServerIP = "10.0.207.3";
+        ServerIP = "10.0.208.21";
     }
 }
