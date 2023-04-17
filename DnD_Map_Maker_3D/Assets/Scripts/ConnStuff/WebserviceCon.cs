@@ -29,7 +29,6 @@ namespace ConnStuff
             stream.Write(data, 0, data.Length);
         }
 
-        public event EventHandler<MapEventArgs> GetMap;
         public void AddGameObject(GameObject gameObject)
         {
             var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange");
@@ -48,7 +47,15 @@ namespace ConnStuff
             stream.Write(data, 0, data.Length);
         }
 
-        public event EventHandler<GameObjectEventArgs> GetGameObjects;
+        public List<JK_GameObject> GetGameObjects()
+        {
+            var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
+            request.Method = "GET";
+            request.Proxy = null!;
+            using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+            return JsonConvert.DeserializeObject<List<JK_GameObject>>(re.Result);
+        }
+
         public Task<bool> MapExists()
         {
             var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
@@ -66,7 +73,11 @@ namespace ConnStuff
 
         public MapData OnConnectMap()
         {
-            throw new NotImplementedException();
+            var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
+            request.Method = "GET";
+            request.Proxy = null!;
+            using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+            return JsonConvert.DeserializeObject<MapData>(re.Result);
         }
 
         public bool Connected()

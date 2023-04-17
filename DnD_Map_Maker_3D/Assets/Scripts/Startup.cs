@@ -12,7 +12,6 @@ public class Startup : MonoBehaviour
     public async void Start()
     {
         DataContainer.CreateConn(new WebserviceCon());
-        DataContainer.Conn.GetMap += (_,e) => menuController.GetComponent<MenuBarController>().MapFromMapData(e.Map);
         if (await DataContainer.Conn.MapExists())
         {
             var map = DataContainer.Conn.OnConnectMap();

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace DnD_3D.ServerConnection.Default
+namespace ConnStuff
 {
     public class GameObjectEventArgs : EventArgs
     {
-        List<GameObject> GameObject { get; set; }
+        List<JK_GameObject> GameObject { get; set; }
 
-        public GameObjectEventArgs(List<GameObject> gameObject) : base()
+        public GameObjectEventArgs(List<JK_GameObject> gameObject) : base()
         {
             GameObject = gameObject;
         }
