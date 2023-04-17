@@ -72,4 +72,9 @@ public class MenuBarController : MonoBehaviour
         DataContainer.Conn.Dispose();
         Application.Quit();
     }
+
+    public void GameObjectsIntoDict()
+    { //todo mit dic verbinden
+        DataContainer.Conn.GetGameObjects();
+    }
 }

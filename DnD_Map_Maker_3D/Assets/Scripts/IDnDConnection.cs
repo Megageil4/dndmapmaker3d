@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ConnStuff;
 using DefaultNamespace;
 using DnD_3D.ServerConnection.Default;
 using UnityEngine;
@@ -8,11 +9,9 @@ using UnityEngine;
 public interface IDnDConnection
 {
     void SendMap(MapData map);
-    event EventHandler<MapEventArgs> GetMap;
     void AddGameObject(GameObject gameObject);
-    event EventHandler<GameObjectEventArgs> GetGameObjects;
+    public List<JK_GameObject> GetGameObjects();
     Task<bool> MapExists();
-
     List<GameObject> OnConnectGO();
 
     MapData OnConnectMap();
