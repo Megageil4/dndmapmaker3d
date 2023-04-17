@@ -11,6 +11,7 @@ public class DataContainer
 
     static DataContainer()
     {
+        GameObjects = new();
         ServerIP = "10.0.207.3";
     }
     

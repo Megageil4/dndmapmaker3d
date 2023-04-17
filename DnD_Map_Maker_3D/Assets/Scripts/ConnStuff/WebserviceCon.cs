@@ -32,8 +32,10 @@ namespace ConnStuff
         public event EventHandler<MapEventArgs> GetMap;
         public void AddGameObject(GameObject gameObject)
         {
-            var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange");
-            var json = JsonConvert.SerializeObject(new JK_GameObject(gameObject));
+            var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange");
+            JKGameObject jkGameObject = new JKGameObject(gameObject);
+            DataContainer.GameObjects.Add(jkGameObject.Guid,gameObject);
+            var json = JsonConvert.SerializeObject(jkGameObject);
 
             var data = Encoding.UTF8.GetBytes(json);
 
