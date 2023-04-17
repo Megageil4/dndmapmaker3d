@@ -57,14 +57,13 @@ namespace ConnStuff
             return JsonConvert.DeserializeObject<List<JKGameObject>>(re.Result);
         }
 
-        public Task<bool> MapExists()
+        public bool MapExists()
         {
             var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
             request.Method = "GET";
             request.Proxy = null!;
             using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
-            var t = new Task<bool>(() =>  v.Result == "true");
-            return t;
+            return v.Result == "true";
         }
 
         public List<GameObject> OnConnectGO()

@@ -9,12 +9,14 @@ public class Startup : MonoBehaviour
     [FormerlySerializedAs("MeshSpawner")] public GameObject meshSpawner;
     // Start is called before the first frame update
 
-    public async void Start()
+    public void Start()
     {
         DataContainer.CreateConn(new WebserviceCon());
-        if (await DataContainer.Conn.MapExists())
+        Debug.Log(DataContainer.Conn.MapExists());
+        if (DataContainer.Conn.MapExists())
         {
             var map = DataContainer.Conn.OnConnectMap();
+            Debug.Log(map);
             menuController.GetComponent<MenuBarController>().MapFromMapData(map);
         }
         else
