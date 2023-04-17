@@ -94,13 +94,13 @@
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">776</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">104</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">90</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">56</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">109</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">82</XPD:ATTR>
 <XPD:REF name="Model">kA1l86gQpECmNkeOUHXetQAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="UQse6gVyUkODNUpoSXXAzQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="PLG89Dfar0itBwsue4pCZAAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Campagne</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Campaign</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="yWIV8pnLVUizQweUhk+Z5QAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -131,7 +131,7 @@
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="hCZM1QaB1kuoBrz9AwI3EAAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="1VltFbBzdU2fyvUjGtbYsgAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">SpielerCampage</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">SpielerCampaign</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="JDW7A7a/KUigy01ExZW16wAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -154,10 +154,10 @@
 <XPD:OBJ name="OwnedViews[3]" type="UMLClassView" guid="d2nxn4j920ylUCvb6yyv8wAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">960</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">996</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">108</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">142</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">56</XPD:ATTR>
+<XPD:ATTR name="Height" type="integer">69</XPD:ATTR>
 <XPD:REF name="Model">L3l0hjytVkGSapkhde/ZpwAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="IrxXvDoqIkGsRERVrlJH9wAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="OcoXIIzfXUe7iwzbwqVHDQAA">
@@ -211,14 +211,14 @@
 <XPD:OBJ name="OwnedViews[5]" type="UMLGeneralizationView" guid="iKnHmpZRTkWkCuvxjcY6BAAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">776,131;690,130</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">776,140;690,134</XPD:ATTR>
 <XPD:REF name="Model">4EQ7aBW6vUWHw5TT2ifjqwAA</XPD:REF>
 <XPD:REF name="Head">BJjAhk6oTEaDmqact7+9ZwAA</XPD:REF>
 <XPD:REF name="Tail">UJuR4GCgZ0CQCO/0kIC+QQAA</XPD:REF>
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="e/P9LdPIv0uY2KBSWBSAsgAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">15</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">CampagneId: int</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">CampaignId: int</XPD:ATTR>
 <XPD:REF name="Model">4EQ7aBW6vUWHw5TT2ifjqwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="EdgeLabelView" guid="qZZaIcXM+UaK66oygtbSrAAA">
@@ -237,14 +237,14 @@
 <XPD:OBJ name="OwnedViews[6]" type="UMLGeneralizationView" guid="mpQCNOr0fkGADuM8wY7KKQAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">865,132;960,134</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">884,144;996,143</XPD:ATTR>
 <XPD:REF name="Model">kjDzDwecwk2+eVuRQS/MnQAA</XPD:REF>
 <XPD:REF name="Head">d2nxn4j920ylUCvb6yyv8wAA</XPD:REF>
 <XPD:REF name="Tail">UJuR4GCgZ0CQCO/0kIC+QQAA</XPD:REF>
 <XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="UnO+5SWuvkKr+b9FcqhXHwAA">
 <XPD:ATTR name="Alpha" type="real">1,5707963267949</XPD:ATTR>
 <XPD:ATTR name="Distance" type="real">15</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">CampageID: int</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">CampaignID: int</XPD:ATTR>
 <XPD:REF name="Model">kjDzDwecwk2+eVuRQS/MnQAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="EdgeLabelView" guid="RBFKoMMYhEWTKaBnvEBtcwAA">
@@ -298,7 +298,7 @@
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[1]" type="UMLClass" guid="kA1l86gQpECmNkeOUHXetQAA">
-<XPD:ATTR name="Name" type="string">Campagne</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Campaign</XPD:ATTR>
 <XPD:REF name="Namespace">v3h47MwuBEK8eVG34BjsJAAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">UJuR4GCgZ0CQCO/0kIC+QQAA</XPD:REF>
@@ -311,15 +311,25 @@
 <XPD:ATTR name="#Associations" type="integer">2</XPD:ATTR>
 <XPD:REF name="Associations[0]">zH80fV8zbEGwFuGmqAunYQAA</XPD:REF>
 <XPD:REF name="Associations[1]">SutGgLZ92UW8d2K1FzOINgAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">1</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">3</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="iuONr0F/pk6cnjpiHSvPWQAA">
 <XPD:ATTR name="Name" type="string">Id</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
 <XPD:REF name="Owner">kA1l86gQpECmNkeOUHXetQAA</XPD:REF>
 </XPD:OBJ>
+<XPD:OBJ name="Attributes[1]" type="UMLAttribute" guid="H2xnnxpA2EeBUENI+GJPpAAA">
+<XPD:ATTR name="Name" type="string">Name</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">varchar(20)</XPD:ATTR>
+<XPD:REF name="Owner">kA1l86gQpECmNkeOUHXetQAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[2]" type="UMLAttribute" guid="TSm2w/Zm/0SA2IUxnuZe8AAA">
+<XPD:ATTR name="Name" type="string">ShareCode</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">int</XPD:ATTR>
+<XPD:REF name="Owner">kA1l86gQpECmNkeOUHXetQAA</XPD:REF>
+</XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[2]" type="UMLClass" guid="qOMR7bx1B0SvbDE60O13DQAA">
-<XPD:ATTR name="Name" type="string">SpielerCampage</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">SpielerCampaign</XPD:ATTR>
 <XPD:REF name="Namespace">v3h47MwuBEK8eVG34BjsJAAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">BJjAhk6oTEaDmqact7+9ZwAA</XPD:REF>
@@ -379,12 +389,20 @@
 <XPD:REF name="Views[3]">wFkvRjOAz0C+30/juo9cowAA</XPD:REF>
 <XPD:ATTR name="#Specializations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Specializations[0]">kjDzDwecwk2+eVuRQS/MnQAA</XPD:REF>
+<XPD:ATTR name="#TypedFeatures" type="integer">1</XPD:ATTR>
+<XPD:REF name="TypedFeatures[0]">Ii1SFc2iX0Wr0OmNxpbQ5gAA</XPD:REF>
 <XPD:ATTR name="#Associations" type="integer">1</XPD:ATTR>
 <XPD:REF name="Associations[0]">vyG0Le2tP02pMXIrfnlN6gAA</XPD:REF>
-<XPD:ATTR name="#Attributes" type="integer">1</XPD:ATTR>
+<XPD:ATTR name="#Attributes" type="integer">2</XPD:ATTR>
 <XPD:OBJ name="Attributes[0]" type="UMLAttribute" guid="SSsg9GPWxk2qIZc012ODmAAA">
 <XPD:ATTR name="Name" type="string">Bezeichnung</XPD:ATTR>
 <XPD:ATTR name="TypeExpression" type="string">varchar(20)</XPD:ATTR>
+<XPD:REF name="Owner">L3l0hjytVkGSapkhde/ZpwAA</XPD:REF>
+</XPD:OBJ>
+<XPD:OBJ name="Attributes[1]" type="UMLAttribute" guid="Ii1SFc2iX0Wr0OmNxpbQ5gAA">
+<XPD:ATTR name="Name" type="string">Map</XPD:ATTR>
+<XPD:ATTR name="TypeExpression" type="string">Map</XPD:ATTR>
+<XPD:REF name="Type_">L3l0hjytVkGSapkhde/ZpwAA</XPD:REF>
 <XPD:REF name="Owner">L3l0hjytVkGSapkhde/ZpwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
@@ -413,7 +431,7 @@
 <XPD:REF name="Views[3]">PhaoOplP9k+5gbLEg6oTigAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[8]" type="UMLGeneralization" guid="4EQ7aBW6vUWHw5TT2ifjqwAA">
-<XPD:ATTR name="Name" type="string">CampagneId: int</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">CampaignId: int</XPD:ATTR>
 <XPD:REF name="Namespace">v3h47MwuBEK8eVG34BjsJAAA</XPD:REF>
 <XPD:REF name="Child">kA1l86gQpECmNkeOUHXetQAA</XPD:REF>
 <XPD:REF name="Parent">qOMR7bx1B0SvbDE60O13DQAA</XPD:REF>
@@ -424,7 +442,7 @@
 <XPD:REF name="Views[3]">5ToKCL9xGkud1qTXl7eiAgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[9]" type="UMLGeneralization" guid="kjDzDwecwk2+eVuRQS/MnQAA">
-<XPD:ATTR name="Name" type="string">CampageID: int</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">CampaignID: int</XPD:ATTR>
 <XPD:REF name="Namespace">v3h47MwuBEK8eVG34BjsJAAA</XPD:REF>
 <XPD:REF name="Child">kA1l86gQpECmNkeOUHXetQAA</XPD:REF>
 <XPD:REF name="Parent">L3l0hjytVkGSapkhde/ZpwAA</XPD:REF>
