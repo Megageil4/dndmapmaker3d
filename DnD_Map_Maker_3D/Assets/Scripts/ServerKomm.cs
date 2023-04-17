@@ -5,16 +5,18 @@ using DefaultNamespace;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class ServerKomm
+public static class ServerKomm
 {
     public static void TellServer(GameObject meshSpawner)
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange");
         var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
 
-        MapData mapData = new MapData();
-        mapData.Triangles = mesh.triangles;
-        mapData.Vertices = new();
+        MapData mapData = new()
+        {
+            Triangles = mesh.triangles,
+            Vertices = new()
+        };
         foreach (var vertex in mesh.vertices)
         {
             mapData.Vertices.Add(new []{vertex.x,vertex.y,vertex.z});

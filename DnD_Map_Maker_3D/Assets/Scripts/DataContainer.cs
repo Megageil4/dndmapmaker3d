@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class DataContainer
 {
     public static string ServerIP { get; set; }
+    public static IDnDConnection Conn { get; private set; }
 
-    static DataContainer()
+    public static void CreateConn(IDnDConnection con)
     {
-        ServerIP = "10.0.207.3";
+        Conn = con;
     }
 }

@@ -1,8 +1,13 @@
-﻿using DnD_3D.ServerConnection.Entity;
-namespace DnD_3D.ServerConnection.Default;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DefaultNamespace;
+using DnD_3D.ServerConnection.Default;
+using UnityEngine;
+
 public interface IDnDConnection
 {
-    void SendMap(Map map);
+    void SendMap(MapData map);
     event EventHandler<MapEventArgs> GetMap;
     void AddGameObject(GameObject gameObject);
     event EventHandler<GameObjectEventArgs> GetGameObjects;
@@ -10,7 +15,7 @@ public interface IDnDConnection
 
     List<GameObject> OnConnectGO();
 
-    Map OnConnectMap();
+    MapData OnConnectMap();
 
     bool Connected();
 
