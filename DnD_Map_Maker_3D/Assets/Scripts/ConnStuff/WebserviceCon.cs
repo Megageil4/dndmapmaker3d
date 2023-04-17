@@ -27,6 +27,7 @@ namespace ConnStuff
 
             using var stream = request.GetRequestStream();
             stream.Write(data, 0, data.Length);
+            stream.Dispose();
         }
 
         public void AddGameObject(GameObject gameObject)
@@ -47,13 +48,13 @@ namespace ConnStuff
             stream.Write(data, 0, data.Length);
         }
 
-        public List<JK_GameObject> GetGameObjects()
+        public List<JKGameObject> GetGameObjects()
         {
             var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
             request.Method = "GET";
             request.Proxy = null!;
             using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
-            return JsonConvert.DeserializeObject<List<JK_GameObject>>(re.Result);
+            return JsonConvert.DeserializeObject<List<JKGameObject>>(re.Result);
         }
 
         public Task<bool> MapExists()
