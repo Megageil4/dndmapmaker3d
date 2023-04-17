@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using ConnStuff;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,6 +11,7 @@ public class Startup : MonoBehaviour
 
     public async void Start()
     {
+        DataContainer.CreateConn(new WebserviceCon());
         DataContainer.Conn.GetMap += (_,e) => menuController.GetComponent<MenuBarController>().MapFromMapData(e.Map);
         if (await DataContainer.Conn.MapExists())
         {
