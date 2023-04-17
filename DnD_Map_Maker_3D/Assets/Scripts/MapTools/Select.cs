@@ -12,7 +12,7 @@ namespace DefaultNamespace
         private bool _isHoldingDown;
         public GameObject Selected;
         private int _delay = 0;
-        private const double _AREAOFDEATH = 0.08;
+        private const double _AREAOFDEATH = .25;
 
         public Select(Camera camera)
         {
@@ -53,13 +53,13 @@ namespace DefaultNamespace
             }
             else if (Input.GetMouseButton((int)MouseButton.LeftMouse) && _isHoldingDown)
             {
-                if (_delay < 2300 * Time.deltaTime)
+                if (_delay < 1)
                 {
                     _delay++;
                     return;
                 }
                 _delay = 0;
-                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(Selected.transform.position, Camera.transform.position ) -1));
+                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(Selected.transform.position, Camera.transform.position ) - 1));
                 Vector3 delta = mousePosition - Selected.transform.position;
                 
                 if ((delta.x < _AREAOFDEATH && delta.x > -_AREAOFDEATH) && (delta.y < _AREAOFDEATH && delta.y > -_AREAOFDEATH))

@@ -30,7 +30,7 @@ namespace DefaultNamespace
                     Toolbar.MapTool.ChangeMap(new Vector3(0,0,0));
                     return;
                 }
-                if (_delay < 4500 * Time.deltaTime)
+                if (_delay < 5)
                 {
                     return;
                 }
@@ -54,7 +54,7 @@ namespace DefaultNamespace
                         {
                             Debug.Log(e);
                         }
-                    
+                        
                         Debug.Log($"Mouse position on mesh: {Mathf.FloorToInt(mousePosition.x)} / {Mathf.FloorToInt(mousePosition.z)}");
                     }
                 }
