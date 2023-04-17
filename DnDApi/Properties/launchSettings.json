@@ -14,11 +14,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-<<<<<<< HEAD
       "applicationUrl": "http://10.0.207.3:5180",
-=======
-      "applicationUrl": "http://10.0.207.4:5180",
->>>>>>> Origin/Websocet
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
