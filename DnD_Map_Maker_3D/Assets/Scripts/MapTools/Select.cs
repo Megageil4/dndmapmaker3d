@@ -12,7 +12,7 @@ namespace DefaultNamespace
         private bool _isHoldingDown;
         public GameObject Selected;
         private int _delay = 0;
-        private const double _AREAOFDEATH = .08;
+        private const double _AREAOFDEATH = .25;
 
         public Select(Camera camera)
         {
