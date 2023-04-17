@@ -11,7 +11,7 @@ public interface IDnDConnection
     void SendMap(MapData map);
     void AddGameObject(GameObject gameObject);
     public List<JK_GameObject> GetGameObjects();
-    Task<bool> MapExists();
+    bool MapExists();
     List<GameObject> OnConnectGO();
 
     MapData OnConnectMap();
