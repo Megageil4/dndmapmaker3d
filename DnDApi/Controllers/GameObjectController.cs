@@ -9,15 +9,12 @@ public class GameObjectController : ControllerBase
     // Vorest nur eine Map
     public static Map? Map { get; set; }
     // List an GameObjects 
-    public static List<GameObject> GameObjects { get; set; }
+    public static List<GameObject> GameObjects = new List<GameObject>();
     private readonly ILogger<GameObjectController> _logger;
 
     public GameObjectController(ILogger<GameObjectController> logger)
     {
         _logger = logger;
-        GameObjects = new();
-
-     
     }
 
     [HttpGet]
