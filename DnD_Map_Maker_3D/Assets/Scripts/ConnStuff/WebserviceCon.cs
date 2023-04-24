@@ -63,29 +63,30 @@ namespace ConnStuff
         
         public void AddGameObject(GameObject gameObject)
         {
-            var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange");
-            JKGameObject jkGameObject = new JKGameObject(gameObject);
-            DataContainer.GameObjects.Add(jkGameObject.Guid,gameObject);
-            var json = JsonConvert.SerializeObject(jkGameObject);
+            //var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange");
+            //JKGameObject jkGameObject = new JKGameObject(gameObject);
+            //DataContainer.GameObjects.Add(jkGameObject.Guid,gameObject);
+            //var json = JsonConvert.SerializeObject(jkGameObject);
 
-            var data = Encoding.UTF8.GetBytes(json);
+            //var data = Encoding.UTF8.GetBytes(json);
 
-            request.Method = "POST";
-            request.ContentType = "application/json";
-            request.ContentLength = data.Length;
-            request.Proxy = null!;
+            //request.Method = "POST";
+            //request.ContentType = "application/json";
+            //request.ContentLength = data.Length;
+            //request.Proxy = null!;
 
-            using var stream = request.GetRequestStream();
-            stream.Write(data, 0, data.Length);
+            //using var stream = request.GetRequestStream();
+            //stream.Write(data, 0, data.Length);
         }
 
         public List<JKGameObject> GetGameObjects()
         {
-            var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
-            request.Method = "GET";
-            request.Proxy = null!;
-            using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
-            return JsonConvert.DeserializeObject<List<JKGameObject>>(re.Result);
+            //var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
+            //request.Method = "GET";
+            //request.Proxy = null!;
+            //using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+            //return JsonConvert.DeserializeObject<List<JKGameObject>>(re.Result);
+            return null;
         }
 
         public bool MapExists()

@@ -10,6 +10,7 @@ public class Toolbar : MonoBehaviour
     public static IMapTool MapTool;
     public List<Button> Buttons;
     public ObjectController Controller;
+    public GameObject ModelContainer;
     
     public void OnSelect(Camera playerCamera)
     {
@@ -37,6 +38,7 @@ public class Toolbar : MonoBehaviour
         ClearButtons();
         MapTool = new Place(Controller);
         Buttons[3].GetComponent<Image>().color = Color.gray;
+        ModelContainer.SetActive(true);
     }
     
     private void ClearButtons()
@@ -52,6 +54,11 @@ public class Toolbar : MonoBehaviour
         {
             var button = Buttons[index];
             button.GetComponent<Image>().color = Color.white;
+        }
+
+        if (ModelContainer != null)
+        {
+            ModelContainer.SetActive(false);
         }
     } 
 }
