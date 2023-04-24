@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 
 public class WsConn : MonoBehaviour, IDnDConnection
 {
-    private string ergebniss;
+    private string _ergebniss;
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
@@ -27,14 +27,14 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public List<JKGameObject> GetGameObjects()
     {
         Getter($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
-        return JsonConvert.DeserializeObject<List<JKGameObject>>(ergebniss);
+        return JsonConvert.DeserializeObject<List<JKGameObject>>(_ergebniss);
     }
 
     public bool MapExists()
     {
-        Getter($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
-        Debug.Log(ergebniss);
-        return  ergebniss == "true";
+        foreach (var coroutine in Getter($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap"));
+        Debug.Log(_ergebniss);
+        return  _ergebniss == "true";
     }
     
 
@@ -47,7 +47,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     {
         Getter($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
         
-        return JsonConvert.DeserializeObject<MapData>(ergebniss);
+        return JsonConvert.DeserializeObject<MapData>(_ergebniss);
     }
 
     private IEnumerable<Coroutine> Getter(string url)
@@ -108,8 +108,8 @@ public class WsConn : MonoBehaviour, IDnDConnection
         if (www.result == UnityWebRequest.Result.Success)
         {
             // Debug.Log("Downloaded data!");
-            ergebniss = www.downloadHandler.text;
-            Debug.Log(ergebniss);
+            _ergebniss = www.downloadHandler.text;
+            Debug.Log(_ergebniss);
         }
     }
 }
