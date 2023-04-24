@@ -48,7 +48,7 @@ namespace ConnStuff
             this.rot3 = rot3;
             this.scale3 = scale3;
             this.Guid = guid;
-            Modeltype = "TODO";
+            Modeltype = modeltype;
             LastChanged = DateTime.Now;
         }
 
@@ -62,8 +62,8 @@ namespace ConnStuff
             
             var localScale = go.transform.localScale;
             this.scale3 = new []{localScale[0], localScale[1], localScale[2]};
-            
-            //go. 
+
+            this.Modeltype = go.name.Replace("(Clone)", "");
             
             this.Guid = Guid.NewGuid();
 
