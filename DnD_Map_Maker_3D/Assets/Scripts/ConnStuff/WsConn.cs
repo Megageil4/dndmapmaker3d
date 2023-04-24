@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using ConnStuff;
 using DefaultNamespace;
 using Newtonsoft.Json;
@@ -32,7 +33,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     public bool MapExists()
     {
-        Getter($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
+        StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap"));
         Debug.Log(ergebniss);
         return  ergebniss == "true";
     }
