@@ -37,19 +37,15 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     public bool MapExists()
     {
-        for (int i = 0; i < 1000; i++)
-        {
-            var request =
-                (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
-            request.Method = "GET";
-            request.Proxy = null!;
-            using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
-            Thread.Sleep(10);
-        }
-        // return  v.Result == "true";
-        return true;
+        var request =
+            (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
+        request.Method = "GET";
+        request.Proxy = null!;
+        using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        Thread.Sleep(10);
+        return v.Result == "true";
     }
-    
+
 
     public List<GameObject> OnConnectGO()
     {
