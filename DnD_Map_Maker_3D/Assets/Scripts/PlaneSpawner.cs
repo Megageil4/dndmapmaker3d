@@ -112,7 +112,7 @@ public class PlaneSpawner : MonoBehaviour
         int i = 0;
         foreach (var v in map.Vertices)
         {
-            Debug.Log(i);
+            // Debug.Log(i);
             vertices[i] = new Vector3(v[0], v[1], v[2]);
             i++;
         }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Threading;
 using ConnStuff;
 using DefaultNamespace;
@@ -10,7 +12,6 @@ using UnityEngine.Networking;
 
 public class WsConn : MonoBehaviour, IDnDConnection
 {
-    private string ergebniss;
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
@@ -22,22 +23,30 @@ public class WsConn : MonoBehaviour, IDnDConnection
         JKGameObject jkGameObject = new JKGameObject(gameObject);
         DataContainer.GameObjects.Add(jkGameObject.Guid, gameObject);
         var json = JsonConvert.SerializeObject(jkGameObject);
+        Debug.Log(json);
         StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange", json));
     }
 
     public List<JKGameObject> GetGameObjects()
     {
-        Getter($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
-        return JsonConvert.DeserializeObject<List<JKGameObject>>(ergebniss);
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
+        request.Method = "GET";
+        request.Proxy = null!;
+        using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        return JsonConvert.DeserializeObject<List<JKGameObject>>(v.Result);
     }
 
     public bool MapExists()
     {
-        StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap"));
-        Debug.Log(ergebniss);
-        return  ergebniss == "true";
+        var request =
+            (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
+        request.Method = "GET";
+        request.Proxy = null!;
+        using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        Thread.Sleep(10);
+        return v.Result == "true";
     }
-    
+
 
     public List<GameObject> OnConnectGO()
     {
@@ -46,15 +55,17 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     public MapData OnConnectMap()
     {
-        Getter($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
-        
-        return JsonConvert.DeserializeObject<MapData>(ergebniss);
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
+        request.Method = "GET";
+        request.Proxy = null!;
+        using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        return JsonConvert.DeserializeObject<MapData>(v.Result);
     }
 
-    private IEnumerable<Coroutine> Getter(string url)
-    {
-        yield return StartCoroutine(GetRequest(url));
-    }
+    // private IEnumerable<Coroutine> Getter(string url)
+    // {
+    //     yield return StartCoroutine(GetRequest(url));
+    // }
 
     public bool Connected()
     {
@@ -70,7 +81,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     {
         var json = JsonConvert.SerializeObject(mapData);
         StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange", json));
-        StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap"));
+        // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap"));
     }
 
     IEnumerator PostRequest(string url, string json)
@@ -96,21 +107,21 @@ public class WsConn : MonoBehaviour, IDnDConnection
         
     }
 
-    IEnumerator GetRequest(string url)
-    {
-        // Debug.Log($"Sending data to {url}");
-        using UnityWebRequest www = UnityWebRequest.Get(url);
-        yield return www.SendWebRequest();
-        if (www.result != UnityWebRequest.Result.Success)
-        {
-            Debug.Log($"Error while receiving: {www.error}");
-        }
-
-        if (www.result == UnityWebRequest.Result.Success)
-        {
-            // Debug.Log("Downloaded data!");
-            ergebniss = www.downloadHandler.text;
-            Debug.Log(ergebniss);
-        }
-    }
+    // IEnumerator GetRequest(string url) //deaktiviert
+    // {
+    //     // Debug.Log($"Sending data to {url}");
+    //     using UnityWebRequest www = UnityWebRequest.Get(url);
+    //     yield return www.SendWebRequest();
+    //     if (www.result != UnityWebRequest.Result.Success)
+    //     {
+    //         Debug.Log($"Error while receiving: {www.error}");
+    //     }
+    //
+    //     if (www.result == UnityWebRequest.Result.Success)
+    //     {
+    //         // Debug.Log("Downloaded data!");
+    //         _ergebniss = www.downloadHandler.text;
+    //         Debug.Log(_ergebniss);
+    //     }
+    // }
 }
