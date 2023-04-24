@@ -38,6 +38,7 @@ public class GameObjectController : ControllerBase
     [Route("[action]")]
     public IEnumerable<GameObject> GetAll()
     {
+        Console.WriteLine(GameObjects.Count);
         return GameObjects;
     }
 
@@ -56,6 +57,7 @@ public class GameObjectController : ControllerBase
     {
         GameObjects.Add(gameObject);
         Console.WriteLine(gameObject);
+        Console.WriteLine(GameObjects.Count);
     }
 
     // Postet eine Map welche die alte aMap überschreibt
