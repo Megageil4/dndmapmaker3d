@@ -34,7 +34,7 @@ namespace ConnStuff
             set { Update(); _modeltype = value; }
         }
 
-        public Guid Guid { get; private set; }
+        public Guid Guid { get; set; }
         public DateTime LastChanged { get; private set; }
 
         private void Update()
@@ -68,6 +68,11 @@ namespace ConnStuff
             this.Guid = Guid.NewGuid();
 
             LastChanged = DateTime.Now;
+        }
+
+        public JKGameObject()
+        {
+            
         }
     }
 }
