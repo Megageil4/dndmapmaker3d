@@ -35,6 +35,7 @@ public class ObjectController : MonoBehaviour
 
     private void Start()
     {
+        ModelTypes = new();
         foreach (var model in Models)
         {
             ModelTypes.Add(model.name, model.model);
