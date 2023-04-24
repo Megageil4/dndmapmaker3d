@@ -1,7 +1,5 @@
 ﻿using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using Update = UnityEngine.PlayerLoop.Update;
 
 namespace ConnStuff
 {
