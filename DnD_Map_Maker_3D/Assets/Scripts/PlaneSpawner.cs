@@ -1,5 +1,10 @@
+using System;
+using System.Collections;
+using System.Text;
 using DefaultNamespace;
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.Serialization;
 
 public class PlaneSpawner : MonoBehaviour
@@ -113,5 +118,60 @@ public class PlaneSpawner : MonoBehaviour
         }
         _triangles = map.Triangles;
         ReloadMesh();
+    }
+
+    public void TestConn(MapData mapData)
+    {
+        var json = JsonConvert.SerializeObject(mapData);
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange",json));
+        StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap",s => Debug.Log(s)));
+    }
+    IEnumerator PostRequest(string url, string json, Action<string> finishDelegate = null)
+    {
+        Debug.Log($"Sending data to {url}");
+        using (UnityWebRequest www = new UnityWebRequest(url,"POST"))
+        {
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+            www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+            www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log($"Error while Sending: {www.error}");
+            }
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Upload complete!");
+                if (finishDelegate != null)
+                {
+                    finishDelegate(www.downloadHandler.text);
+                }
+            }
+        }
+    }
+    
+    IEnumerator GetRequest(string url, Action<string> finishDelegate)
+    {
+        Debug.Log($"Sending data to {url}");
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        {
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log($"Error while receiving: {www.error}");
+            }
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Downloaded data!");
+                if (finishDelegate != null)
+                {
+                    finishDelegate(www.downloadHandler.text);
+                }
+            }
+        }
     }
 }
