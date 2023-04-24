@@ -83,6 +83,7 @@ public class MenuBarController : MonoBehaviour
             DataContainer.GameObjects[jkGameObject.Guid].transform.position = new Vector3(jkGameObject.pos3[0], jkGameObject.pos3[1], jkGameObject.pos3[2]);
             DataContainer.GameObjects[jkGameObject.Guid].transform.Rotate(new Vector3(jkGameObject.rot3[0], jkGameObject.rot3[1], jkGameObject.rot3[2]));
             DataContainer.GameObjects[jkGameObject.Guid].transform.localScale = new Vector3(jkGameObject.scale3[0], jkGameObject.scale3[1], jkGameObject.scale3[2]);
+            Instantiate(ObjectController.ModelTypes[jkGameObject.Modeltype], DataContainer.GameObjects[jkGameObject.Guid].transform);
         }
     }
 }

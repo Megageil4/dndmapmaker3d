@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
@@ -7,7 +8,15 @@ using UnityEngine.UIElements;
 public class ObjectController : MonoBehaviour
 {
     public GameObject Prefab { get; set; }
-    private GameObject _previousField { get; set; } 
+    private GameObject _previousField { get; set; }
+    public static Dictionary<string,GameObject> ModelTypes { get; set; }
+    
+    [Serializable]
+    public struct ModelType {
+        public string name;
+        public GameObject model;
+    }
+    public ModelType[] Models;
 
     public void onObjectSelected(GameObject prefab)
     {
@@ -22,5 +31,13 @@ public class ObjectController : MonoBehaviour
         }
         tab.SetActive(true);
         _previousField = tab;
+    }
+
+    private void Start()
+    {
+        foreach (var model in Models)
+        {
+            ModelTypes.Add(model.name, model.model);
+        }
     }
 }

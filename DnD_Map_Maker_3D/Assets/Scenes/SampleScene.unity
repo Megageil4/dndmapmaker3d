@@ -5650,6 +5650,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3700b5e3b12ebd4a92b72dbc868325f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Models:
+  - name: Barbarian
+    model: {fileID: 413157833265110719, guid: d9812a5206d993c4f98a998ab56e4bb2, type: 3}
+  - name: Bard
+    model: {fileID: 413157833265110719, guid: 9f0fafceb931d544a994043a28d3dda5, type: 3}
+  - name: Beholder
+    model: {fileID: 413157833265110719, guid: 752352afc89782d45bf75738a7555b82, type: 3}
+  - name: Cleric
+    model: {fileID: 413157833265110719, guid: 8e31426f2e2114742a39660b2c0db086, type: 3}
+  - name: Cube
+    model: {fileID: 413157833265110719, guid: 4a448775bf2b63142af8a91e2737aa91, type: 3}
+  - name: Dragon
+    model: {fileID: 413157833265110719, guid: d8545696f74588f469b96456d3b544b3, type: 3}
+  - name: Druid
+    model: {fileID: 413157833265110719, guid: 17505a7d24263794d8f25d91a3a7e9c7, type: 3}
+  - name: Fighter
+    model: {fileID: 413157833265110719, guid: 618fb33f810f6df48b87067f699269a3, type: 3}
+  - name: Goblin
+    model: {fileID: 413157833265110719, guid: 4d9db5434f0066c48b6fbd39692d5ead, type: 3}
+  - name: Mimic
+    model: {fileID: 413157833265110719, guid: c1ef76effe22941459abaef7ded43b2e, type: 3}
+  - name: Minotaur
+    model: {fileID: 413157833265110719, guid: 06f0efb0b1edfe5428d9ec7db60ad650, type: 3}
+  - name: Monk
+    model: {fileID: 413157833265110719, guid: 997b3e81127f2794385ccd246488e0ad, type: 3}
+  - name: Paladin
+    model: {fileID: 413157833265110719, guid: 85a9e59952228a441892bfeff9d9d805, type: 3}
+  - name: Ranger
+    model: {fileID: 413157833265110719, guid: f056aab6fe1137644a36e63efee9da2d, type: 3}
+  - name: Rogue
+    model: {fileID: 413157833265110719, guid: e2a869f4c36a33b4ba2cc8324040e3a1, type: 3}
+  - name: Sorcerer
+    model: {fileID: 413157833265110719, guid: 63dfbd4b1021e4540b4ca05dda6b945b, type: 3}
+  - name: Warlock
+    model: {fileID: 413157833265110719, guid: dc24368100dd0fb4ba5a253e3f4ed2f2, type: 3}
+  - name: Wizard
+    model: {fileID: 413157833265110719, guid: 363bb17545ce11e4ca5606afe8db8383, type: 3}
 --- !u!1 &1512730819
 GameObject:
   m_ObjectHideFlags: 0
