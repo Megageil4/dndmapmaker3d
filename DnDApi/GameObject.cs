@@ -17,7 +17,7 @@ public class GameObject
         Scale3 = scale3;
         Modeltype = modeltype;
         this.Guid = guid;
-        this.LastChanged = lastChanged;
+        this.LastChanged = DateTime.Now;
     }
 
     public override string ToString()
