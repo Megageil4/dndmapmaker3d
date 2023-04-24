@@ -1,101 +1,43 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using DefaultNamespace;
-using DnD_3D.ServerConnection.Default;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace ConnStuff
 {
-    public class WebserviceCon : IDnDConnection
+    public class WebserviceCon : MonoBehaviour, IDnDConnection
     {
         public void SendMap(MapData map)
         {
-
-           var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange");
-           var json = JsonConvert.SerializeObject(map);
-           
-           var data = Encoding.UTF8.GetBytes(json); 
-
-           request.Method = "POST";
-           request.ContentType = "application/json";
-           request.ContentLength = data.Length;
-           request.Proxy = null!;
-
-           request.Timeout = 500;
-           request.ServicePoint.ConnectionLeaseTimeout = 500;
-           request.ServicePoint.MaxIdleTime = 500;
-
-           using var stream = request.GetRequestStream();
-           stream.Write(data, 0, data.Length);
-           stream.Flush();
-           stream.Close(); 
-           stream.Dispose();
+            var json = JsonConvert.SerializeObject(map);
+            StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange", json));
         }
 
-        
-        IEnumerator postRequest(string url, string json)
-        {
-            var uwr = new UnityWebRequest(url, "POST");
-            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
-            uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-            uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-            uwr.SetRequestHeader("Content-Type", "application/json");
-
-            //Send the request then wait here until it returns
-            yield return uwr.SendWebRequest();
-
-            if (uwr.isNetworkError)
-            {
-                Debug.Log("Error While Sending: " + uwr.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + uwr.downloadHandler.text);
-            }
-        }
-        
         public void AddGameObject(GameObject gameObject)
         {
-            //var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange");
-            //JKGameObject jkGameObject = new JKGameObject(gameObject);
-            //DataContainer.GameObjects.Add(jkGameObject.Guid,gameObject);
-            //var json = JsonConvert.SerializeObject(jkGameObject);
-
-            //var data = Encoding.UTF8.GetBytes(json);
-
-            //request.Method = "POST";
-            //request.ContentType = "application/json";
-            //request.ContentLength = data.Length;
-            //request.Proxy = null!;
-
-            //using var stream = request.GetRequestStream();
-            //stream.Write(data, 0, data.Length);
+            JKGameObject jkGameObject = new JKGameObject(gameObject);
+            DataContainer.GameObjects.Add(jkGameObject.Guid, gameObject);
+            var json = JsonConvert.SerializeObject(jkGameObject);
+            StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange", json));
         }
 
         public List<JKGameObject> GetGameObjects()
         {
-            //var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
-            //request.Method = "GET";
-            //request.Proxy = null!;
-            //using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
-            //return JsonConvert.DeserializeObject<List<JKGameObject>>(re.Result);
-            return null;
+            string str = "";
+            StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll", s => str = s));
+            while (str == "") {}
+            return JsonConvert.DeserializeObject<List<JKGameObject>>(str);
         }
 
         public bool MapExists()
         {
-            var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
-            request.Method = "GET";
-            request.Proxy = null!;
-            using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
-            return v.Result == "true";
+            string str = "";
+            StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap", s => str = s));
+            while (str == "") {}
+            return str == "true";
         }
 
         public List<GameObject> OnConnectGO()
@@ -105,11 +47,10 @@ namespace ConnStuff
 
         public MapData OnConnectMap()
         {
-            var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
-            request.Method = "GET";
-            request.Proxy = null!;
-            using var re = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
-            return JsonConvert.DeserializeObject<MapData>(re.Result);
+            string str = "";
+            StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap", s => str = s));
+            while (str == "") {}
+            return JsonConvert.DeserializeObject<MapData>(str);
         }
 
         public bool Connected()
@@ -121,5 +62,60 @@ namespace ConnStuff
         {
             throw new NotImplementedException();
         }
+
+
+        public void TestConn(MapData mapData)
+        {
+            var json = JsonConvert.SerializeObject(mapData);
+            StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange", json));
+            StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap", s => Debug.Log(s)));
+        }
+
+        IEnumerator PostRequest(string url, string json, Action<string> finishDelegate = null)
+        {
+            Debug.Log($"Sending data to {url}");
+            using UnityWebRequest www = new UnityWebRequest(url, "POST");
+            byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+            www.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log($"Error while Sending: {www.error}");
+            }
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Upload complete!");
+                if (finishDelegate != null)
+                {
+                    finishDelegate(www.downloadHandler.text);
+                }
+            }
+        }
+
+        IEnumerator GetRequest(string url, Action<string> finishDelegate)
+        {
+            Debug.Log($"Sending data to {url}");
+            using UnityWebRequest www = UnityWebRequest.Get(url);
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log($"Error while receiving: {www.error}");
+            }
+
+            if (www.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Downloaded data!");
+                if (finishDelegate != null)
+                {
+                    finishDelegate(www.downloadHandler.text);
+                }
+            }
+        }
+        
+        
     }
 }
