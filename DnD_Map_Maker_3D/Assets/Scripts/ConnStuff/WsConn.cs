@@ -23,6 +23,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
         JKGameObject jkGameObject = new JKGameObject(gameObject);
         DataContainer.GameObjects.Add(jkGameObject.Guid, gameObject);
         var json = JsonConvert.SerializeObject(jkGameObject);
+        Debug.Log(json);
         StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange", json));
     }
 

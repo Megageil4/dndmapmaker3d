@@ -15,41 +15,25 @@ namespace ConnStuff
         public float[] pos3
         {
             get => _pos3;
-            set
-            {
-                Update();
-                _pos3 = value;
-            }
+            set { Update(); _pos3 = value; }
         }
 
         public float[] rot3
         {
             get => _rot3;
-            set
-            {
-                Update();
-                _rot3 = value;
-            }
+            set { Update(); _rot3 = value; }
         }
 
         public float[] scale3
         {
             get => _scale3;
-            set
-            {
-                Update();
-                _scale3 = value;
-            }
+            set { Update(); _scale3 = value; }
         }
 
         public string Modeltype
         {
             get => _modeltype;
-            set
-            {
-                Update();
-                _modeltype = value;
-            }
+            set { Update(); _modeltype = value; }
         }
 
         public Guid Guid { get; private set; }
@@ -66,7 +50,7 @@ namespace ConnStuff
             this.rot3 = rot3;
             this.scale3 = scale3;
             this.Guid = guid;
-            Modeltype = modeltype;
+            Modeltype = "TODO";
             LastChanged = DateTime.Now;
         }
 
