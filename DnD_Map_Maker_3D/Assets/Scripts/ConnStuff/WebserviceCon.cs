@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
-using System.Threading.Tasks;
 using DefaultNamespace;
-using DnD_3D.ServerConnection.Default;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -24,7 +23,9 @@ namespace ConnStuff
             request.ContentType = "application/json";
             request.ContentLength = data.Length;
             request.Proxy = null!;
+            request.Timeout = 500;
 
+            Debug.Log(IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpConnections().Length);
             using var stream = request.GetRequestStream();
             stream.Write(data, 0, data.Length);
         }
