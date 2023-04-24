@@ -37,9 +37,9 @@ public class MenuBarController : MonoBehaviour
 
         mapData.sizeX = meshSpawner.GetComponent<PlaneSpawner>().sizeX;
         mapData.sizeY = meshSpawner.GetComponent<PlaneSpawner>().sizeY;
-        spawner.TestConn(mapData);
+        // spawner.TestConn(mapData);
         
-        //DataContainer.Conn.SendMap(mapData);
+        DataContainer.Conn.SendMap(mapData);
         
         gridSizePopUp.SetActive(false);
     }
