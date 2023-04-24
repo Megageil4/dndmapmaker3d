@@ -11,7 +11,8 @@ public class DataContainer
 
     static DataContainer()
     {
-        ServerIP = "10.0.207.4";
+        GameObjects = new();
+        ServerIP = "localhost";
     }
     
     public static void CreateConn(IDnDConnection con)

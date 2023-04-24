@@ -5,9 +5,9 @@ namespace ConnStuff
 {
     public class GameObjectEventArgs : EventArgs
     {
-        List<JK_GameObject> GameObject { get; set; }
+        List<JKGameObject> GameObject { get; set; }
 
-        public GameObjectEventArgs(List<JK_GameObject> gameObject) : base()
+        public GameObjectEventArgs(List<JKGameObject> gameObject) : base()
         {
             GameObject = gameObject;
         }

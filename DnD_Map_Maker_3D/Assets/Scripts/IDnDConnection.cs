@@ -10,7 +10,7 @@ public interface IDnDConnection
 {
     void SendMap(MapData map);
     void AddGameObject(GameObject gameObject);
-    public List<JK_GameObject> GetGameObjects();
+    public List<JKGameObject> GetGameObjects();
     bool MapExists();
     List<GameObject> OnConnectGO();
 

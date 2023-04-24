@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DnD_3D.ServerConnection.Default;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace DefaultNamespace
@@ -18,7 +19,8 @@ namespace DefaultNamespace
             {
                 var posX = Mathf.FloorToInt(location.x);
                 var posZ = Mathf.FloorToInt(location.z);
-                Instantiate(Controller.Prefab, new Vector3(posX,0,posZ), Quaternion.identity);
+                GameObject gameObject = Instantiate(Controller.Prefab, new Vector3(posX,0,posZ), Quaternion.identity);
+                DataContainer.Conn.AddGameObject(gameObject);
             }    
         }
         

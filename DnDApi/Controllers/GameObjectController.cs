@@ -55,6 +55,7 @@ public class GameObjectController : ControllerBase
     public void PostChange([FromBody] GameObject gameObject)
     {
         GameObjects.Add(gameObject);
+        Console.WriteLine(gameObject);
     }
 
     // Postet eine Map welche die alte aMap überschreibt
