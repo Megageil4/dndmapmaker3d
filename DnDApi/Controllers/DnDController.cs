@@ -60,6 +60,20 @@ public class DnDController : ControllerBase
         Console.WriteLine(gameObject);
         Console.WriteLine(GameObjects.Count);
     }
+    [HttpPut]
+    [ActionName("GameObject")]
+    [Route("[action]")]
+    public void PutGameObjekt([FromBody] GameObject gameObject)
+    {
+        var old = GameObjects.Find(g => g.Guid == gameObject.Guid);
+        if (old != null)
+        {
+            GameObjects.Remove(old);
+            GameObjects.Add(gameObject);
+            Console.WriteLine(gameObject);
+            Console.WriteLine(GameObjects.Count);   
+        }
+    }
 
     // Postet eine Map welche die alte aMap überschreibt
     [HttpPost]
