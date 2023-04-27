@@ -15,7 +15,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange", json));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json));
     }
 
     public void AddGameObject(GameObject gameObject)
@@ -24,12 +24,12 @@ public class WsConn : MonoBehaviour, IDnDConnection
         DataContainer.GameObjects.Add(jkGameObject.Guid, gameObject);
         var json = JsonConvert.SerializeObject(jkGameObject);
         Debug.Log(json);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/PostChange", json));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json));
     }
 
     public List<JKGameObject> GetGameObjects()
     {
-        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetAll");
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/GameObject");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
@@ -39,7 +39,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public bool MapExists()
     {
         var request =
-            (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");
+            (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map/Exists");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
@@ -55,7 +55,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     public MapData OnConnectMap()
     {
-        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
@@ -80,7 +80,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void TestConn(MapData mapData)
     {
         var json = JsonConvert.SerializeObject(mapData);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange", json));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json));
         // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap"));
     }
 
