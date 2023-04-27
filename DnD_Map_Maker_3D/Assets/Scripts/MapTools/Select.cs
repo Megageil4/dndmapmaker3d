@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -84,6 +85,10 @@ namespace DefaultNamespace
                 }
 
                 _lastPosition = Camera.ScreenToViewportPoint(Input.mousePosition);
+                //DataContainer.Conn.ChangeGameObject(
+                 //       DataContainer.GameObjects.First(g => g.Value.gameObject. == Selected).Key
+                 //   );
+                 //TODO send changes
             }
         }
     }

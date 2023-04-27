@@ -8,7 +8,7 @@ public interface IDnDConnection
 {
     void SendMap(MapData map);
     void AddGameObject(GameObject gameObject);
-    public void ChangeGAmeObject(Guid guid);
+    public void ChangeGameObject(Guid guid);
     public List<JKGameObject> GetGameObjects();
     bool MapExists();
     List<GameObject> OnConnectGO();

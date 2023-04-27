@@ -33,7 +33,7 @@ public class DnDController : ControllerBase
     }
     // getet Alle Objekte auf der Map
     [HttpGet]
-    [ActionName("GameObjekt")]
+    [ActionName("GameObject")]
     [Route("[action]")]
     public IEnumerable<GameObject> GetAll()
     {
