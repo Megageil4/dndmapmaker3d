@@ -70,6 +70,11 @@ namespace ConnStuff
             LastChanged = DateTime.Now;
         }
 
+        public JKGameObject(GameObject go, Guid guid) : this(go)
+        {
+            this.Guid = guid;
+        }
+
         public JKGameObject()
         {
             

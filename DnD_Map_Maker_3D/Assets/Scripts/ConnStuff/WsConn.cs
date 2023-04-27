@@ -15,7 +15,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json, "POST"));
     }
 
     public void AddGameObject(GameObject gameObject)
@@ -24,7 +24,14 @@ public class WsConn : MonoBehaviour, IDnDConnection
         DataContainer.GameObjects.Add(jkGameObject.Guid, gameObject);
         var json = JsonConvert.SerializeObject(jkGameObject);
         Debug.Log(json);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json, "POST"));
+    }
+
+    public void ChangeGAmeObject(Guid guid)
+    {
+        JKGameObject jkGameObject = new JKGameObject(DataContainer.GameObjects[guid], guid);
+        var json = JsonConvert.SerializeObject(jkGameObject);
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json, "PUT"));
     }
 
     public List<JKGameObject> GetGameObjects()
@@ -80,14 +87,14 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void TestConn(MapData mapData)
     {
         var json = JsonConvert.SerializeObject(mapData);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json, "POST"));
         // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap"));
     }
 
-    IEnumerator PostRequest(string url, string json)
+    IEnumerator PostRequest(string url, string json, string method)
     {
         Debug.Log($"Sending data to {url}");
-        using UnityWebRequest www = new UnityWebRequest(url, "POST");
+        using UnityWebRequest www = new UnityWebRequest(url, method);
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         www.uploadHandler = new UploadHandlerRaw(jsonToSend);
         www.downloadHandler = new DownloadHandlerBuffer();
