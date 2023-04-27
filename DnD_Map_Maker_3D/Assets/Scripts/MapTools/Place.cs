@@ -1,5 +1,4 @@
-﻿using DnD_3D.ServerConnection.Default;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace DefaultNamespace
