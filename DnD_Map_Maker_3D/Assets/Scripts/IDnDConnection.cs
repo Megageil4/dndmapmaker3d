@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ConnStuff;
 using DefaultNamespace;
-using DnD_3D.ServerConnection.Default;
 using UnityEngine;
 
 public interface IDnDConnection

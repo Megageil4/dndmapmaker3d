@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using ConnStuff;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -21,6 +19,7 @@ public class Startup : MonoBehaviour
             var map = DataContainer.Conn.OnConnectMap();
             Debug.Log(map);
             menuController.GetComponent<MenuBarController>().MapFromMapData(map);
+            menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
         }
         else
         {

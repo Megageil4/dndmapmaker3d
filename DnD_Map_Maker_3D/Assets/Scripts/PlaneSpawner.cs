@@ -1,10 +1,5 @@
-using System;
-using System.Collections;
-using System.Text;
 using DefaultNamespace;
-using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.Serialization;
 
 public class PlaneSpawner : MonoBehaviour
