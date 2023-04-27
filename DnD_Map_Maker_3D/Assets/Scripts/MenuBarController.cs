@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using DefaultNamespace;
 using TMPro;
 using UnityEngine;
@@ -88,5 +90,17 @@ public class MenuBarController : MonoBehaviour
             DataContainer.GameObjects[jkGameObject.Guid].transform.localScale = new Vector3(jkGameObject.scale3[0], jkGameObject.scale3[1], jkGameObject.scale3[2]);
             Instantiate(ObjectController.ModelTypes[jkGameObject.Modeltype], DataContainer.GameObjects[jkGameObject.Guid].transform);
         }
+    }
+
+    private int _count = 0;
+    private void FixedUpdate()
+    {
+        if (_count >= 50)
+        {
+            _count = 0;
+            GameObjectsIntoDict();   
+        }
+        Debug.Log(_count);
+        _count++;
     }
 }
