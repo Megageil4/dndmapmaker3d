@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace DnDApi.Controllers;
 [ApiController]
 [Route("[controller]")]
-public class GameObjectController : ControllerBase
+public class DnDController : ControllerBase
 {
     
     // Vorest nur eine Map
     public static Map? Map { get; set; }
     // List an GameObjects 
     public static List<GameObject> GameObjects = new List<GameObject>();
-    private readonly ILogger<GameObjectController> _logger;
+    private readonly ILogger<DnDController> _logger;
 
-    public GameObjectController(ILogger<GameObjectController> logger)
+    public DnDController(ILogger<DnDController> logger)
     {
         _logger = logger;
     }
@@ -25,6 +25,7 @@ public class GameObjectController : ControllerBase
     }
 
     [HttpGet]
+    [ActionName("Map/Exists")]
     [Route("[action]")]
     public bool ExistsMap()
     {
@@ -32,6 +33,7 @@ public class GameObjectController : ControllerBase
     }
     // getet Alle Objekte auf der Map
     [HttpGet]
+    [ActionName("GameObjekt")]
     [Route("[action]")]
     public IEnumerable<GameObject> GetAll()
     {
@@ -40,6 +42,7 @@ public class GameObjectController : ControllerBase
     }
 
     [HttpGet]
+    [ActionName("Map")]
     [Route("[action]")]
     public Map GetMap()
     {
@@ -49,6 +52,7 @@ public class GameObjectController : ControllerBase
     
     // Postet ein GameObjekt in den Cache
     [HttpPost]
+    [ActionName("GameObject")]
     [Route("[action]")]
     public void PostChange([FromBody] GameObject gameObject)
     {
@@ -59,6 +63,7 @@ public class GameObjectController : ControllerBase
 
     // Postet eine Map welche die alte aMap überschreibt
     [HttpPost]
+    [ActionName("Map")]
     [Route("[action]")]
     public void MapChange([FromBody] Map map)
     {
