@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace ConnStuff
@@ -52,7 +52,10 @@ namespace ConnStuff
             LastChanged = DateTime.Now;
         }
 
-        public JKGameObject(GameObject go)
+        public JKGameObject(GameObject go) :this(go, new Guid)
+        {}
+
+        public JKGameObject(GameObject go, Guid guid)
         {
             var position = go.transform.position;
             this.pos3 = new[] { position[0], position[1], position[2] };
@@ -65,14 +68,9 @@ namespace ConnStuff
 
             this.Modeltype = go.name.Replace("(Clone)", "");
             
-            this.Guid = Guid.NewGuid();
+            this.Guid = guid;
 
             LastChanged = DateTime.Now;
-        }
-
-        public JKGameObject(GameObject go, Guid guid) : this(go)
-        {
-            this.Guid = guid;
         }
 
         public JKGameObject()
