@@ -26,22 +26,11 @@ public class MenuBarController : MonoBehaviour
         spawner.RegenerateMeshFromStart();
 
         var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
-
-        MapData mapData = new()
-        {
-            Triangles = mesh.triangles,
-            Vertices = new()
-        };
-        foreach (var vertex in mesh.vertices)
-        {
-            mapData.Vertices.Add(new []{vertex.x,vertex.y,vertex.z});
-        }
-
-        mapData.sizeX = meshSpawner.GetComponent<PlaneSpawner>().sizeX;
-        mapData.sizeY = meshSpawner.GetComponent<PlaneSpawner>().sizeY;
         // spawner.TestConn(mapData);
         
-        DataContainer.Conn.SendMap(mapData);
+        DataContainer.Conn.SendMap(Util.MeshToMapData(mesh,
+            meshSpawner.GetComponent<PlaneSpawner>().sizeX,
+            meshSpawner.GetComponent<PlaneSpawner>().sizeY));
         
         gridSizePopUp.SetActive(false);
     }
@@ -98,9 +87,10 @@ public class MenuBarController : MonoBehaviour
         if (_count >= 50)
         {
             _count = 0;
-            GameObjectsIntoDict();   
+            GameObjectsIntoDict();
+            var map = DataContainer.Conn.OnConnectMap();
+            MapFromMapData(map);
         }
-        Debug.Log(_count);
         _count++;
     }
 }

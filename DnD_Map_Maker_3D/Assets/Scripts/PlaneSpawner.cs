@@ -38,6 +38,8 @@ public class PlaneSpawner : MonoBehaviour
         _mesh.uv = _uvs;
         _mesh.RecalculateNormals();
         GetComponent<MeshCollider>().sharedMesh = _mesh;
+        
+        DataContainer.Conn.SendMap(Util.MeshToMapData(_mesh, sizeX, sizeY));
     }
 
     private void CreateVertices()
