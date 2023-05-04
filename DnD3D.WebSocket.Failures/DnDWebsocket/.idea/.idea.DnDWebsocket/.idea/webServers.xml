@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a9708f19-fd32-4670-af63-cf739e8f7e33" name="devel1" url="http://devel1">
+        <fileTransfer rootFolder="/home/dvs/jkaufman/DnDAPI" accessType="SFTP" host="devel1" port="22" sshConfigId="b1a7338e-1675-4006-8245-3501cc0fdc88" sshConfig="jkaufman@devel1:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
