@@ -16,7 +16,7 @@ public class Startup : MonoBehaviour
         // Debug.Log(DataContainer.Conn.MapExists());
         if (DataContainer.Conn.MapExists())
         {
-            var map = DataContainer.Conn.OnConnectMap();
+            var map = DataContainer.Conn.FetchMap();
             Debug.Log(map);
             menuController.GetComponent<MenuBarController>().MapFromMapData(map);
             menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();

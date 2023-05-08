@@ -86,7 +86,7 @@ public class MenuBarController : MonoBehaviour
         {
             _count = 0;
             GameObjectsIntoDict();
-            var map = DataContainer.Conn.OnConnectMap();
+            var map = DataContainer.Conn.FetchMap();
             MapFromMapData(map);
         }
         _count++;

@@ -55,7 +55,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
         return v.Result == "true";
     }
 
-    public MapData OnConnectMap()
+    public MapData FetchMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map");
         request.Method = "GET";
@@ -72,7 +72,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void Connect()
     {
         _socketClient = new();
-        _socketClient.NewMap += (_,_) => OnConnectMap();
+        _socketClient.NewMap += (_,_) => FetchMap();
         _socketClient.NewGameObject += (_, _) => GetGameObjects();
         _socketClient.NewGuid += (_, y) => DataContainer.ClientId = y.Id;
         _socketClient?.Connect($"ws://{DataContainer.ServerIP}:5020/ws");
