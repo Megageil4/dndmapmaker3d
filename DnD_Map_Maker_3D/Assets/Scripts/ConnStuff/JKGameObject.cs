@@ -54,7 +54,7 @@ namespace ConnStuff
             ClientId = DataContainer.ClientId;
         }
 
-        public JKGameObject(GameObject go) :this(go, new Guid())
+        public JKGameObject(GameObject go) :this(go, Guid.NewGuid())
         {}
 
         public JKGameObject(GameObject go, Guid guid)

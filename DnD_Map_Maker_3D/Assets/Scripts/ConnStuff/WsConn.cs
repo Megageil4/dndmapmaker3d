@@ -13,7 +13,7 @@ using UnityEngine.Networking;
 public class WsConn : MonoBehaviour, IDnDConnection
 {
     private WebSocketClient _socketClient;
-    private GameObject menuController;
+    public GameObject menuController;
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
@@ -76,7 +76,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
         _socketClient.NewMap += (_,_) => menuController.GetComponent<MenuBarController>().MapFromMapData();
         _socketClient.NewGameObject += (_, _) => menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
         _socketClient.NewGuid += (_, y) => DataContainer.ClientId = y.Id;
-        _socketClient?.Connect($"ws://{DataContainer.ServerIP}:5020/ws");
+        _socketClient?.Connect($"ws://{DataContainer.ServerIP}:5180/ws");
     }
 
     public void Dispose()
@@ -93,7 +93,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     IEnumerator PostRequest(string url, string json, string method)
     {
-        Debug.Log($"Sending data to {url}");
+        // Debug.Log($"Sending data to {url}");
         using UnityWebRequest www = new UnityWebRequest(url, method);
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         www.uploadHandler = new UploadHandlerRaw(jsonToSend);
