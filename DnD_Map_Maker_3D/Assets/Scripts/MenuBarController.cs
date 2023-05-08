@@ -37,9 +37,9 @@ public class MenuBarController : MonoBehaviour
         gridSizePopUp.SetActive(true);
     }
 
-    public void MapFromMapData(MapData map)
+    public void MapFromMapData()
     {
-        meshSpawner.GetComponent<PlaneSpawner>().SetNewMap(map);
+        meshSpawner.GetComponent<PlaneSpawner>().SetNewMap(DataContainer.Conn.FetchMap());
     }
 
     public void OnExit()
@@ -79,16 +79,16 @@ public class MenuBarController : MonoBehaviour
         }
     }
 
-    private int _count = 0;
-    private void FixedUpdate()
-    {
-        if (_count >= 50)
-        {
-            _count = 0;
-            GameObjectsIntoDict();
-            var map = DataContainer.Conn.FetchMap();
-            MapFromMapData(map);
-        }
-        _count++;
-    }
+    // private int _count = 0;
+    // private void FixedUpdate()
+    // {
+    //     if (_count >= 50)
+    //     {
+    //         _count = 0;
+    //         GameObjectsIntoDict();
+    //         var map = DataContainer.Conn.FetchMap();
+    //         MapFromMapData(map);
+    //     }
+    //     _count++;
+    // }
 }
