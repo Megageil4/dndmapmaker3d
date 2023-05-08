@@ -73,6 +73,7 @@ namespace ConnStuff
             this.Guid = guid;
 
             LastChanged = DateTime.Now;
+            ClientId = DataContainer.ClientId;
         }
 
         public JKGameObject()
