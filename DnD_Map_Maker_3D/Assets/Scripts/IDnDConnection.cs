@@ -11,11 +11,7 @@ public interface IDnDConnection
     public void ChangeGameObject(Guid guid);
     public List<JKGameObject> GetGameObjects();
     bool MapExists();
-    List<GameObject> OnConnectGO();
-
     MapData OnConnectMap();
-
-    bool Connected();
-
+    void Connect();
     void Dispose();
 }

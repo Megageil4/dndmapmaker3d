@@ -11,5 +11,6 @@ namespace DefaultNamespace
         public int[] Triangles;
         public int sizeX;
         public int sizeY;
+        public Guid ClientID;
     }
 }
