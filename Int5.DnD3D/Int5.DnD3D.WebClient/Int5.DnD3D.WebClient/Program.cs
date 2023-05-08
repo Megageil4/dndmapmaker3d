@@ -18,7 +18,7 @@ client.NewGuid += (sender, e) =>
     // Id abrufen und speichern
 };
 
-await client.Connect("ws://localhost:5020/ws");
+await client.Connect("ws://10.0.207.7:5180/ws");
 
 
 

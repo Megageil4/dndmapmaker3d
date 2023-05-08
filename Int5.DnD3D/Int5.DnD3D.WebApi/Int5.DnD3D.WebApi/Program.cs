@@ -19,7 +19,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-var wsOptions = new WebSocketOptions { KeepAliveInterval = TimeSpan.FromHours(2) };
+var wsOptions = new WebSocketOptions { KeepAliveInterval = TimeSpan.FromMinutes(2) };
 app.UseWebSockets(wsOptions);
 // Handelt einkommende Http anfragen welche dem Pfad "/ws" folgen
 // und den RequestType WebSocketRequest haben
@@ -50,7 +50,8 @@ static async Task Echo(HttpContext context,WebSocket webSocket)
     var buffer = new byte[1024 * 4];
     Guid guid = DnDController._connectionManager.AddWebSocket(webSocket);
     await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
-    while (true) { }
+    Console.WriteLine("Neuer Client " + guid);
+    while (webSocket.State == WebSocketState.Open) { }
 }
 
 app.UseAuthorization();
