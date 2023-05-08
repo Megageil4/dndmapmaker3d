@@ -16,7 +16,6 @@ public class Startup : MonoBehaviour
         // Debug.Log(DataContainer.Conn.MapExists());
         if (DataContainer.Conn.MapExists())
         {
-            Debug.Log(DataContainer.ClientId);
             menuController.GetComponent<MenuBarController>().MapFromMapData();
             menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
         }
@@ -24,5 +23,6 @@ public class Startup : MonoBehaviour
         {
             menuController.GetComponent<MenuBarController>().MakeGridSizePopUpVisible();
         }
+        Debug.Log("start " + DataContainer.ClientId);
     }
 }
