@@ -77,6 +77,16 @@ public class MenuBarController : MonoBehaviour
             DataContainer.GameObjects[jkGameObject.Guid].transform.position = new Vector3(jkGameObject.pos3[0], jkGameObject.pos3[1], jkGameObject.pos3[2]);
             DataContainer.GameObjects[jkGameObject.Guid].transform.Rotate(new Vector3(jkGameObject.rot3[0], jkGameObject.rot3[1], jkGameObject.rot3[2]));
             DataContainer.GameObjects[jkGameObject.Guid].transform.localScale = new Vector3(jkGameObject.scale3[0], jkGameObject.scale3[1], jkGameObject.scale3[2]);
+            
+            //TODO: Get correct color on get;
+            
+            int r = Convert.ToInt32(jkGameObject.Color.Substring(0,2),16);
+            int g = Convert.ToInt32(jkGameObject.Color.Substring(2,2),16);
+            int b = Convert.ToInt32(jkGameObject.Color.Substring(4,2),16);
+            
+            DataContainer.GameObjects[jkGameObject.Guid].transform.GetChild(0).GetChild(0).gameObject
+                .GetComponent<MeshRenderer>().material.color = new Color(r,g,b);
+            ;
         }
     }
 

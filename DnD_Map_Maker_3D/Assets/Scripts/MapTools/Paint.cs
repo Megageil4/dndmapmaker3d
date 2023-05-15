@@ -1,5 +1,6 @@
 ﻿using System;
 using HSVPicker;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -35,6 +36,8 @@ namespace DefaultNamespace
                               .material.color = _colorPicker
                                                 .GetComponent<ColorPicker>()
                                                 .CurrentColor;
+
+            DataContainer.Conn.ChangeGameObject(DataContainer.Guids[selected]);
         }
     }
 }
