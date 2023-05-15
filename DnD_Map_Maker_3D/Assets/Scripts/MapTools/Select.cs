@@ -85,10 +85,12 @@ namespace DefaultNamespace
                 }
 
                 _lastPosition = Camera.ScreenToViewportPoint(Input.mousePosition);
-                //DataContainer.Conn.ChangeGameObject(
-                 //       DataContainer.GameObjects.First(g => g.Value.gameObject. == Selected).Key
-                 //   );
-                 //TODO send changes
+                Debug.Log(Selected);
+                foreach (var keys in DataContainer.Guids.Keys)
+                {
+                    Debug.Log("Key: " + keys);
+                }
+                DataContainer.Conn.ChangeGameObject(DataContainer.Guids[Selected]);
             }
         }
     }

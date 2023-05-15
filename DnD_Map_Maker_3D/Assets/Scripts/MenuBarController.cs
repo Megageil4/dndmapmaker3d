@@ -70,19 +70,20 @@ public class MenuBarController : MonoBehaviour
         {
             if (!DataContainer.GameObjects.ContainsKey(jkGameObject.Guid))
             {
-                DataContainer.GameObjects.Add(jkGameObject.Guid, new GameObject());   
+                GameObject newObject = Instantiate(ObjectController.ModelTypes[jkGameObject.Modeltype]);
+                DataContainer.GameObjects.Add(jkGameObject.Guid, newObject);
+                DataContainer.Guids.Add(newObject,jkGameObject.Guid);
             }
             DataContainer.GameObjects[jkGameObject.Guid].transform.position = new Vector3(jkGameObject.pos3[0], jkGameObject.pos3[1], jkGameObject.pos3[2]);
             DataContainer.GameObjects[jkGameObject.Guid].transform.Rotate(new Vector3(jkGameObject.rot3[0], jkGameObject.rot3[1], jkGameObject.rot3[2]));
             DataContainer.GameObjects[jkGameObject.Guid].transform.localScale = new Vector3(jkGameObject.scale3[0], jkGameObject.scale3[1], jkGameObject.scale3[2]);
-            Instantiate(ObjectController.ModelTypes[jkGameObject.Modeltype], DataContainer.GameObjects[jkGameObject.Guid].transform);
         }
     }
 
     private int _count = 0;
     private void FixedUpdate()
     {
-        if (_count >= 50)
+        if (_count >= 15)
         {
             _count = 0;
             GameObjectsIntoDict();

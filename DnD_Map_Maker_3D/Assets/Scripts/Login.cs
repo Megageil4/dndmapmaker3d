@@ -19,7 +19,7 @@ public class Login : MonoBehaviour
             // Kein v / v1 / t !!!!!!!!
             // Und bitte keinen code mit syntax error pushen, findet unity nicht toll
             // doch
-            var webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
+            var webRequest = WebRequest.Create("http://" + inF.text + ":5180/DnD/TestConnection");
             webRequest.Proxy = null;
             // Task<string> d = ;
             var responseString =  Connect(webRequest);

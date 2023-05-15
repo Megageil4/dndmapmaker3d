@@ -11,6 +11,7 @@ public class Toolbar : MonoBehaviour
     public List<Button> Buttons;
     public ObjectController Controller;
     public GameObject ModelContainer;
+    public GameObject ColorPicker;
     
     public void OnSelect(Camera playerCamera)
     {
@@ -40,6 +41,14 @@ public class Toolbar : MonoBehaviour
         Buttons[3].GetComponent<Image>().color = Color.gray;
         ModelContainer.SetActive(true);
     }
+
+    public void OnPaint(Camera playerCamera)
+    {
+        ClearButtons();
+        MapTool = new Paint(playerCamera);
+        Buttons[4].GetComponent<Image>().color = Color.gray;
+        ColorPicker.SetActive(true);
+    }
     
     private void ClearButtons()
     {
@@ -60,5 +69,7 @@ public class Toolbar : MonoBehaviour
         {
             ModelContainer.SetActive(false);
         }
+        
+        ColorPicker.SetActive(false);
     } 
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 namespace DefaultNamespace
@@ -10,6 +11,7 @@ namespace DefaultNamespace
         private Camera _camera;
         private Mesh _mesh;
         private int _delay;
+        public EventSystem eventSystem;
 
         private void Start()
         {
@@ -25,7 +27,9 @@ namespace DefaultNamespace
                 Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 Debug.DrawRay(ray.origin,ray.direction,Color.red,100f);
-                if (Toolbar.MapTool is Select)
+                //if (eventSystem.IsPointerOverGameObject()) return;
+                //if (eventSystem.currentSelectedGameObject != null) return;
+                if (Toolbar.MapTool is Select || Toolbar.MapTool is Paint)
                 {
                     Toolbar.MapTool.ChangeMap(new Vector3(0,0,0));
                     return;
