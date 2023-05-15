@@ -1,4 +1,5 @@
 ﻿using System;
+using HSVPicker;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -6,9 +7,11 @@ namespace DefaultNamespace
     public class Paint : IMapTool
     {
         private Camera _playerCamera;
-        public Paint(Camera playerCamera)
+        private GameObject _colorPicker;
+        public Paint(Camera playerCamera, GameObject colorPicker)
         {
             _playerCamera = playerCamera;
+            _colorPicker = colorPicker;
         }
 
         public void ChangeMap(Vector3 location)
@@ -24,8 +27,14 @@ namespace DefaultNamespace
                 return;
             }
 
-            
-            selected.transform.GetChild(0).GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+
+            selected.transform.GetChild(0)
+                              .GetChild(0)
+                              .gameObject
+                              .GetComponent<MeshRenderer>()
+                              .material.color = _colorPicker
+                                                .GetComponent<ColorPicker>()
+                                                .CurrentColor;
         }
     }
 }

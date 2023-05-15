@@ -12,7 +12,7 @@ using UnityEngine.Networking;
 
 public class WsConn : MonoBehaviour, IDnDConnection
 {
-    private WebSocketClient _socketClient;
+   // private WebSocketClient _socketClient;
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
@@ -65,12 +65,22 @@ public class WsConn : MonoBehaviour, IDnDConnection
         return JsonConvert.DeserializeObject<MapData>(v.Result);
     }
 
+    public void Connect()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Dispose()
+    {
+        throw new NotImplementedException();
+    }
+
     // private IEnumerable<Coroutine> Getter(string url)
     // {
     //     yield return StartCoroutine(GetRequest(url));
     // }
 
-    public void Connect()
+/*    public void Connect()
     {
         _socketClient = new();
         _socketClient.NewMap += (_,_) => OnConnectMap();
@@ -82,7 +92,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void Dispose()
     {
         _socketClient?.Disconnect();
-    }
+    } */
     
     public void TestConn(MapData mapData)
     {

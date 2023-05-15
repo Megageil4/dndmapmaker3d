@@ -45,7 +45,7 @@ public class Toolbar : MonoBehaviour
     public void OnPaint(Camera playerCamera)
     {
         ClearButtons();
-        MapTool = new Paint(playerCamera);
+        MapTool = new Paint(playerCamera, ColorPicker);
         Buttons[4].GetComponent<Image>().color = Color.gray;
         ColorPicker.SetActive(true);
     }
