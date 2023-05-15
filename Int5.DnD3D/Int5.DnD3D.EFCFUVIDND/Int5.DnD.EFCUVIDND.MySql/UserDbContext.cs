@@ -18,7 +18,7 @@ namespace Int5.DnD.EFCUVIDND.MySql
 		#region Methoden
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.HasDefaultSchema("DnD");
+			
 			modelBuilder.Entity<User>().ToTable("User");
 			
 			
