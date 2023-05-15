@@ -9,6 +9,7 @@ public class DataContainer
     public static IDnDConnection Conn { get; private set; }
     public static Dictionary<Guid, GameObject> GameObjects;
     public static Dictionary<GameObject, Guid> Guids;
+    public static Guid ClientId;
 
     static DataContainer()
     {
@@ -20,5 +21,6 @@ public class DataContainer
     public static void CreateConn(IDnDConnection con)
     {
         Conn = con;
+        Conn.Connect();
     }
 }

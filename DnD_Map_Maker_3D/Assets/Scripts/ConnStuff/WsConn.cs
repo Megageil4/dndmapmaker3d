@@ -12,6 +12,7 @@ using UnityEngine.Networking;
 
 public class WsConn : MonoBehaviour, IDnDConnection
 {
+    private WebSocketClient _socketClient;
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
@@ -55,12 +56,6 @@ public class WsConn : MonoBehaviour, IDnDConnection
         return v.Result == "true";
     }
 
-
-    public List<GameObject> OnConnectGO()
-    {
-        throw new NotImplementedException();
-    }
-
     public MapData OnConnectMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map");
@@ -75,14 +70,18 @@ public class WsConn : MonoBehaviour, IDnDConnection
     //     yield return StartCoroutine(GetRequest(url));
     // }
 
-    public bool Connected()
+    public void Connect()
     {
-        throw new NotImplementedException();
+        _socketClient = new();
+        _socketClient.NewMap += (_,_) => OnConnectMap();
+        _socketClient.NewGameObject += (_, _) => GetGameObjects();
+        _socketClient.NewGuid += (_, y) => DataContainer.ClientId = y.Id;
+        _socketClient?.Connect($"ws://{DataContainer.ServerIP}:5020/ws");
     }
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        _socketClient?.Disconnect();
     }
     
     public void TestConn(MapData mapData)

@@ -9,6 +9,7 @@ namespace ConnStuff
         private float[] _rot3;
         private float[] _scale3;
         private string _modeltype;
+        public Guid ClientId;
 
         public float[] pos3
         {
@@ -50,6 +51,7 @@ namespace ConnStuff
             this.Guid = guid;
             Modeltype = modeltype;
             LastChanged = DateTime.Now;
+            ClientId = DataContainer.ClientId;
         }
 
         public JKGameObject(GameObject go) :this(go, Guid.NewGuid())
