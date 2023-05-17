@@ -1,5 +1,4 @@
 # Definiton of Done
----
 
 - **Es compiliert.**
 - Der Code ist fertiggestellt und im Git eingespielt.
