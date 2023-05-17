@@ -1,7 +1,7 @@
 # Definiton of Done
 ---
 
-- ** Es compiliert. **
+- **Es compiliert.**
 - Der Code ist fertiggestellt und im Git eingespielt.
 - Es gab einen Peer Code Review
 - Vereinbarte Coding Guidelines und Standards sind eingehalten.
