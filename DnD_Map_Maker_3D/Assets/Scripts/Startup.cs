@@ -23,6 +23,7 @@ public class Startup : MonoBehaviour
         {
             menuController.GetComponent<MenuBarController>().MakeGridSizePopUpVisible();
         }
+
         Debug.Log("start " + DataContainer.ClientId);
     }
 }

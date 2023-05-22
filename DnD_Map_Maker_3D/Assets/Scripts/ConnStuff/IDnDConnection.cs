@@ -13,5 +13,4 @@ public interface IDnDConnection
     bool MapExists();
     MapData FetchMap();
     void Connect();
-    void Dispose();
 }

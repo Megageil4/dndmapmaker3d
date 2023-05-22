@@ -26,9 +26,9 @@ public class MenuBarController : MonoBehaviour
         var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
         // spawner.TestConn(mapData);
         
-        DataContainer.Conn.SendMap(Util.MeshToMapData(mesh,
-            meshSpawner.GetComponent<PlaneSpawner>().sizeX,
-            meshSpawner.GetComponent<PlaneSpawner>().sizeY));
+        // DataContainer.Conn.SendMap(Util.MeshToMapData(mesh,
+        //     meshSpawner.GetComponent<PlaneSpawner>().sizeX,
+        //     meshSpawner.GetComponent<PlaneSpawner>().sizeY));
         
         gridSizePopUp.SetActive(false);
     }
@@ -60,7 +60,6 @@ public class MenuBarController : MonoBehaviour
         mapData.sizeY = meshSpawner.GetComponent<PlaneSpawner>().sizeY;
         DataContainer.Conn.SendMap(mapData);
         // ServerKomm.TellServer(meshSpawner);
-        DataContainer.Conn.Dispose();
         Application.Quit();
     }
 

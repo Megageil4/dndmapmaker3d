@@ -12,8 +12,6 @@ using UnityEngine.Networking;
 
 public class WsConn : MonoBehaviour, IDnDConnection
 {
-    private WebSocketClient _socketClient;
-    public GameObject menuController;
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
@@ -72,18 +70,9 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     public void Connect()
     {
-        _socketClient = new();
-        _socketClient.NewMap += (_,_) => menuController.GetComponent<MenuBarController>().MapFromMapData();
-        _socketClient.NewGameObject += (_, _) => menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
-        _socketClient.NewGuid += (_, y) => DataContainer.ClientId = y.Id;
-            _socketClient?.Connect($"ws://{DataContainer.ServerIP}:5180/ws");
+        
     }
 
-    public void Dispose()
-    {
-        _socketClient?.Disconnect();
-    }
-    
     public void TestConn(MapData mapData)
     {
         var json = JsonConvert.SerializeObject(mapData);
