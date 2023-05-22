@@ -22,7 +22,7 @@ public static class ServerKomm
 
         MapData mapData = new()
         {
-            Triangles = mesh.triangles,
+            triangles = mesh.triangles,
             Vertices = new()
         };
         foreach (var vertex in mesh.vertices)
@@ -46,6 +46,10 @@ public static class ServerKomm
         stream.Write(data, 0, data.Length);
     }
 
+    /// <summary>
+    /// Used to fetch the map from the server
+    /// </summary>
+    /// <returns>The map from the server</returns>
     public static string FetchMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap");
@@ -55,6 +59,10 @@ public static class ServerKomm
         return re.Result;
     }
 
+    /// <summary>
+    /// Used to check if a map exists on the server
+    /// </summary>
+    /// <returns>True if a map exists</returns>
     public static bool ExistsMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/ExistsMap");

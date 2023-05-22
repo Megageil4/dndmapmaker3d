@@ -20,7 +20,7 @@ namespace DefaultNamespace
         {
             MapData mapData = new()
             {
-                Triangles = mesh.triangles,
+                triangles = mesh.triangles,
                 Vertices = new()
             };
             foreach (var vertex in mesh.vertices)

@@ -1,13 +1,22 @@
 ﻿using System;
+using DefaultNamespace;
 using HSVPicker;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace MapTools
 {
+    /// <summary>
+    /// Tool to paint objects on the map
+    /// </summary>
     public class Paint : IMapTool
     {
+        /// <summary>
+        /// Player camera to shoot the raycast
+        /// </summary>
         private Camera _playerCamera;
+        /// <summary>
+        /// Color picker used to get the selected color
+        /// </summary>
         private GameObject _colorPicker;
         public Paint(Camera playerCamera, GameObject colorPicker)
         {
@@ -22,7 +31,7 @@ namespace DefaultNamespace
             {
                 selected = Util.GetGameObjektByRayCast(_playerCamera);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Debug.Log("No Object selected for painting");
                 return;

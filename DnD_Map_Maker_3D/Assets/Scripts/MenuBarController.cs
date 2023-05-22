@@ -4,12 +4,33 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Class for the menu bar at the top of the screen
+/// Gets sometimes misused for server communication to make things easier
+/// </summary>
 public class MenuBarController : MonoBehaviour
 {
+    /// <summary>
+    /// The canvas for the grid size change menu pop up
+    /// </summary>
     [FormerlySerializedAs("GridSizePopUp")] public GameObject gridSizePopUp;
+    /// <summary>
+    /// The input field for the x size of the grid of above mentioned pop up
+    /// </summary>
     [FormerlySerializedAs("XSize")] public TMP_InputField xSize;
+    /// <summary>
+    /// The input field for the Z(y) size of the grid of above mentioned pop up
+    /// </summary>
     [FormerlySerializedAs("ZSize")] public TMP_InputField zSize;
+    /// <summary>
+    /// The mesh spawner used to generate the map
+    /// </summary>
     [FormerlySerializedAs("MeshSpawner")] public GameObject meshSpawner;
+    
+    /// <summary>
+    /// Gets called when OK button in the grid size pop up gets clicked.
+    /// Used to change the grid size according to the input fields 
+    /// </summary>
     public void ChangeGridSize()
     {
         if (xSize == null || xSize.text == "" || !int.TryParse(xSize.text, out _) 
@@ -32,23 +53,36 @@ public class MenuBarController : MonoBehaviour
         
         gridSizePopUp.SetActive(false);
     }
+    /// <summary>
+    /// Gets called when the "Change Grid Size" button gets clicked.
+    /// Makes the pop up visible
+    /// </summary>
     public void MakeGridSizePopUpVisible()
     {
         gridSizePopUp.SetActive(true);
     }
 
+    /// <summary>
+    /// Gets called by the map update cycle.
+    /// Makes a new Map from the given map data.
+    /// </summary>
+    /// <param name="map"></param>
     public void MapFromMapData(MapData map)
     {
         meshSpawner.GetComponent<PlaneSpawner>().SetNewMap(map);
     }
-
+    
+    /// <summary>
+    /// DECPRECATED - Was used to send the map to the server on exit.
+    /// Only here for reference
+    /// </summary>
     public void OnExit()
     {
         var mesh = meshSpawner.GetComponent<MeshFilter>().mesh;
 
         MapData mapData = new()
         {
-            Triangles = mesh.triangles,
+            triangles = mesh.triangles,
             Vertices = new()
         };
         foreach (var vertex in mesh.vertices)
@@ -64,10 +98,20 @@ public class MenuBarController : MonoBehaviour
         Application.Quit();
     }
 
+    /// <summary>
+    /// Called by the map update cycle.
+    /// Gets the maps from the WS and instantiates the gameobjects
+    /// and adds them into the dictionary for managing all gameobjects.
+    /// </summary>
     public void GameObjectsIntoDict()
     {
         foreach (var jkGameObject in DataContainer.Conn.GetGameObjects())
         {
+            if (jkGameObject == null)
+            {
+                Debug.Log("jkGameObject is null");
+                continue;
+            }
             if (!DataContainer.GameObjects.ContainsKey(jkGameObject.Guid))
             {
                 GameObject newObject = Instantiate(ObjectController.ModelTypes[jkGameObject.Modeltype]);
@@ -87,7 +131,17 @@ public class MenuBarController : MonoBehaviour
         }
     }
 
-    private int _count = 0;
+    /// <summary>
+    /// Counter used to manage the speed of the update cycle.
+    /// </summary>
+    private int _count;
+    
+    /// <summary>
+    /// The map update cycle.
+    /// Updates all gameobjects and the map.
+    /// Gets called every 15 frames.
+    /// One second currently has 27 frames.
+    /// </summary>
     private void FixedUpdate()
     {
         if (_count >= 15)

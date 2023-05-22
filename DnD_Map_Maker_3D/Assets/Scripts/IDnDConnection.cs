@@ -4,6 +4,9 @@ using ConnStuff;
 using DefaultNamespace;
 using UnityEngine;
 
+/// <summary>
+/// Interface that defines the methods needed for a connection to the server
+/// </summary>
 public interface IDnDConnection
 {
     void SendMap(MapData map);

@@ -6,38 +6,44 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Class for the login screen
+/// </summary>
 public class Login : MonoBehaviour
 {
-    // Was ist inF??? -> bessere Namen
-    [FormerlySerializedAs("InF")] public TMP_InputField inF;
+    /// <summary>
+    /// 
+    /// </summary>
+    [FormerlySerializedAs("inF")] [FormerlySerializedAs("InF")] public TMP_InputField serverIp;
 
-    public void SubmitName()
+    
+    /// <summary>
+    /// Gets called when the user clicks the connect button.
+    /// Test the server connection and if it works, loads the next scene
+    /// </summary>
+    public void ConnectToServer()
     {
         try
         {
-            // Bitte bessere Variablen Namen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // Kein v / v1 / t !!!!!!!!
-            // Und bitte keinen code mit syntax error pushen, findet unity nicht toll
-            // doch
-            var webRequest = WebRequest.Create("http://" + inF.text + ":5180/DnD/TestConnection");
+            var webRequest = WebRequest.Create("http://" + serverIp.text + ":5180/DnD/TestConnection");
             webRequest.Proxy = null;
             // Task<string> d = ;
             var responseString =  Connect(webRequest);
             if ("Connection erstellt" == responseString)
             {
-                inF.image.color = Color.green;
-                DataContainer.ServerIP = inF.text;
+                serverIp.image.color = Color.green;
+                DataContainer.ServerIP = serverIp.text;
                 SceneManager.LoadScene("SampleScene");
             }
             else
             {
-                inF.image.color = Color.red;
+                serverIp.image.color = Color.red;
             }
         }
         catch (Exception e)
         {
             Debug.Log(e.Message);
-            inF.image.color = Color.red;
+            serverIp.image.color = Color.red;
         }
     }
     public string Connect(WebRequest webRequest)

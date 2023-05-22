@@ -1,24 +1,36 @@
 ﻿using System;
+using MapTools;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 namespace DefaultNamespace
 {
+    /// <summary>
+    /// Class to handle clicks when a tool is selected
+    /// </summary>
     public class ToolController : MonoBehaviour
     {
+        /// <summary>
+        /// Mesh filter of the map used to determine collisions of raycasts with the map
+        /// </summary>
         public MeshFilter meshFilter;
+        /// <summary>
+        /// Camera used to cast the ray
+        /// </summary>
         private Camera _camera;
-        private Mesh _mesh;
+        /// <summary>
+        /// Delay to prevent multiple clicks in a short time
+        /// </summary>
         private int _delay;
-        public EventSystem eventSystem;
 
         private void Start()
         {
             _camera = GetComponent<Camera>();
-            _mesh = meshFilter.mesh;
         }
-
+        
+        /// <summary>
+        /// The update cycle in which the raycast is cast and the tool is used
+        /// </summary>
         private void Update()
         {
             _delay++;
