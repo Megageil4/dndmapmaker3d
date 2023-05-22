@@ -2,12 +2,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataContainer
+public static class DataContainer
 {
     public static string ServerIP { get; set; }
     public static IDnDConnection Conn { get; private set; }
     public static Dictionary<Guid, GameObject> GameObjects;
-    public static Guid ClientId;
+    private static Guid _clientID;
+
+    public static Guid ClientId
+    {
+        get => _clientID;
+        set { _clientID = value; Debug.Log(_clientID); }
+    }
 
     static DataContainer()
     {
