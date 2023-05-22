@@ -15,7 +15,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json, "POST"));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
     }
 
     public void AddGameObject(GameObject gameObject)
@@ -24,19 +24,19 @@ public class WsConn : MonoBehaviour, IDnDConnection
         DataContainer.GameObjects.Add(jkGameObject.Guid, gameObject);
         var json = JsonConvert.SerializeObject(jkGameObject);
         Debug.Log(json);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json, "POST"));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/GameObject", json, "POST"));
     }
 
     public void ChangeGameObject(Guid guid)
     {
         JKGameObject jkGameObject = new JKGameObject(DataContainer.GameObjects[guid], guid);
         var json = JsonConvert.SerializeObject(jkGameObject);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json, "PUT"));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/GameObject", json, "PUT"));
     }
 
     public List<JKGameObject> GetGameObjects()
     {
-        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/GameObject");
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/GameObject");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
@@ -46,7 +46,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public bool MapExists()
     {
         var request =
-            (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map/Exists");
+            (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/Map/Exists");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
@@ -56,7 +56,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     public MapData FetchMap()
     {
-        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map");
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/Map");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
@@ -76,8 +76,8 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void TestConn(MapData mapData)
     {
         var json = JsonConvert.SerializeObject(mapData);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json, "POST"));
-        // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap"));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
+        // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:443/GameObject/GetMap"));
     }
 
     IEnumerator PostRequest(string url, string json, string method)
