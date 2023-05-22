@@ -51,7 +51,12 @@ static async Task Echo(HttpContext context,WebSocket webSocket)
     Guid guid = DnDController._connectionManager.AddWebSocket(webSocket);
     await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
     Console.WriteLine("Neuer Client " + guid);
-    while (webSocket.State == WebSocketState.Open) { }
+    while (webSocket.State == WebSocketState.Open) {
+        var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+        var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+        Console.WriteLine(message);
+
+    }
 }
 
 app.UseAuthorization();

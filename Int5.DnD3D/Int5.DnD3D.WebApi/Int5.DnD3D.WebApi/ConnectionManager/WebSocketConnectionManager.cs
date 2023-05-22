@@ -39,6 +39,7 @@ namespace FinalTest.ConnectionManager
                         {
 
                             var byteToSend = Encoding.UTF8.GetBytes(message);
+                            Console.WriteLine(message);
                             await socket.SendAsync(byteToSend, WebSocketMessageType.Text, true, cTs.Token);
                         }
                     }

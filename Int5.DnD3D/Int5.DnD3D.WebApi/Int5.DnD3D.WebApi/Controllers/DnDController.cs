@@ -45,7 +45,7 @@ namespace FinalTest.Controllers
         [Route("[action]")]
         public IEnumerable<GameObject> GetAll()
         {
-            Console.WriteLine(GameObjects.Count);
+            Console.WriteLine("GetAll " + GameObjects.Count);
             return GameObjects;
         }
 
@@ -67,11 +67,9 @@ namespace FinalTest.Controllers
             if (_connectionManager.Sockets.Keys.Contains(gameObject.ClientId))
             {
                 GameObjects.Add(gameObject);
-                Console.WriteLine(gameObject);
-                Console.WriteLine(GameObjects.Count);
                 // Informiert alle Connections darüber dass ein neues GameObject geposted wurde
                 _connectionManager.anAlle("ngo", gameObject.ClientId + "");
-                Console.WriteLine("Map Post");
+                Console.WriteLine("Post Change");
             }
             else
             {
@@ -95,7 +93,7 @@ namespace FinalTest.Controllers
                     Console.WriteLine(GameObjects.Count);
                 }
                 // Informiert alle Connections dass ein GameObject geändert wurde
-                Console.WriteLine("MapPut");
+                Console.WriteLine("Put GameObject");
                 _connectionManager.anAlle("ngo", gameObject.ClientId + "");
             }
             else
@@ -103,7 +101,7 @@ namespace FinalTest.Controllers
                 throw new Exception("Keine gültige Id");
             }
         }
-
+        
         // Postet eine Map welche die alte aMap überschreibt
         [HttpPost]
         [ActionName("Map")]
