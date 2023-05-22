@@ -18,5 +18,6 @@ namespace FinalTestClient.DnDWebSocketClient
         {
             NewGameObject?.Invoke(this, EventArgs.Empty);
         }
+
     }
 }
