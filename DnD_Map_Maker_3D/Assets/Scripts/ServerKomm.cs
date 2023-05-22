@@ -5,8 +5,16 @@ using DefaultNamespace;
 using Newtonsoft.Json;
 using UnityEngine;
 
+/// <summary>
+/// DEPRECATED and only for reference
+/// Class was used to communicate with the server
+/// </summary>
 public static class ServerKomm
 {
+    /// <summary>
+    /// Was used to send the map to the server
+    /// </summary>
+    /// <param name="meshSpawner">The mesh spawner containing the map</param>
     public static void TellServer(GameObject meshSpawner)
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/GameObject/MapChange");
