@@ -1,11 +1,5 @@
 # Definiton of Done
 
-- **Es compiliert.**
-- Der Code ist fertiggestellt und im Git eingespielt.
-- Es gab einen Peer Code Review
-- Vereinbarte Coding Guidelines und Standards sind eingehalten.
-- Kommentare zu jeder Klasse, public Methods, Propertys
-- Code und Kommentare auf Englisch
-- Jede neue Funktion wurde getestet 
-- Status, der Tasks/User Stories passend gesetzt
-- Alle Akzeptanzkriterien sind erfüllt.
+- Der Code ist im main branch eingespielt und ein tag wurde erstellt.
+- Es gab einen Peer Code Review und ist im Scrum protokolliert.
+- Kommentare zu jeder Klasse und komplexeren Methoden, Properties
