@@ -1,17 +1,15 @@
 ﻿using FinalTest.ConnectionManager;
 using FinalTest.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.WebSockets;
 
-namespace FinalTest.Controllers
+namespace Int5.DnD3D.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class DnDController : ControllerBase
     {
         // Handelt alle WebSocketConnections
-        public static WebSocketConnectionManager _connectionManager { get; } = new();
+        public static WebSocketConnectionManager ConnectionManager { get; } = new();
         // Vorest nur eine Map
         public static Map? Map { get; set; }
         // List an GameObjects 
@@ -64,11 +62,11 @@ namespace FinalTest.Controllers
         [Route("[action]")]
         public void PostChange([FromBody] GameObject gameObject)
         {
-            if (_connectionManager.Sockets.Keys.Contains(gameObject.ClientId))
+            if (ConnectionManager.Sockets.Keys.Contains(gameObject.ClientId))
             {
                 GameObjects.Add(gameObject);
                 // Informiert alle Connections darüber dass ein neues GameObject geposted wurde
-                _connectionManager.anAlle("ngo", gameObject.ClientId + "");
+                ConnectionManager.anAlle("ngo", gameObject.ClientId + "");
                 Console.WriteLine("Post Change");
             }
             else
@@ -81,7 +79,7 @@ namespace FinalTest.Controllers
         [Route("[action]")]
         public void PutGameObjekt([FromBody] GameObject gameObject)
         {
-            if (_connectionManager.Sockets.Keys.Contains(gameObject.ClientId))
+            if (ConnectionManager.Sockets.Keys.Contains(gameObject.ClientId))
             {
                 var old = GameObjects.Find(g => g.Guid == gameObject.Guid);
                 if (old != null)
@@ -94,7 +92,7 @@ namespace FinalTest.Controllers
                 }
                 // Informiert alle Connections dass ein GameObject geändert wurde
                 Console.WriteLine("Put GameObject");
-                _connectionManager.anAlle("ngo", gameObject.ClientId + "");
+                ConnectionManager.anAlle("ngo", gameObject.ClientId + "");
             }
             else
             {
@@ -108,12 +106,12 @@ namespace FinalTest.Controllers
         [Route("[action]")]
         public void MapChange([FromBody] Map map)
         {
-            if (_connectionManager.Sockets.Keys.Contains(map.ClientId))
+            if (ConnectionManager.Sockets.Keys.Contains(map.ClientId))
             {
                 Console.WriteLine("Map geändert");
                 Map = map;
                 // Informiert alle Connections dass neue Map Geposted wurde
-                _connectionManager.anAlle("nm", map.ClientId + "");
+                ConnectionManager.anAlle("nm", map.ClientId + "");
             }
             else
             {

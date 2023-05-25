@@ -1,6 +1,6 @@
-using FinalTest.Controllers;
 using System.Net.WebSockets;
 using System.Text;
+using Int5.DnD3D.WebApi.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +48,7 @@ static async Task Echo(HttpContext context,WebSocket webSocket)
 {
    
     var buffer = new byte[1024 * 4];
-    Guid guid = DnDController._connectionManager.AddWebSocket(webSocket);
+    Guid guid = DnDController.ConnectionManager.AddWebSocket(webSocket);
     await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
     Console.WriteLine("Neuer Client " + guid);
     while (webSocket.State == WebSocketState.Open) {
