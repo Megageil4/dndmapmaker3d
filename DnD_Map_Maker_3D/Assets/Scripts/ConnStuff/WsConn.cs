@@ -92,7 +92,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log($"Error while Sending: {www.error}");
+            Debug.Log($"Error while Sending: {www.error} , {url}");
         }
 
         if (www.result == UnityWebRequest.Result.Success)

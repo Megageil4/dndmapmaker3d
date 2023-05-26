@@ -75,7 +75,7 @@ public class MenuBarController : MonoBehaviour
             DataContainer.GameObjects[jkGameObject.Guid].transform.Rotate(new Vector3(jkGameObject.rot3[0], jkGameObject.rot3[1], jkGameObject.rot3[2]));
             DataContainer.GameObjects[jkGameObject.Guid].transform.localScale = new Vector3(jkGameObject.scale3[0], jkGameObject.scale3[1], jkGameObject.scale3[2]);
             Debug.Log(jkGameObject.Modeltype);
-            Debug.Log(jkGameObject.Guid);
+            Debug.Log("Object GUID :" +jkGameObject.Guid);
             Instantiate(ObjectController.ModelTypes[jkGameObject.Modeltype], DataContainer.GameObjects[jkGameObject.Guid].transform);
         }
     }

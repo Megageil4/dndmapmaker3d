@@ -7,22 +7,29 @@ using Debug = UnityEngine.Debug;
 public class FileListener : MonoBehaviour
 {
     // Start is called before the first frame update
-    private int iterator;
+    private int _iterator;
     public GameObject menuController;
     private Process _websocetConn;
+    private string _tmpPath = Path.GetTempPath() + "/DnD/";
     void Start()
     {
-        _websocetConn = Process.Start(@"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe");
-        _websocetConn?.CloseMainWindow();
+        _websocetConn = Process.Start(@"..\..\dndmapmaker3d\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe");
+        while (!File.Exists(Path.GetTempPath() + @$"/DnD/{_iterator}"))
+        { }
+        string content = File.ReadAllText(_tmpPath + _iterator);
+        DataContainer.ClientId = Guid.Parse(content.Substring(1, content.Length - 1));
+        File.Delete(_tmpPath + _iterator);
+        _tmpPath += DataContainer.ClientId + "/";
+        _iterator++;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (File.Exists(Path.GetTempPath() + @$"/{iterator}"))
+        if (File.Exists(_tmpPath + _iterator))
         {
-            var content = File.ReadAllText(Path.GetTempPath() + @$"/{iterator}"); 
-            switch (content)
+            Debug.Log("File found!");
+            switch (File.ReadAllText(_tmpPath + _iterator))
             {
                 case "nm":
                     menuController.GetComponent<MenuBarController>().MapFromMapData();
@@ -30,12 +37,9 @@ public class FileListener : MonoBehaviour
                 case "ngo": 
                     menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
                     break;
-                default:
-                    DataContainer.ClientId = Guid.Parse(content.Substring(1, content.Length - 1));
-                    break;
             }
-            File.Delete(Path.GetTempPath() + @$"/{iterator}");
-            iterator++;
+            File.Delete(_tmpPath + _iterator);
+            _iterator++;
         }
     }
 

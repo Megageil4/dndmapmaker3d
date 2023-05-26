@@ -4409,7 +4409,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611eb859d5adc1f4a8b2ef5c022ca3e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuController: {fileID: 1465804799}
 --- !u!4 &1082430863
 Transform:
   m_ObjectHideFlags: 0
@@ -4434,7 +4433,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1082430861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10075f89176c4c06b97bedde1e0f5a3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 64092ef11d7d1c7448263db9e81427e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   menuController: {fileID: 1465804799}
