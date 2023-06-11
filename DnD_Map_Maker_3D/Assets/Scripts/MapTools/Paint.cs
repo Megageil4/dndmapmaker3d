@@ -1,6 +1,6 @@
 ﻿using System;
 using DefaultNamespace;
-using HSVPicker;
+//using HSVPicker;
 using UnityEngine;
 
 namespace MapTools
@@ -38,13 +38,13 @@ namespace MapTools
             }
 
 
-            selected.transform.GetChild(0)
-                              .GetChild(0)
-                              .gameObject
-                              .GetComponent<MeshRenderer>()
-                              .material.color = _colorPicker
-                                                .GetComponent<ColorPicker>()
-                                                .CurrentColor;
+            // selected.transform.GetChild(0)
+            //                   .GetChild(0)
+            //                   .gameObject
+            //                   .GetComponent<MeshRenderer>()
+            //                   .material.color = _colorPicker
+            //                                     .GetComponent<ColorPicker>()
+            //                                     .CurrentColor;
 
             DataContainer.Conn.ChangeGameObject(DataContainer.Guids[selected]);
         }
