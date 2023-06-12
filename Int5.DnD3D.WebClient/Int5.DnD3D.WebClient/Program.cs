@@ -29,7 +29,7 @@ client.NewGuid += (sender, e) =>
 
 
 
-await client.Connect($"ws://{args[0]}:443/ws");
+await client.Connect($"ws://10.0.207.4:443/ws");
 
 
 
