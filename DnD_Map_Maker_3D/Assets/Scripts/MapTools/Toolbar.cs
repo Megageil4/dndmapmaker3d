@@ -34,7 +34,16 @@ namespace MapTools
         /// The color picker used in the paint tool
         /// </summary>
         [FormerlySerializedAs("ColorPicker")] public GameObject colorPicker;
-    
+
+        private readonly Color _colorPressed;
+        private Color _colorBase;
+
+        public Toolbar()
+        {
+            _colorPressed = new Color(83.0f/255.0f, 109.0f/255.0f, 254.0f/255.0f);
+            _colorBase = new Color(159.0f/255.0f, 168.0f/255.0f, 218.0f/255.0f);
+        }
+        
         /// <summary>
         /// Tool handler for the select tool
         /// </summary>
@@ -43,7 +52,7 @@ namespace MapTools
         {
             ClearButtons();
             MapTool = new Select(playerCamera);
-            buttons[0].GetComponent<Image>().color = Color.gray;
+            buttons[0].GetComponent<Image>().color = _colorPressed;
         }
 
         /// <summary>
@@ -53,7 +62,7 @@ namespace MapTools
         {
             ClearButtons();
             MapTool = new Extrude(planeSpawner);
-            buttons[1].GetComponent<Image>().color = Color.gray;
+            buttons[1].GetComponent<Image>().color = _colorPressed;
         }
 
         /// <summary>
@@ -63,7 +72,7 @@ namespace MapTools
         {
             ClearButtons();
             MapTool = new Intrude(planeSpawner);
-            buttons[2].GetComponent<Image>().color = Color.gray;
+            buttons[2].GetComponent<Image>().color = _colorPressed;
         }
 
         /// <summary>
@@ -73,7 +82,7 @@ namespace MapTools
         {
             ClearButtons();
             MapTool = new Place(controller);
-            buttons[3].GetComponent<Image>().color = Color.gray;
+            buttons[3].GetComponent<Image>().color = _colorPressed;
             modelContainer.SetActive(true);
         }
 
@@ -85,7 +94,7 @@ namespace MapTools
         {
             ClearButtons();
             MapTool = new Paint(playerCamera, colorPicker);
-            buttons[4].GetComponent<Image>().color = Color.gray;
+            buttons[4].GetComponent<Image>().color = _colorPressed;
             colorPicker.SetActive(true);
         }
         /// <summary>
@@ -103,7 +112,7 @@ namespace MapTools
             for (var index = 0; index < buttons.Count; index++)
             {
                 var button = buttons[index];
-                button.GetComponent<Image>().color = Color.white;
+                button.GetComponent<Image>().color = _colorBase;
             }
 
             if (modelContainer != null)

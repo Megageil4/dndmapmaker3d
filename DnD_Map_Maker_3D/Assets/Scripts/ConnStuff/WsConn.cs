@@ -115,6 +115,11 @@ public class WsConn : MonoBehaviour, IDnDConnection
         
     }
 
+    public List<string> GetUsers()
+    {
+        throw new NotImplementedException();
+    }
+
     public void TestConn(MapData mapData)
     {
         var json = JsonConvert.SerializeObject(mapData);

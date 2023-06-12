@@ -16,6 +16,9 @@ public class Login : MonoBehaviour
 
     [SerializeField]
     private PopupController popup;
+    
+    [SerializeField]
+    private TMP_InputField username;
 
     
     /// <summary>
