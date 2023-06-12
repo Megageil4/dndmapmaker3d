@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// connection to the server
+/// </summary>
 public class WsConn : MonoBehaviour, IDnDConnection
 {
    // private WebSocketClient _socketClient;
@@ -75,8 +78,20 @@ public class WsConn : MonoBehaviour, IDnDConnection
         Thread.Sleep(10);
         return v.Result == "true";
     }
+   /// <summary>
+   /// Fetches the map for the first time from the server
+   /// </summary>
+   /// <returns>mapdata</returns>
+   public MapData FetchMap()
+   {
+       var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/Map");
+       request.Method = "GET";
+       request.Proxy = null!;
+       using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+       return JsonConvert.DeserializeObject<MapData>(v.Result);
+   }
 
-    public MapData FetchMap()
+   
    /// <summary>
    /// gets a map from the server
    /// </summary>
@@ -106,7 +121,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
         StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
         // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:443/GameObject/GetMap"));
     }
-*/
+
     /// <summary>
     /// Sends A WebRequest to a Webserver
     /// </summary>
