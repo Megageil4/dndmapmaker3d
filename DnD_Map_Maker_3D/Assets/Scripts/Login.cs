@@ -26,7 +26,7 @@ public class Login : MonoBehaviour
     {
         try
         {
-            var webRequest = WebRequest.Create("http://" + serverIp.text + ":5180/DnD/TestConnection");
+            var webRequest = WebRequest.Create("http://" + serverIp.text + ":443/DnD/TestConnection");
             webRequest.Proxy = null;
             var responseString =  Connect(webRequest); //TODO: Change to use method from connection class
             if ("Connection erstellt" == responseString)
@@ -34,8 +34,11 @@ public class Login : MonoBehaviour
                 DataContainer.ServerIP = serverIp.text;
                 SceneManager.LoadScene("SampleScene");
             }
-            popup.ShowPopup("Server responded with invalid message. " +
-                               "Please check if the server is running the correct version.");
+            else
+            {
+                popup.ShowPopup("Server responded with invalid message. " +
+                                "Please check if the server is running the correct version.");
+            }
         }
         catch (Exception e)
         {
