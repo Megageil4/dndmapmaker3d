@@ -13,12 +13,20 @@ using UnityEngine.Networking;
 public class WsConn : MonoBehaviour, IDnDConnection
 {
    // private WebSocketClient _socketClient;
+   /// <summary>
+   /// Sends a map to the server
+   /// </summary>
+   /// <param name="map">MapData that will be sent to the server</param>
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
         StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json, "POST"));
     }
 
+   /// <summary>
+   /// Posts a gameobject to the server and DataContainer
+   /// </summary>
+   /// <param name="gameObject">Object that will be addet</param>
     public void AddGameObject(GameObject gameObject)
     {
         JKGameObject jkGameObject = new JKGameObject(gameObject);
@@ -29,6 +37,10 @@ public class WsConn : MonoBehaviour, IDnDConnection
         StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json, "POST"));
     }
 
+   /// <summary>
+   /// Puts a gameobject to the server
+   /// </summary>
+   /// <param name="guid">id of the gameobject that changed</param>
     public void ChangeGameObject(Guid guid)
     {
         JKGameObject jkGameObject = new JKGameObject(DataContainer.GameObjects[guid], guid);
@@ -36,6 +48,10 @@ public class WsConn : MonoBehaviour, IDnDConnection
         StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json, "PUT"));
     }
 
+   /// <summary>
+   /// Getts all gameobjects from the server
+   /// </summary>
+   /// <returns>a List of GameObjects</returns>
     public List<JKGameObject> GetGameObjects()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/GameObject");
@@ -45,6 +61,10 @@ public class WsConn : MonoBehaviour, IDnDConnection
         return JsonConvert.DeserializeObject<List<JKGameObject>>(v.Result);
     }
 
+   /// <summary>
+   /// Checks if a map exists on the server
+   /// </summary>
+   /// <returns>true whene a map already exists on the server, else false</returns>
     public bool MapExists()
     {
         var request =
@@ -56,6 +76,10 @@ public class WsConn : MonoBehaviour, IDnDConnection
         return v.Result == "true";
     }
 
+   /// <summary>
+   /// gets a map from the server
+   /// </summary>
+   /// <returns>map from the server</returns>
     public MapData OnConnectMap()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map");
@@ -73,6 +97,11 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void Dispose()
     {
         throw new NotImplementedException();
+    }
+/*
+    private IEnumerable<Coroutine> Getter(string url)
+    {
+        yield return StartCoroutine(GetRequest(url));
     }
 
     // private IEnumerable<Coroutine> Getter(string url)
@@ -100,7 +129,14 @@ public class WsConn : MonoBehaviour, IDnDConnection
         StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json, "POST"));
         // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap"));
     }
-
+*/
+    /// <summary>
+    /// Sends A WebRequest to a Webserver
+    /// </summary>
+    /// <param name="url">URL of the Webserver</param>
+    /// <param name="json">JSON string that will be sent to the server</param>
+    /// <param name="method">Request Type (POST/PUT)</param>
+    /// <returns></returns>
     IEnumerator PostRequest(string url, string json, string method)
     {
         Debug.Log($"Sending data to {url}");
