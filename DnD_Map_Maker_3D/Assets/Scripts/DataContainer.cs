@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
+
 /// <summary>
 /// Class that contains all the data that needs to be accessed from multiple scripts
 /// </summary>
@@ -17,6 +20,7 @@ public class DataContainer
     public static Dictionary<Guid, GameObject> GameObjects;
     public static Dictionary<GameObject, Guid> Guids;
     private static Guid _clientID;
+    public static Process WebserviceConnection { get; set; }
 
     public static Guid ClientId
     {

@@ -57,5 +57,14 @@ namespace DefaultNamespace
             
             throw new Exception("No object found");
         }
+        
+        public static void Exit()
+        {
+            if (DataContainer.WebserviceConnection != null)
+            {
+                DataContainer.WebserviceConnection.Close();   
+            }
+            Application.Quit();
+        }
     }
 }
