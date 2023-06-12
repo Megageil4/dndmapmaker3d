@@ -11,10 +11,11 @@ using UnityEngine.Serialization;
 /// </summary>
 public class Login : MonoBehaviour
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    [FormerlySerializedAs("inF")] [FormerlySerializedAs("InF")] public TMP_InputField serverIp;
+    [SerializeField]
+    private TMP_InputField serverIp;
+
+    [SerializeField]
+    private PopupController popup;
 
     
     /// <summary>
@@ -27,33 +28,25 @@ public class Login : MonoBehaviour
         {
             var webRequest = WebRequest.Create("http://" + serverIp.text + ":5180/DnD/TestConnection");
             webRequest.Proxy = null;
-            // Task<string> d = ;
-            var responseString =  Connect(webRequest);
+            var responseString =  Connect(webRequest); //TODO: Change to use method from connection class
             if ("Connection erstellt" == responseString)
             {
-                serverIp.image.color = Color.green;
                 DataContainer.ServerIP = serverIp.text;
                 SceneManager.LoadScene("SampleScene");
             }
-            else
-            {
-                serverIp.image.color = Color.red;
-            }
+            popup.ShowPopup("Server responded with invalid message. " +
+                               "Please check if the server is running the correct version.");
         }
         catch (Exception e)
         {
             Debug.Log(e.Message);
-            serverIp.image.color = Color.red;
+            popup.ShowPopup("Server not found. Please check if the server is running and the ip is correct.");
         }
     }
-    public string Connect(WebRequest webRequest)
+    private string Connect(WebRequest webRequest)
     {
-        using (var response = webRequest.GetResponse())
-        {
-            using (StreamReader streamReader = new StreamReader(response.GetResponseStream()!))
-            {
-                return streamReader.ReadLine();   
-            }
-        }
+        using var response = webRequest.GetResponse();
+        using StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
+        return streamReader.ReadLine();
     }
 }
