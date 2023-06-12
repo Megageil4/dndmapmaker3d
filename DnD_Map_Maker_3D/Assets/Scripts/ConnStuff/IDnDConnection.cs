@@ -16,4 +16,5 @@ public interface IDnDConnection
     bool MapExists();
     MapData FetchMap();
     string Connect();
+    List<string> GetUsers();
 }
