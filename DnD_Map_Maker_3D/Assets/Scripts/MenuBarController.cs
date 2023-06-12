@@ -129,9 +129,8 @@ public class MenuBarController : MonoBehaviour
             
             Debug.Log(jkGameObject.Modeltype);
             Debug.Log("Object GUID :" +jkGameObject.Guid);
-            Instantiate(ObjectController.ModelTypes[jkGameObject.Modeltype], DataContainer.GameObjects[jkGameObject.Guid].transform);
 
-            
+
             DataContainer.GameObjects[jkGameObject.Guid].transform.GetChild(0).GetChild(0)
                 .GetComponent<MeshRenderer>().material.color = new Color(r/255f,g/255f,b/255f);
         }
