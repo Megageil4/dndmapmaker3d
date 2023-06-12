@@ -7,6 +7,7 @@ WebSocketClient client = new();
 int count = 0;
 Guid clientID;
 string tempPath = Path.GetTempPath() + @"DnD\";
+Directory.CreateDirectory(tempPath);
 client.NewMap += (sender, e) =>
 {
     CreateFile("nm");
@@ -28,7 +29,7 @@ client.NewGuid += (sender, e) =>
 
 
 
-await client.Connect("ws://10.0.207.7:443/ws");
+await client.Connect("ws://10.0.207.3:443/ws");
 
 
 

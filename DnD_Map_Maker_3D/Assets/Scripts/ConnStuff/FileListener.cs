@@ -11,9 +11,9 @@ public class FileListener : MonoBehaviour
     public GameObject menuController;
     private Process _websocetConn;
     private string _tmpPath = Path.GetTempPath() + "/DnD/";
-    void Start()
+    void Awake()
     {
-        _websocetConn = Process.Start(@"..\..\dndmapmaker3d\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe");
+        _websocetConn = Process.Start(@"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe");
         while (!File.Exists(Path.GetTempPath() + @$"/DnD/{_iterator}"))
         { }
         string content = File.ReadAllText(_tmpPath + _iterator);
