@@ -7,3 +7,6 @@ Wenn Unity Hub Login nicht funktioniert:
 ./UnityHub.AppImage unityhub://<the-url-you-have-copied>
 
 Source: https://issuetracker.unity3d.com/issues/hub-linux-sign-in-page-redirects-to-blank-browser-page-when-signing-in-the-unity-hub
+
+
+Nach clonen in Unity über git das package https://github.com/judah4/HSV-Color-Picker-Unity hinzufügen
