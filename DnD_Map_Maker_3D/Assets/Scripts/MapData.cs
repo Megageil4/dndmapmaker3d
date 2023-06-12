@@ -32,5 +32,6 @@ namespace DefaultNamespace
         /// The client of the current session 
         /// </summary>
         public Guid ClientID;
+        public Guid ClientId = DataContainer.ClientId;
     }
 }
