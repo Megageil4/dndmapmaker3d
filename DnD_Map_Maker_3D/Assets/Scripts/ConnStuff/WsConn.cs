@@ -110,9 +110,13 @@ public class WsConn : MonoBehaviour, IDnDConnection
     //     yield return StartCoroutine(GetRequest(url));
     // }
 
-    public void Connect()
+    public string Connect(string serverIp)
     {
-        
+        var webRequest = WebRequest.Create("http://" + serverIp + ":443/DnD/TestConnection");
+        webRequest.Proxy = null;
+        using var response = webRequest.GetResponse();
+        using StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
+        return streamReader.ReadLine();
     }
 
     public void TestConn(MapData mapData)

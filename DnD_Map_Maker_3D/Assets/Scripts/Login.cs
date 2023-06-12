@@ -26,9 +26,7 @@ public class Login : MonoBehaviour
     {
         try
         {
-            var webRequest = WebRequest.Create("http://" + serverIp.text + ":443/DnD/TestConnection");
-            webRequest.Proxy = null;
-            var responseString =  Connect(webRequest); //TODO: Change to use method from connection class
+            
             if ("Connection erstellt" == responseString)
             {
                 DataContainer.ServerIP = serverIp.text;
@@ -45,11 +43,5 @@ public class Login : MonoBehaviour
             Debug.Log(e.Message);
             popup.ShowPopup("Server not found. Please check if the server is running and the ip is correct.");
         }
-    }
-    private string Connect(WebRequest webRequest)
-    {
-        using var response = webRequest.GetResponse();
-        using StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
-        return streamReader.ReadLine();
     }
 }
