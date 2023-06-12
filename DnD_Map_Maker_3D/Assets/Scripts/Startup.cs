@@ -23,14 +23,14 @@ public class Startup : MonoBehaviour
         // Debug.Log(DataContainer.Conn.MapExists());
         if (DataContainer.Conn.MapExists())
         {
-            var map = DataContainer.Conn.OnConnectMap();
-            Debug.Log(map);
-            menuController.GetComponent<MenuBarController>().MapFromMapData(map);
+            menuController.GetComponent<MenuBarController>().MapFromMapData();
             menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
         }
         else
         {
             menuController.GetComponent<MenuBarController>().MakeGridSizePopUpVisible();
         }
+
+        Debug.Log("start " + DataContainer.ClientId);
     }
 }

@@ -20,7 +20,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public void SendMap(MapData map)
     {
         var json = JsonConvert.SerializeObject(map);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json, "POST"));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
     }
 
    /// <summary>
@@ -33,8 +33,8 @@ public class WsConn : MonoBehaviour, IDnDConnection
         DataContainer.GameObjects.Add(jkGameObject.Guid, gameObject);
         DataContainer.Guids.Add(gameObject,jkGameObject.Guid);
         var json = JsonConvert.SerializeObject(jkGameObject);
-        Debug.Log(json);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json, "POST"));
+            Debug.Log(json);
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/GameObject", json, "POST"));
     }
 
    /// <summary>
@@ -45,7 +45,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     {
         JKGameObject jkGameObject = new JKGameObject(DataContainer.GameObjects[guid], guid);
         var json = JsonConvert.SerializeObject(jkGameObject);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/GameObject", json, "PUT"));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/GameObject", json, "PUT"));
     }
 
    /// <summary>
@@ -54,7 +54,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
    /// <returns>a List of GameObjects</returns>
     public List<JKGameObject> GetGameObjects()
     {
-        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/GameObject");
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/GameObject");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
@@ -68,7 +68,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     public bool MapExists()
     {
         var request =
-            (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map/Exists");
+            (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/Map/Exists");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
@@ -76,32 +76,18 @@ public class WsConn : MonoBehaviour, IDnDConnection
         return v.Result == "true";
     }
 
+    public MapData FetchMap()
    /// <summary>
    /// gets a map from the server
    /// </summary>
    /// <returns>map from the server</returns>
     public MapData OnConnectMap()
     {
-        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:5180/DnD/Map");
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/Map");
         request.Method = "GET";
         request.Proxy = null!;
         using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
         return JsonConvert.DeserializeObject<MapData>(v.Result);
-    }
-
-    public void Connect()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Dispose()
-    {
-        throw new NotImplementedException();
-    }
-/*
-    private IEnumerable<Coroutine> Getter(string url)
-    {
-        yield return StartCoroutine(GetRequest(url));
     }
 
     // private IEnumerable<Coroutine> Getter(string url)
@@ -109,25 +95,16 @@ public class WsConn : MonoBehaviour, IDnDConnection
     //     yield return StartCoroutine(GetRequest(url));
     // }
 
-/*    public void Connect()
+    public void Connect()
     {
-        _socketClient = new();
-        _socketClient.NewMap += (_,_) => OnConnectMap();
-        _socketClient.NewGameObject += (_, _) => GetGameObjects();
-        _socketClient.NewGuid += (_, y) => DataContainer.ClientId = y.Id;
-        _socketClient?.Connect($"ws://{DataContainer.ServerIP}:5020/ws");
+        
     }
 
-    public void Dispose()
-    {
-        _socketClient?.Disconnect();
-    } */
-    
     public void TestConn(MapData mapData)
     {
         var json = JsonConvert.SerializeObject(mapData);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:5180/DnD/Map", json, "POST"));
-        // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:5180/GameObject/GetMap"));
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
+        // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:443/GameObject/GetMap"));
     }
 */
     /// <summary>
@@ -139,7 +116,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
     /// <returns></returns>
     IEnumerator PostRequest(string url, string json, string method)
     {
-        Debug.Log($"Sending data to {url}");
+        // Debug.Log($"Sending data to {url}");
         using UnityWebRequest www = new UnityWebRequest(url, method);
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
         www.uploadHandler = new UploadHandlerRaw(jsonToSend);
@@ -149,7 +126,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log($"Error while Sending: {www.error}");
+            Debug.Log($"Error while Sending: {www.error} , {url}");
         }
 
         if (www.result == UnityWebRequest.Result.Success)

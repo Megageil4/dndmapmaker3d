@@ -14,12 +14,15 @@ public class DataContainer
     /// The connection object that is used to communicate with the server
     /// </summary>
     public static IDnDConnection Conn { get; private set; }
-    /// <summary>
-    /// 
-    /// </summary>
     public static Dictionary<Guid, GameObject> GameObjects;
     public static Dictionary<GameObject, Guid> Guids;
-    public static Guid ClientId;
+    private static Guid _clientID;
+
+    public static Guid ClientId
+    {
+        get => _clientID;
+        set { _clientID = value; Debug.Log(_clientID); }
+    }
 
     static DataContainer()
     {

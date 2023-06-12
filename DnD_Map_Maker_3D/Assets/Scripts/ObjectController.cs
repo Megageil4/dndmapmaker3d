@@ -60,7 +60,7 @@ public class ObjectController : MonoBehaviour
     /// <summary>
     /// Used to fill the dictionary with the models set in the inspector
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         ModelTypes = new();
         foreach (var model in models)
