@@ -1,4 +1,5 @@
 using FinalTest.Controllers;
+using Microsoft.Data.Sqlite;
 using System.Net.WebSockets;
 using System.Text;
 
@@ -18,6 +19,25 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+if (!File.Exists(@"user.db"))
+{
+    using (var connection = new SqliteConnection(@"Data Source=user.db"))
+    {
+        connection.Open();
+        var command = connection.CreateCommand();
+        command = connection.CreateCommand();
+        command.CommandText = @"
+        CREATE TABLE User (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL
+        );
+        INSERT INTO User
+        VALUES (0, 'default');
+        ";
+        command.ExecuteNonQuery();
+        Console.WriteLine("Datenbank neu erstellt");
+    }
 }
 var wsOptions = new WebSocketOptions { KeepAliveInterval = TimeSpan.FromMinutes(2) };
 app.UseWebSockets(wsOptions);
