@@ -24,6 +24,7 @@ public class DataContainer
     public static Dictionary<Guid, GameObject> GameObjects;
     public static Dictionary<GameObject, Guid> Guids;
     private static Guid _clientID;
+    public static Process WebserviceConnection { get; set; }
 
     public static Guid ClientId
     {
