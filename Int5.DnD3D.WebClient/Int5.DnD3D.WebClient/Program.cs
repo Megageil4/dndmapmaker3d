@@ -8,16 +8,16 @@ int count = 0;
 Guid clientID;
 string tempPath = Path.GetTempPath() + @"DnD\";
 Directory.CreateDirectory(tempPath);
-client.NewMap += (sender, e) =>
+client.NewMap += (_, _) =>
 {
     CreateFile("nm");
     
 };
-client.NewGameObject += (sender, e) =>
+client.NewGameObject += (_, _) =>
 {
     CreateFile("ngo");
 };
-client.NewGuid += (sender, e) =>
+client.NewGuid += (_, e) =>
 {
   string cont = e.Id + "";
   clientID = e.Id;
@@ -26,10 +26,14 @@ client.NewGuid += (sender, e) =>
   Directory.CreateDirectory(tempPath);
 	Console.WriteLine(tempPath);
 };
+client.NewPlayer += (_, _) =>
+{
+  CreateFile("np");
+};
 
 
 
-await client.Connect($"ws://{args[0]}:443/ws");
+await client.Connect($"ws://{args[0]}:443/ws?username={args[1]}");
 
 
 

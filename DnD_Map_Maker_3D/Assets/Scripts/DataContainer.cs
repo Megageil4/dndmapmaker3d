@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
+
 /// <summary>
 /// Class that contains all the data that needs to be accessed from multiple scripts
 /// </summary>
 public class DataContainer
 {
+    /// <summary>
+    /// the process of the websocket connection
+    /// </summary>
+    public static Process WebsocetConn;
     /// <summary>
     /// The server ip that is used to connect to the server
     /// </summary>

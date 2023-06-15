@@ -91,7 +91,12 @@ public class WsConn : MonoBehaviour, IDnDConnection
        return JsonConvert.DeserializeObject<MapData>(v.Result);
    }
 
-   
+   public void Connect()
+   {
+       
+   }
+
+
    /// <summary>
    /// gets a map from the server
    /// </summary>
@@ -121,7 +126,11 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     public List<string> GetUsers()
     {
-        throw new NotImplementedException();
+        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/User"); 
+        request.Method = "GET";
+        request.Proxy = null!;
+        using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+        return JsonConvert.DeserializeObject<List<string>>(v.Result);
     }
 
     public void TestConn(MapData mapData)

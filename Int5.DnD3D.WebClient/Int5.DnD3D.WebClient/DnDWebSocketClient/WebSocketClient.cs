@@ -1,9 +1,6 @@
 ﻿using Int5.DnD3D.WebClient.DnDWebSocketClient;
-using System;
 using System.Net.WebSockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FinalTestClient.DnDWebSocketClient;
 public class WebSocketClient
@@ -43,7 +40,8 @@ public class WebSocketClient
                         case "ngo":
                             OnNewGameObject();
                             break;
-                        default:
+                        case "np":
+                            OnNewPlayer();
                             break;
                     }
                     Console.WriteLine($"Received message: {message}");
@@ -73,6 +71,7 @@ public class WebSocketClient
     public event EventHandler<EventArgs> NewMap;
     public event EventHandler<EventArgs> NewGameObject;
     public event EventHandler<GuidEventArgs> NewGuid;
+    public event EventHandler<EventArgs> NewPlayer;
 
     protected virtual void OnNewGuid()
     {
@@ -86,5 +85,9 @@ public class WebSocketClient
     {
         NewGameObject?.Invoke(this, EventArgs.Empty);
     }
+    protected virtual void OnNewPlayer()
+	  {
+      NewPlayer?.Invoke(this, EventArgs.Empty);
+	  }
     #endregion
 }

@@ -1,6 +1,5 @@
-using System;
-using System.Diagnostics;
 using System.IO;
+using DefaultNamespace;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 /// <summary>
@@ -8,37 +7,22 @@ using Debug = UnityEngine.Debug;
 /// </summary>
 public class FileListener : MonoBehaviour
 {
-    private int _iterator;
+    private int _iterator = 1;
     
     /// <summary>
     /// controller used to get map and gameobject data to the server
     /// </summary>
-    public GameObject menuController;
+    [SerializeField]
+    private GameObject menuController;
     
-    /// <summary>
-    /// the process of the websocket connection
-    /// </summary>
-    private Process _websocetConn;
-    
+    [SerializeField]
+    private GameObject connController;
+
     /// <summary>
     /// the current path of the temp folder
     /// </summary>
-    private string _tmpPath = Path.GetTempPath() + "/DnD/";
+    private readonly string _tmpPath = Path.GetTempPath() + "/DnD/" + DataContainer.ClientId + "/";
     
-    /// <summary>
-    /// connects to the server, gets the client id and creates a folder for the client
-    /// </summary>
-    void Awake()
-    {
-        _websocetConn = Process.Start(@"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe");
-        while (!File.Exists(Path.GetTempPath() + @$"/DnD/{_iterator}"))
-        { }
-        string content = File.ReadAllText(_tmpPath + _iterator);
-        DataContainer.ClientId = Guid.Parse(content.Substring(1, content.Length - 1));
-        File.Delete(_tmpPath + _iterator);
-        _tmpPath += DataContainer.ClientId + "/";
-        _iterator++;
-    }
 
     // Update is called once per frame
     /// <summary>
@@ -57,6 +41,9 @@ public class FileListener : MonoBehaviour
                 case "ngo": 
                     menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
                     break;
+                case "np":
+                    menuController.GetComponent<CurrentUserController>().UpdateUsers(connController.GetComponent<WsConn>().GetUsers());
+                    break;
             }
             File.Delete(_tmpPath + _iterator);
             _iterator++;
@@ -68,6 +55,6 @@ public class FileListener : MonoBehaviour
     /// </summary>
     private void OnApplicationQuit()
     {
-        _websocetConn.Close();
+        DataContainer.WebsocetConn.Close();
     }
 }

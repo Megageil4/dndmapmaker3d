@@ -15,6 +15,6 @@ public interface IDnDConnection
     public List<JKGameObject> GetGameObjects();
     bool MapExists();
     MapData FetchMap();
-    string Connect();
+    void Connect();
     List<string> GetUsers();
 }
