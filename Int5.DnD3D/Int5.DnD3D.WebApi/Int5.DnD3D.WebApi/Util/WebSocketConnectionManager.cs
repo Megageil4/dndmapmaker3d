@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using Int5.DnD3D.WebApi.Model;
+using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -8,16 +9,16 @@ namespace FinalTest.ConnectionManager
     public class WebSocketConnectionManager
     {
         // Speichert alle Connections mit zugehöriger Guid
-        public ConcurrentDictionary<Guid, WebSocket> Sockets { get; }
+        public ConcurrentDictionary<Guid, User> Connections { get; }
         public WebSocketConnectionManager()
         {
-            Sockets = new ConcurrentDictionary<Guid, WebSocket>();
+            Connections = new ConcurrentDictionary<Guid, User>();
         }
         // Added einen WebSocket zum Connectionmanager und returned die erstellte Guid für die Connection
-        public Guid AddWebSocket(WebSocket webSocket)
+        public Guid AddUser(User user)
         {
             Guid guid = Guid.NewGuid();
-            Sockets[guid] = webSocket;
+            Connections[guid] = user;
             return guid;
         }
         // Sendet eine Nachricht an Alle Offenen Connections außer der der 
@@ -25,11 +26,11 @@ namespace FinalTest.ConnectionManager
         public async void anAlle(string text, string clientGuid)
         {
 
-            foreach (var guid in Sockets.Keys)
+            foreach (var guid in Connections.Keys)
             {
                 if (guid != Guid.Parse(clientGuid))
                 {
-                    var socket = Sockets[guid];
+                    var socket = Connections[guid].WebSocket;
                     var cTs = new CancellationTokenSource();
                     cTs.CancelAfter(TimeSpan.FromHours(2));
                     if (socket.State == WebSocketState.Open)

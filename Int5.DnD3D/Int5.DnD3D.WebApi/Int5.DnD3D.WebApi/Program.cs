@@ -43,7 +43,7 @@ var wsOptions = new WebSocketOptions { KeepAliveInterval = TimeSpan.FromMinutes(
 app.UseWebSockets(wsOptions);
 // Handelt einkommende Http anfragen welche dem Pfad "/ws" folgen
 // und den RequestType WebSocketRequest haben
-app.Use(async (context, next) =>
+/*app.Use(async (context, next) =>
 {
     if (context.Request.Path == "/ws")
     {
@@ -78,7 +78,7 @@ static async Task Echo(HttpContext context,WebSocket webSocket)
 
     }
 }
-
+*/
 app.UseAuthorization();
 
 app.MapControllers();

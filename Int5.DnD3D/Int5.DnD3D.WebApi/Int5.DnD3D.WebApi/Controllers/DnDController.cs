@@ -24,22 +24,26 @@ namespace FinalTest.Controllers
             _logger = logger;
         }
         [Route("/ws")]
-        public async Task Get([FromBody] string username)
+        public async Task Get([FromQuery(Name="username")] string username)
         {
             if (HttpContext.WebSockets.IsWebSocketRequest)
             {
-                using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-                await Echo(webSocket);
+                if (_databaseManager.UserExists(username))
+                {
+                    using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
+                    await Echo(webSocket, username);
+                }
+                
             }
             else
             {
                 HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             }
         }
-        static async Task Echo(WebSocket webSocket)
+        static async Task Echo(WebSocket webSocket,string username)
         {
             var buffer = new byte[1024 * 4];
-            Guid guid = DnDController._connectionManager.AddWebSocket(webSocket);
+            Guid guid = DnDController._connectionManager.AddUser(webSocket,username);
             await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
             Console.WriteLine("Neuer Client " + guid);
             while (webSocket.State == WebSocketState.Open)
@@ -84,7 +88,7 @@ namespace FinalTest.Controllers
         [Route("[action]")]
         public void PostChange([FromBody] GameObject gameObject)
         {
-            if (_connectionManager.Sockets.Keys.Contains(gameObject.ClientId))
+            if (_connectionManager.Connections.Keys.Contains(gameObject.ClientId))
             {
                 GameObjects.Add(gameObject);
                 // Informiert alle Connections darüber dass ein neues GameObject geposted wurde
@@ -101,7 +105,7 @@ namespace FinalTest.Controllers
         [Route("[action]")]
         public void PutGameObjekt([FromBody] GameObject gameObject)
         {
-            if (_connectionManager.Sockets.Keys.Contains(gameObject.ClientId))
+            if (_connectionManager.Connections.Keys.Contains(gameObject.ClientId))
             {
                 var old = GameObjects.Find(g => g.Guid == gameObject.Guid);
                 if (old != null)
@@ -126,7 +130,7 @@ namespace FinalTest.Controllers
         [Route("[action]")]
         public void MapChange([FromBody] Map map)
         {
-            if (_connectionManager.Sockets.Keys.Contains(map.ClientId))
+            if (_connectionManager.Connections.Keys.Contains(map.ClientId))
             {
                 Console.WriteLine("Map geändert");
                 Map = map;
@@ -139,13 +143,19 @@ namespace FinalTest.Controllers
             }
         }
         [HttpGet]
-        [ActionName("Users")]
+        [ActionName("User")]
         [Route("[action]")]
-        public List<string> Users()
+        public List<string> User()
         {
             var users
             = new List<string>();
+            users.Add("default");
+            users.Add("dawilly");
+            users.Add("neibl");
             return users;
         }
+
+        
+
     }
 }
