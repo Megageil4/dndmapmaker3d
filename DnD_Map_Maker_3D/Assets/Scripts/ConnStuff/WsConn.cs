@@ -97,24 +97,27 @@ public class WsConn : MonoBehaviour, IDnDConnection
    }
 
 
-   /// <summary>
-   /// gets a map from the server
-   /// </summary>
-   /// <returns>map from the server</returns>
-    public MapData OnConnectMap()
-    {
-        var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/Map");
-        request.Method = "GET";
-        request.Proxy = null!;
-        using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
-        return JsonConvert.DeserializeObject<MapData>(v.Result);
-    }
+   
+    // debricated
+    // public MapData OnConnectMap()
+    // {
+    //     var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/Map");
+    //     request.Method = "GET";
+    //     request.Proxy = null!;
+    //     using var v = new StreamReader(request.GetResponse().GetResponseStream()!).ReadToEndAsync();
+    //     return JsonConvert.DeserializeObject<MapData>(v.Result);
+    // }
 
     // private IEnumerable<Coroutine> Getter(string url)
     // {
     //     yield return StartCoroutine(GetRequest(url));
     // }
 
+    /// <summary>
+    /// Tests the connection to the server and checks the ip
+    /// </summary>
+    /// <param name="serverIp">IP of the server</param>
+    /// <returns></returns>
     public string Connect(string serverIp)
     {
         var webRequest = WebRequest.Create("http://" + serverIp + ":443/DnD/TestConnection");
@@ -124,6 +127,10 @@ public class WsConn : MonoBehaviour, IDnDConnection
         return streamReader.ReadLine();
     }
 
+    /// <summary>
+    /// Gets all users currently on the map
+    /// </summary>
+    /// <returns>list of strings containing the names of the users</returns>
     public List<string> GetUsers()
     {
         var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/User"); 
@@ -133,12 +140,13 @@ public class WsConn : MonoBehaviour, IDnDConnection
         return JsonConvert.DeserializeObject<List<string>>(v.Result);
     }
 
-    public void TestConn(MapData mapData)
-    {
-        var json = JsonConvert.SerializeObject(mapData);
-        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
-        // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:443/GameObject/GetMap"));
-    }
+    //debricated
+    // public void TestConn(MapData mapData)
+    // {
+    //     var json = JsonConvert.SerializeObject(mapData);
+    //     StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
+    //     // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:443/GameObject/GetMap"));
+    // }
 
     /// <summary>
     /// Sends A WebRequest to a Webserver
