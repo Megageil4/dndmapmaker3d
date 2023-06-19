@@ -1,16 +1,21 @@
-﻿using Int5.DnD3D.WebClient.DnDWebSocketClient;
-using System;
-using System.Net.WebSockets;
+﻿using System.Net.WebSockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace FinalTestClient.DnDWebSocketClient;
+namespace Int5.DnD3D.WebClient.DnDWebSocketClient;
+/// <summary>
+/// Base class for the WebSocketClient to handle the connection and messages
+/// </summary>
 public class WebSocketClient
 {
     private ClientWebSocket webSocket;
+    /// <summary>
+    /// The Guid of the client
+    /// </summary>
     public Guid Id { get; private set; }
-    // Establisched die Connection und Recieved die Guid
+    /// <summary>
+    /// Establisched die Connection und Recieved die Guid
+    /// </summary>
+    /// <param name="url">the url of the server</param>
     public async Task Connect(string url)
     {
         webSocket = new ClientWebSocket();
@@ -23,7 +28,9 @@ public class WebSocketClient
         OnNewGuid();
         await Task.WhenAll(Receive());
     }
-    // Läuft durchgehend im Hintergrund und handelt einkommende Nachrichten
+    /// <summary>
+    /// runs in the background, recieves messages and handles them
+    /// </summary>
     private async Task Receive()
     {
         byte[] buffer = new byte[1024 * 4];
@@ -43,7 +50,8 @@ public class WebSocketClient
                         case "ngo":
                             OnNewGameObject();
                             break;
-                        default:
+                        case "np":
+                            OnNewPlayer();
                             break;
                     }
                     Console.WriteLine($"Received message: {message}");
@@ -59,7 +67,9 @@ public class WebSocketClient
     }
     
   
-    // Schließt die Connection
+    /// <summary>
+    /// closes the connection
+    /// </summary>
     public async Task Disconnect()
     {
         if (webSocket.State == WebSocketState.Open)
@@ -68,23 +78,28 @@ public class WebSocketClient
             Console.WriteLine("Disconnected from WebSocket server");
         }
     }
-    // Events und Hilfsmethoden
+    
     #region Event
     public event EventHandler<EventArgs> NewMap;
     public event EventHandler<EventArgs> NewGameObject;
     public event EventHandler<GuidEventArgs> NewGuid;
+    public event EventHandler<EventArgs> NewPlayer;
 
     protected virtual void OnNewGuid()
     {
-        NewGuid?.Invoke(this, new GuidEventArgs(Id));
+        NewGuid.Invoke(this, new GuidEventArgs(Id));
     }
     protected virtual void OnNewMap()
     {
-        NewMap?.Invoke(this, EventArgs.Empty);
+        NewMap.Invoke(this, EventArgs.Empty);
     }
     protected virtual void OnNewGameObject()
     {
-        NewGameObject?.Invoke(this, EventArgs.Empty);
+        NewGameObject.Invoke(this, EventArgs.Empty);
     }
+    protected virtual void OnNewPlayer()
+	  {
+      NewPlayer.Invoke(this, EventArgs.Empty);
+	  }
     #endregion
 }

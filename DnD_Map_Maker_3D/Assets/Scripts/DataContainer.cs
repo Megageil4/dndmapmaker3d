@@ -10,6 +10,10 @@ using Debug = UnityEngine.Debug;
 public class DataContainer
 {
     /// <summary>
+    /// the process of the websocket connection
+    /// </summary>
+    public static Process WebserviceConnection { get; set; }
+    /// <summary>
     /// The server ip that is used to connect to the server
     /// </summary>
     public static string ServerIP { get; set; }
@@ -20,7 +24,7 @@ public class DataContainer
     public static Dictionary<Guid, GameObject> GameObjects;
     public static Dictionary<GameObject, Guid> Guids;
     private static Guid _clientID;
-    public static Process WebserviceConnection { get; set; }
+    
 
     public static Guid ClientId
     {

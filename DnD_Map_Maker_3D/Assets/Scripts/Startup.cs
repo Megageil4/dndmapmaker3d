@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -21,6 +22,7 @@ public class Startup : MonoBehaviour
     {
         DataContainer.CreateConn(connection.GetComponent<WsConn>());
         // Debug.Log(DataContainer.Conn.MapExists());
+        menuController.GetComponent<CurrentUserController>().UpdateUsers(DataContainer.Conn.GetUsers());
         if (DataContainer.Conn.MapExists())
         {
             menuController.GetComponent<MenuBarController>().MapFromMapData();

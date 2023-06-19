@@ -1,7 +1,5 @@
-using System;
-using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
+using DefaultNamespace;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 /// <summary>
@@ -14,38 +12,18 @@ public class FileListener : MonoBehaviour
     /// <summary>
     /// controller used to get map and gameobject data to the server
     /// </summary>
-    public GameObject menuController;
+    [SerializeField]
+    private GameObject menuController;
     
-    /// <summary>
-    /// the process of the websocket connection
-    /// </summary>
-    private Process _websocetConn;
-    
+    [SerializeField]
+    private GameObject connController;
+
     /// <summary>
     /// the current path of the temp folder
     /// </summary>
-    private string _tmpPath = Path.Combine(Path.GetTempPath(),"DnD");
+    private string _tmpPath = Path.Combine(Path.GetTempPath(),"DnD", DataContainer.ClientId.ToString());
     
-    /// <summary>
-    /// connects to the server, gets the client id and creates a folder for the client
-    /// </summary>
-    void Awake()
-    {
-#if DEBUG
-        _websocetConn = Process.Start(@"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe",DataContainer.ServerIP);
-#else
-        _websocetConn = Process.Start(@".\WebClient\Int5.DnD3D.WebClient.exe",DataContainer.ServerIP);
-#endif
-
-        while (!File.Exists(Path.Combine(_tmpPath, $"{_iterator}")))
-        { }
-        string content = File.ReadAllText(Path.Combine(_tmpPath, $"{_iterator}"));
-        DataContainer.ClientId = Guid.Parse(content.Substring(1, content.Length - 1));
-        File.Delete(Path.Combine(_tmpPath, $"{_iterator}"));
-        _tmpPath = Path.Combine(_tmpPath, DataContainer.ClientId.ToString());
-        _iterator++;
-    }
-
+    
     // Update is called once per frame
     /// <summary>
     /// checks if a file exists and if it does, it reads the content and does something with it
@@ -63,17 +41,12 @@ public class FileListener : MonoBehaviour
                 case "ngo": 
                     menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
                     break;
+                case "np":
+                    menuController.GetComponent<CurrentUserController>().UpdateUsers(connController.GetComponent<WsConn>().GetUsers());
+                    break;
             }
             File.Delete(Path.Combine(_tmpPath, $"{_iterator}"));
             _iterator++;
         }
-    }
-
-    /// <summary>
-    /// closes the websocket connection when the application is closed
-    /// </summary>
-    private void OnApplicationQuit()
-    {
-        _websocetConn.Close();
     }
 }
