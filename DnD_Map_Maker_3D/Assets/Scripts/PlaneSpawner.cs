@@ -47,7 +47,7 @@ public class PlaneSpawner : MonoBehaviour
     /// <summary>
     /// Used to reload an already existing map after the vertices and triangles have been changed
     /// </summary>
-    public void ReloadMesh()
+    public void ReloadMesh(bool sendMap = true)
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
@@ -57,8 +57,10 @@ public class PlaneSpawner : MonoBehaviour
         _mesh.uv = _uvs;
         _mesh.RecalculateNormals();
         GetComponent<MeshCollider>().sharedMesh = _mesh;
-        
-        DataContainer.Conn.SendMap(Util.MeshToMapData(_mesh, sizeX, sizeY));
+        if (sendMap)
+        {
+            DataContainer.Conn.SendMap(Util.MeshToMapData(_mesh, sizeX, sizeY));   
+        }
     }
 
     /// <summary>
@@ -135,12 +137,13 @@ public class PlaneSpawner : MonoBehaviour
             }
         }
     }
-    
+
     /// <summary>
     /// Makes a new map from a provided map data
     /// </summary>
     /// <param name="map">The map data the map should be made of</param>
-    public void SetNewMap(MapData map)
+    /// <param name="sendMap">If the map data should be uploaded to server</param>
+    public void SetNewMap(MapData map, bool sendMap = true)
     {
         sizeX = map.sizeX;
         sizeY = map.sizeY;
@@ -153,6 +156,6 @@ public class PlaneSpawner : MonoBehaviour
             i++;
         }
         _triangles = map.triangles;
-        ReloadMesh();
+        ReloadMesh(sendMap);
     }
 }

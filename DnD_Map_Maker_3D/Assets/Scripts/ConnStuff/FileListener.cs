@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 /// <summary>
@@ -23,20 +24,25 @@ public class FileListener : MonoBehaviour
     /// <summary>
     /// the current path of the temp folder
     /// </summary>
-    private string _tmpPath = Path.GetTempPath() + "/DnD/";
+    private string _tmpPath = Path.Combine(Path.GetTempPath(),"DnD");
     
     /// <summary>
     /// connects to the server, gets the client id and creates a folder for the client
     /// </summary>
     void Awake()
     {
-        _websocetConn = Process.Start(@"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe");
-        while (!File.Exists(Path.GetTempPath() + @$"/DnD/{_iterator}"))
+#if DEBUG
+        _websocetConn = Process.Start(@"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe",DataContainer.ServerIP);
+#else
+        _websocetConn = Process.Start(@".\WebClient\Int5.DnD3D.WebClient.exe",DataContainer.ServerIP);
+#endif
+
+        while (!File.Exists(Path.Combine(_tmpPath, $"{_iterator}")))
         { }
-        string content = File.ReadAllText(_tmpPath + _iterator);
+        string content = File.ReadAllText(Path.Combine(_tmpPath, $"{_iterator}"));
         DataContainer.ClientId = Guid.Parse(content.Substring(1, content.Length - 1));
-        File.Delete(_tmpPath + _iterator);
-        _tmpPath += DataContainer.ClientId + "/";
+        File.Delete(Path.Combine(_tmpPath, $"{_iterator}"));
+        _tmpPath = Path.Combine(_tmpPath, DataContainer.ClientId.ToString());
         _iterator++;
     }
 
@@ -46,10 +52,10 @@ public class FileListener : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (File.Exists(_tmpPath + _iterator))
+        if (File.Exists(Path.Combine(_tmpPath, $"{_iterator}")))
         {
             Debug.Log("File found!");
-            switch (File.ReadAllText(_tmpPath + _iterator))
+            switch (File.ReadAllText(Path.Combine(_tmpPath, $"{_iterator}")).Substring(1))
             {
                 case "nm":
                     menuController.GetComponent<MenuBarController>().MapFromMapData();
@@ -58,7 +64,7 @@ public class FileListener : MonoBehaviour
                     menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
                     break;
             }
-            File.Delete(_tmpPath + _iterator);
+            File.Delete(Path.Combine(_tmpPath, $"{_iterator}"));
             _iterator++;
         }
     }

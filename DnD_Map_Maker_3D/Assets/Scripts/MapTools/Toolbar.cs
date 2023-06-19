@@ -41,7 +41,7 @@ namespace MapTools
         public Toolbar()
         {
             _colorPressed = new Color(83.0f/255.0f, 109.0f/255.0f, 254.0f/255.0f);
-            _colorBase = new Color(159.0f/255.0f, 168.0f/255.0f, 218.0f/255.0f);
+            _colorBase = new Color(255f/255.0f, 255f/255.0f, 255f/255.0f);
         }
         
         /// <summary>

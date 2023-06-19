@@ -120,6 +120,11 @@ public class WsConn : MonoBehaviour, IDnDConnection
         throw new NotImplementedException();
     }
 
+    public void Logout()
+    {
+        throw new NotImplementedException();
+    }
+
     public void TestConn(MapData mapData)
     {
         var json = JsonConvert.SerializeObject(mapData);

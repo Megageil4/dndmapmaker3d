@@ -17,4 +17,5 @@ public interface IDnDConnection
     MapData FetchMap();
     void Connect();
     List<string> GetUsers();
+    void Logout();
 }

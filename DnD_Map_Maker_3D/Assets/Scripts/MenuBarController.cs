@@ -68,7 +68,7 @@ public class MenuBarController : MonoBehaviour
     /// </summary>
     public void MapFromMapData()
     {
-        meshSpawner.GetComponent<PlaneSpawner>().SetNewMap(DataContainer.Conn.FetchMap());
+        meshSpawner.GetComponent<PlaneSpawner>().SetNewMap(DataContainer.Conn.FetchMap(),false);
     }
     
     /// <summary>
