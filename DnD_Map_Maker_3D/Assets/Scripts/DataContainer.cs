@@ -12,7 +12,7 @@ public class DataContainer
     /// <summary>
     /// the process of the websocket connection
     /// </summary>
-    public static Process WebsocetConn;
+    public static Process WebserviceConnection { get; set; }
     /// <summary>
     /// The server ip that is used to connect to the server
     /// </summary>
@@ -24,7 +24,7 @@ public class DataContainer
     public static Dictionary<Guid, GameObject> GameObjects;
     public static Dictionary<GameObject, Guid> Guids;
     private static Guid _clientID;
-    public static Process WebserviceConnection { get; set; }
+    
 
     public static Guid ClientId
     {

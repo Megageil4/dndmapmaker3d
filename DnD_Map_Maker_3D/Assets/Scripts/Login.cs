@@ -5,7 +5,6 @@ using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
 
 /// <summary>
@@ -35,7 +34,8 @@ public class Login : MonoBehaviour
             if ("Connection erstellt" == responseString)
             {
                 DataContainer.ServerIP = serverIp.text;
-                DataContainer.WebsocetConn = Process.Start(@"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe", DataContainer.ServerIP + " " + username.text);
+                DataContainer.WebserviceConnection = Process.Start(@"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe", DataContainer.ServerIP + " " + username.text);
+                DataContainer.WebserviceConnection!.StartInfo.CreateNoWindow = true;
                 while (!File.Exists(Path.GetTempPath() + @$"/DnD/0"))
                 { }
                 string content = File.ReadAllText(Path.GetTempPath() + "/DnD/" + 0);

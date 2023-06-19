@@ -1,11 +1,9 @@
-﻿using FinalTestClient.DnDWebSocketClient;
-
-
+﻿using Int5.DnD3D.WebClient.DnDWebSocketClient;
 
 Console.WriteLine("I am a WebSocketClient");
+Console.WriteLine(args[0] + " : " + args[1]);
 WebSocketClient client = new();
 int count = 0;
-Guid clientID;
 string tempPath = Path.GetTempPath() + @"DnD\";
 Directory.CreateDirectory(tempPath);
 client.NewMap += (_, _) =>
@@ -20,7 +18,6 @@ client.NewGameObject += (_, _) =>
 client.NewGuid += (_, e) =>
 {
   string cont = e.Id + "";
-  clientID = e.Id;
   CreateFile(cont);
   tempPath += cont + "/";
   Directory.CreateDirectory(tempPath);
@@ -46,11 +43,7 @@ while (true)
 void CreateFile(string cont)
 {
     count++;
-    using (FileStream fsDatei = File.Open(tempPath + (count - 1), FileMode.Create, FileAccess.Write, FileShare.None))
-    {
-        using (BinaryWriter writer = new BinaryWriter(fsDatei))
-        {
-            writer.Write(cont);
-        }
-    }
+    using FileStream fsDatei = File.Open(tempPath + (count - 1), FileMode.Create, FileAccess.Write, FileShare.None);
+    using BinaryWriter writer = new BinaryWriter(fsDatei);
+    writer.Write(cont);
 }

@@ -1,8 +1,7 @@
-﻿using Int5.DnD3D.WebClient.DnDWebSocketClient;
-using System.Net.WebSockets;
+﻿using System.Net.WebSockets;
 using System.Text;
 
-namespace FinalTestClient.DnDWebSocketClient;
+namespace Int5.DnD3D.WebClient.DnDWebSocketClient;
 /// <summary>
 /// Base class for the WebSocketClient to handle the connection and messages
 /// </summary>
@@ -88,19 +87,19 @@ public class WebSocketClient
 
     protected virtual void OnNewGuid()
     {
-        NewGuid?.Invoke(this, new GuidEventArgs(Id));
+        NewGuid.Invoke(this, new GuidEventArgs(Id));
     }
     protected virtual void OnNewMap()
     {
-        NewMap?.Invoke(this, EventArgs.Empty);
+        NewMap.Invoke(this, EventArgs.Empty);
     }
     protected virtual void OnNewGameObject()
     {
-        NewGameObject?.Invoke(this, EventArgs.Empty);
+        NewGameObject.Invoke(this, EventArgs.Empty);
     }
     protected virtual void OnNewPlayer()
 	  {
-      NewPlayer?.Invoke(this, EventArgs.Empty);
+      NewPlayer.Invoke(this, EventArgs.Empty);
 	  }
     #endregion
 }

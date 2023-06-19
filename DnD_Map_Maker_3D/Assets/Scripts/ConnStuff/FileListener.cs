@@ -49,12 +49,4 @@ public class FileListener : MonoBehaviour
             _iterator++;
         }
     }
-
-    /// <summary>
-    /// closes the websocket connection when the application is closed
-    /// </summary>
-    private void OnApplicationQuit()
-    {
-        DataContainer.WebsocetConn.Close();
-    }
 }
