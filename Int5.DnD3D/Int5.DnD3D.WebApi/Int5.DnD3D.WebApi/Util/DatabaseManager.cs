@@ -9,6 +9,7 @@ namespace Int5.DnD3D.WebApi.Util
         {
             using (var connection = new SqliteConnection(DataSource))
             {
+                connection.Open();
                 var command = connection.CreateCommand();
                 command.CommandText =
                     @"
@@ -24,6 +25,7 @@ namespace Int5.DnD3D.WebApi.Util
             List<string> usernames = new();
             using (var connection = new SqliteConnection(DataSource))
             {
+                connection.Open();
                 var command = connection.CreateCommand();
                 command.CommandText =
                         @"
@@ -48,13 +50,21 @@ namespace Int5.DnD3D.WebApi.Util
 
             using (var connection = new SqliteConnection(DataSource))
             {
+                connection.Open();
                 var command = connection.CreateCommand();
                 command.CommandText =
                     @"
                     SELECT * FROM User WHERE username =  $username;
 ";
                 command.Parameters.AddWithValue("$username", username);
-                return command.ExecuteNonQuery() == 1;
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var result = reader.GetString(1);
+                        return result == username;
+                    }
+                }
             }
             return false;
         }

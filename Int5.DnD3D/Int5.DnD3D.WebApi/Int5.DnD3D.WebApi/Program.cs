@@ -46,14 +46,22 @@ app.UseWebSockets(wsOptions);
 //und den RequestType WebSocketRequest haben
 app.Use(async (context, next) =>
 {
-    if (Regex.IsMatch(context.Request.Path,"[^/ws]"))
+    //if (Regex.IsMatch(context.Request.Path,"[^/ws]"))
+    if(context.Request.Path.StartsWithSegments("/ws"))
     {
         if (context.WebSockets.IsWebSocketRequest)
         {
             var parameterParts = (context.Request.Path + "").Split("/");
-            var paramter = parameterParts[1];
-            using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-            await Echo(webSocket,paramter);
+            var parameter = parameterParts[2];
+            if (DnDController._databaseManager.UserExists(parameter))
+            {
+                using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
+                await Echo(webSocket, parameter);
+            }
+            else
+            {
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            }
         }
         else
         {
