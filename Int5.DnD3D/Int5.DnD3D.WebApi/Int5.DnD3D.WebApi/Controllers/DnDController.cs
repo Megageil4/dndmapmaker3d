@@ -23,8 +23,8 @@ namespace FinalTest.Controllers
         {
             _logger = logger;
         }
-        [Route("/ws")]
-        public async Task Get([FromQuery(Name="username")] string username)
+        /*[Route("/ws")]
+        public async Task Get([FromQuery ] string username)
         {
             if (HttpContext.WebSockets.IsWebSocketRequest)
             {
@@ -33,7 +33,10 @@ namespace FinalTest.Controllers
                     using var webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
                     await Echo(webSocket, username);
                 }
-                
+                else
+                {
+                    throw new Exception("bad username");
+                }
             }
             else
             {
@@ -43,7 +46,7 @@ namespace FinalTest.Controllers
         static async Task Echo(WebSocket webSocket,string username)
         {
             var buffer = new byte[1024 * 4];
-            Guid guid = DnDController._connectionManager.AddUser(webSocket,username);
+            Guid guid = _connectionManager.AddUser(new Int5.DnD3D.WebApi.Model.User(username,webSocket));
             await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
             Console.WriteLine("Neuer Client " + guid);
             while (webSocket.State == WebSocketState.Open)
@@ -52,7 +55,7 @@ namespace FinalTest.Controllers
                 var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
                 Console.WriteLine(message);
             }
-        }
+        }*/
         [HttpGet]
         [Route("[action]")]
         public string TestConnection()
@@ -92,7 +95,7 @@ namespace FinalTest.Controllers
             {
                 GameObjects.Add(gameObject);
                 // Informiert alle Connections darüber dass ein neues GameObject geposted wurde
-                _connectionManager.anAlle("ngo", gameObject.ClientId + "");
+                _connectionManager.AnAlle("ngo", gameObject.ClientId + "");
                 Console.WriteLine("Post Change");
             }
             else
@@ -117,7 +120,7 @@ namespace FinalTest.Controllers
                 }
                 // Informiert alle Connections dass ein GameObject geändert wurde
                 Console.WriteLine("Put GameObject");
-                _connectionManager.anAlle("ngo", gameObject.ClientId + "");
+                _connectionManager.AnAlle("ngo", gameObject.ClientId + "");
             }
             else
             {
@@ -135,7 +138,7 @@ namespace FinalTest.Controllers
                 Console.WriteLine("Map geändert");
                 Map = map;
                 // Informiert alle Connections dass neue Map Geposted wurde
-                _connectionManager.anAlle("nm", map.ClientId + "");
+                _connectionManager.AnAlle("nm", map.ClientId + "");
             }
             else
             {
@@ -145,17 +148,32 @@ namespace FinalTest.Controllers
         [HttpGet]
         [ActionName("User")]
         [Route("[action]")]
-        public List<string> User()
+        public List<string> UserGet()
         {
             var users
             = new List<string>();
-            users.Add("default");
-            users.Add("dawilly");
-            users.Add("neibl");
+            foreach (var sessionKey in _connectionManager.Connections.Keys)
+            {
+                if (_connectionManager.Connections[sessionKey].WebSocket.State == WebSocketState.Open)
+                {
+                    users.Add(_connectionManager.Connections[sessionKey].Username);
+                }
+                else
+                {
+                    _connectionManager.KillConnection(sessionKey);
+                }
+            }
             return users;
         }
 
-        
+        [HttpPost]
+        [ActionName("User")]
+        [Route("[action]")]
+        public string RegisterUser([FromBody] string username)
+        {
+            _databaseManager.AddUser(username);
+            return "User added";
+        }
 
     }
 }

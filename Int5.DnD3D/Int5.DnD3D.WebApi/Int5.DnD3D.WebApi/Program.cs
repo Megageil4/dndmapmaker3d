@@ -2,6 +2,7 @@ using FinalTest.Controllers;
 using Microsoft.Data.Sqlite;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,16 +42,18 @@ if (!File.Exists(@"user.db"))
 }
 var wsOptions = new WebSocketOptions { KeepAliveInterval = TimeSpan.FromMinutes(2) };
 app.UseWebSockets(wsOptions);
-// Handelt einkommende Http anfragen welche dem Pfad "/ws" folgen
-// und den RequestType WebSocketRequest haben
-/*app.Use(async (context, next) =>
+//Handelt einkommende Http anfragen welche dem Pfad "/ws" folgen
+//und den RequestType WebSocketRequest haben
+app.Use(async (context, next) =>
 {
-    if (context.Request.Path == "/ws")
+    if (Regex.IsMatch(context.Request.Path,"[^/ws]"))
     {
         if (context.WebSockets.IsWebSocketRequest)
         {
+            var parameterParts = (context.Request.Path + "").Split("/");
+            var paramter = parameterParts[1];
             using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-            await Echo(context, webSocket);
+            await Echo(webSocket,paramter);
         }
         else
         {
@@ -64,7 +67,21 @@ app.UseWebSockets(wsOptions);
     }
 });
 
-static async Task Echo(HttpContext context,WebSocket webSocket)
+static async Task Echo(WebSocket webSocket,string username)
+{
+    var buffer = new byte[1024 * 4];
+    Guid guid = DnDController._connectionManager.AddUser(new Int5.DnD3D.WebApi.Model.User(username, webSocket));
+    await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
+    Console.WriteLine("Neuer Client " + guid);
+    while (webSocket.State == WebSocketState.Open)
+    {
+        var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+        var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+        Console.WriteLine(message);
+    }
+}
+
+/*static async Task Echo(HttpContext context,WebSocket webSocket)
 {
    
     var buffer = new byte[1024 * 4];
@@ -77,8 +94,8 @@ static async Task Echo(HttpContext context,WebSocket webSocket)
         Console.WriteLine(message);
 
     }
-}
-*/
+}*/
+
 app.UseAuthorization();
 
 app.MapControllers();

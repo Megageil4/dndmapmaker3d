@@ -14,16 +14,25 @@ namespace FinalTest.ConnectionManager
         {
             Connections = new ConcurrentDictionary<Guid, User>();
         }
+        
+        public void KillConnection(Guid guid)
+        {
+            Connections.Remove(guid, out _);
+        }
+        
         // Added einen WebSocket zum Connectionmanager und returned die erstellte Guid für die Connection
+        
+        
         public Guid AddUser(User user)
         {
             Guid guid = Guid.NewGuid();
             Connections[guid] = user;
             return guid;
         }
+        
         // Sendet eine Nachricht an Alle Offenen Connections außer der der 
         // der übergebenen Guid gleich ist
-        public async void anAlle(string text, string clientGuid)
+        public async Task AnAlle(string text, string clientGuid)
         {
 
             foreach (var guid in Connections.Keys)
@@ -43,6 +52,10 @@ namespace FinalTest.ConnectionManager
                             Console.WriteLine(message);
                             await socket.SendAsync(byteToSend, WebSocketMessageType.Text, true, cTs.Token);
                         }
+                    }
+                    else
+                    {
+                        KillConnection(guid);
                     }
                 }
             }

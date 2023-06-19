@@ -12,5 +12,9 @@ namespace Int5.DnD3D.WebApi.Model
             Username = username;
             WebSocket = webSocket;
         }
+
+        public User()
+        {
+        }
     }
 }
