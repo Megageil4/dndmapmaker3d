@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -783,6 +783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 233501707}
   - component: {fileID: 233501706}
+  - component: {fileID: 233501708}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -867,6 +868,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &233501708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233501705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &234258163
 GameObject:
   m_ObjectHideFlags: 0
@@ -4002,7 +4023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverIp: {fileID: 1030442512}
-  popup: {fileID: 1168077731}
+  errorPopup: {fileID: 1168077731}
   username: {fileID: 23340483}
 --- !u!114 &1105651954
 MonoBehaviour:
@@ -6136,7 +6157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverIp: {fileID: 1980070431}
-  popup: {fileID: 0}
+  errorPopup: {fileID: 0}
   username: {fileID: 0}
 --- !u!114 &1980070435
 MonoBehaviour:
@@ -6151,7 +6172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serverIp: {fileID: 1980070431}
-  popup: {fileID: 0}
+  errorPopup: {fileID: 0}
   username: {fileID: 0}
 --- !u!1 &2008883750
 GameObject:
