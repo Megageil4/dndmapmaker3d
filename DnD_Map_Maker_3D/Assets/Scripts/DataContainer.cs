@@ -9,6 +9,7 @@ using Debug = UnityEngine.Debug;
 /// </summary>
 public class DataContainer
 {
+    public static bool UserNameValid { get; set; }
     /// <summary>
     /// the process of the websocket connection
     /// </summary>
@@ -37,6 +38,8 @@ public class DataContainer
         GameObjects = new();
         Guids = new();
         ServerIP = "10.0.207.3";
+        WebserviceConnection = new Process();
+        WebserviceConnection!.Exited += (_, _) => { UserNameValid = false; };
     }
     
     public static void CreateConn(IDnDConnection con)
