@@ -1,4 +1,6 @@
-﻿namespace FinalTest.Model
+﻿using System.Drawing;
+
+namespace FinalTest.Model
 {
     public class GameObject
     {
@@ -7,16 +9,18 @@
         public float[] Rot3 { get; set; }
         public float[] Scale3 { get; set; }
         public string Modeltype { get; set; }
+        public string Color { get; set; }
         public Guid Guid { get; set; }
         public DateTime LastChanged { get; set; }
         public Guid ClientId { get; set; }
 
-        public GameObject(float[] pos3, float[] rot3, float[] scale3, string modeltype, Guid guid, DateTime lastChanged, Guid clientId)
+        public GameObject(float[] pos3, float[] rot3, float[] scale3, string modeltype, string color,Guid guid, DateTime lastChanged, Guid clientId)
         {
             Pos3 = pos3;
             Rot3 = rot3;
             Scale3 = scale3;
             Modeltype = modeltype;
+            Color = color;
             this.Guid = guid;
             this.LastChanged = DateTime.Now;
             ClientId = clientId;

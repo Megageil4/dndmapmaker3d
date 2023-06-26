@@ -1,10 +1,15 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace DefaultNamespace
+namespace MapTools
 {
+    /// <summary>
+    /// Tool to intrude squares the map
+    /// </summary>
     public class Intrude : IMapTool
     {
+        /// <summary>
+        /// The mesh spawner to change values in the mesh
+        /// </summary>
         public PlaneSpawner Spawner { get; set; }
 
         public Intrude(PlaneSpawner spawner)
