@@ -20,15 +20,21 @@ public class PauseMenuController : MonoBehaviour
         pauseMenu.SetActive(false);
     }
 
-    public void Settings()
+    public void Settings(GameObject settingsMenu)
     {
-        throw new NotImplementedException();
+        settingsMenu.SetActive(!settingsMenu.activeSelf);
+        Resume();
     }
     
+    public void CloseSettings(GameObject settingsMenu)
+    {
+        settingsMenu.SetActive(false);
+    }
+
     public void Logout() 
     {
         DataContainer.Conn.Logout();
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Login");
     }
     
     public void Quit()

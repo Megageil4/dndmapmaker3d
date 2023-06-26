@@ -66,7 +66,7 @@ public class Login : MonoBehaviour
                         {
                             StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
                                 JsonConvert.SerializeObject(username.text), "POST"));
-                            DataContainer.WebserviceConnection.Close();
+                            DataContainer.WebserviceConnection.Kill();
                             Debug.Log("cmd geschlossen");
                             DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
 #if DEBUG
