@@ -15,9 +15,6 @@ public class FileListener : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject menuController;
-    
-    [SerializeField]
-    private GameObject connController;
 
     /// <summary>
     /// the current path of the temp folder
@@ -43,7 +40,7 @@ public class FileListener : MonoBehaviour
                     menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
                     break;
                 case "np":
-                    menuController.GetComponent<CurrentUserController>().UpdateUsers(connController.GetComponent<WsConn>().GetUsers());
+                    menuController.GetComponent<CurrentUserController>().UpdateUsers(DataContainer.Conn.GetUsers());
                     break;
             }
             File.Delete(Path.Combine(_tmpPath, $"{_iterator}"));
