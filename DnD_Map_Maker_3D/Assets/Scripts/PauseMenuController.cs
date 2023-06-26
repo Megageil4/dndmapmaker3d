@@ -36,4 +36,19 @@ public class PauseMenuController : MonoBehaviour
         DataContainer.Conn.Logout();
         Util.Exit();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (pauseMenu.activeSelf)
+            {
+                Resume();   
+            }
+            else
+            {
+                ShowPauseMenu();
+            }
+        }
+    }
 }
