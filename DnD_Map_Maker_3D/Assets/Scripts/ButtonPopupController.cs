@@ -27,7 +27,7 @@ public class ButtonPopupController : PopupController
     {
         popupText.text = text;
         buttonText.text = "OK";
-        button.onClick.AddListener(delegate { ClosePopup(); });
+        button.onClick.AddListener(ClosePopup);
         popup.SetActive(true);
     }
 
@@ -36,6 +36,7 @@ public class ButtonPopupController : PopupController
         popupText.text = textOnButton;
         buttonText.text = textOnButton;
         button.onClick.AddListener(delegate { buttonAction(); });
+        button.onClick.AddListener(ClosePopup);
         popup.SetActive(true);
     }
 
