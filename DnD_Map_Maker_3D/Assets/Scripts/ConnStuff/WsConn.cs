@@ -148,11 +148,6 @@ public class WsConn : MonoBehaviour, IDnDConnection
         
     }
 
-    public List<string> GetUsers()
-    {
-        throw new NotImplementedException();
-    }
-
     public void Logout()
     {
         throw new NotImplementedException();

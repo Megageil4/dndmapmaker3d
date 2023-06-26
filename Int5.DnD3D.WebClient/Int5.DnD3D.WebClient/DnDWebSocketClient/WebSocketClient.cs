@@ -18,15 +18,24 @@ public class WebSocketClient
     /// <param name="url">the url of the server</param>
     public async Task Connect(string url)
     {
-        webSocket = new ClientWebSocket();
-    
-        await webSocket.ConnectAsync(new Uri(url), CancellationToken.None);
-        byte[] buffer = new byte[1024];
-        var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-        var guid = Encoding.UTF8.GetString(buffer, 0, result.Count);
-        Id = Guid.Parse(guid);
-        OnNewGuid();
-        await Task.WhenAll(Receive());
+        try
+        {
+            webSocket = new ClientWebSocket();
+
+            await webSocket.ConnectAsync(new Uri(url), CancellationToken.None);
+            byte[] buffer = new byte[1024];
+            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+            var guid = Encoding.UTF8.GetString(buffer, 0, result.Count);
+            Id = Guid.Parse(guid);
+            OnNewGuid();
+            await Task.WhenAll(Receive());
+        }
+        catch (Exception _)
+        {
+            using FileStream fsDatei = File.Open(Path.Combine(Path.GetTempPath(), @"DnD\0"), FileMode.Create, FileAccess.Write, FileShare.None);
+            using BinaryWriter writer = new BinaryWriter(fsDatei);
+            writer.Write("nu");
+        }
     }
     /// <summary>
     /// runs in the background, recieves messages and handles them

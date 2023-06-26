@@ -36,6 +36,7 @@ public class DataContainer
     static DataContainer()
     {
         GameObjects = new();
+        UserNameValid = true;
         Guids = new();
         ServerIP = "10.0.207.3";
         WebserviceConnection = new Process();

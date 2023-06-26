@@ -1,12 +1,13 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Threading;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
+using System.Collections;
 
 /// <summary>
 /// Class for the login screen
@@ -42,14 +43,27 @@ public class Login : MonoBehaviour
                 DataContainer.WebserviceConnection.Start();
                 
                 while (!File.Exists(Path.GetTempPath() + @$"/DnD/0") && DataContainer.UserNameValid)
-                {
-                }
+                {}
 
                 Debug.Log(DataContainer.UserNameValid);
                 if (DataContainer.UserNameValid)
                 {
-                    string content = File.ReadAllText(Path.GetTempPath() + "/DnD/" + 0);
-                    DataContainer.ClientId = Guid.Parse(content.Substring(1, content.Length - 1));
+                    string content = File.ReadAllText(Path.GetTempPath() + "/DnD/0" );
+                    content = content.Substring(1, content.Length - 1);
+                    if (content == "nu")
+                    {
+                        // popup.ShowPopup("User does not exist. Do you wannt to create it?");
+                        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User", JsonConvert.SerializeObject(username.text), "POST"));
+                    }
+
+                    while (content == "nu")
+                    {
+                        content = File.ReadAllText(Path.GetTempPath() + "/DnD/" + 0);
+                        content = content.Substring(1, content.Length - 1);
+                    } 
+                    
+                    DataContainer.ClientId = Guid.Parse(content);
+                    
                     File.Delete(Path.GetTempPath() + "/DnD/0");
                     SceneManager.LoadScene("SampleScene");
                 }
@@ -72,5 +86,35 @@ public class Login : MonoBehaviour
         using var response = webRequest.GetResponse();
         using StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
         return streamReader.ReadLine();
+    }
+    
+    /// <summary>
+    /// Sends A WebRequest to a Webserver
+    /// </summary>
+    /// <param name="url">URL of the Webserver</param>
+    /// <param name="json">JSON string that will be sent to the server</param>
+    /// <param name="method">Request Type (POST/PUT)</param>
+    /// <returns></returns>
+    IEnumerator PostRequest(string url, string json, string method)
+    {
+        // Debug.Log($"Sending data to {url}");
+        using UnityWebRequest www = new UnityWebRequest(url, method);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        www.uploadHandler = new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        yield return www.SendWebRequest();
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"Error while Sending: {www.error} , {url}");
+        }
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Upload complete!");
+            
+        }
+        
     }
 }
