@@ -1,32 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
-/// <summary>
-/// Class to controll a specific popup window to display errors or other messages
-/// </summary>
-public class PopupController : MonoBehaviour
+public abstract class PopupController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject popup;
-    [SerializeField]
-    private TMP_Text popupText;
-    
     /// <summary>
     /// Shows the popup with the specified text
     /// </summary>
     /// <param name="text">The text the popup should contain</param>
-    public void ShowPopup(string text)
-    {
-        popupText.text = text;
-        popup.SetActive(true);
-    }
-    
-    public void ClosePopup()
-    {
-        popupText.text = "";
-        popup.SetActive(false);
-    }
+    public abstract void ShowPopup(string text);
+
+    public abstract void ClosePopup();
 }
