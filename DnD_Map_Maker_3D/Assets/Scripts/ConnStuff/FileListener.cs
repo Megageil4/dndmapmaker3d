@@ -8,7 +8,7 @@ using Debug = UnityEngine.Debug;
 /// </summary>
 public class FileListener : MonoBehaviour
 {
-    private int _iterator;
+    private int _iterator = 1;
     
     /// <summary>
     /// controller used to get map and gameobject data to the server

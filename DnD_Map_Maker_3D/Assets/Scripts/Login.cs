@@ -69,9 +69,15 @@ public class Login : MonoBehaviour
                             DataContainer.WebserviceConnection.Close();
                             Debug.Log("cmd geschlossen");
                             DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
+#if DEBUG
                             DataContainer.WebserviceConnection.StartInfo.FileName =
                                 @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
+#else
+                DataContainer.WebserviceConnection.StartInfo.FileName =
+                    @".\WebClient\Int5.DnD3D.WebClient.exe";
+#endif
                             DataContainer.WebserviceConnection.Start();
+                            //Change path on build
                             
                             while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0"))) 
                             {}
