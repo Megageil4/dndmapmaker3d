@@ -12,7 +12,7 @@ namespace Int5.DnD3D.EFCFUVIDND.DbSetup
     {
         public UserDbContext CreateDbContext(string[] args)
         {
-            string connString = "User.db";
+            string connString = "Data Source=user.db";
             var optionsBuilder = new DbContextOptionsBuilder<UserDbContext>();
             optionsBuilder.UseSqlite(connString);
 
