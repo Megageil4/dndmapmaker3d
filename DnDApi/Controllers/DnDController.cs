@@ -59,6 +59,7 @@ public class DnDController : ControllerBase
         GameObjects.Add(gameObject);
         Console.WriteLine(gameObject);
         Console.WriteLine(GameObjects.Count);
+        Console.WriteLine(gameObject.Color);
     }
     [HttpPut]
     [ActionName("GameObject")]
@@ -72,10 +73,11 @@ public class DnDController : ControllerBase
             GameObjects.Add(gameObject);
             Console.WriteLine(gameObject);
             Console.WriteLine(GameObjects.Count);   
+            Console.WriteLine(gameObject.Color);
         }
     }
 
-    // Postet eine Map welche die alte aMap überschreibt
+     // Postet eine Map welche die alte aMap überschreibt
     [HttpPost]
     [ActionName("Map")]
     [Route("[action]")]

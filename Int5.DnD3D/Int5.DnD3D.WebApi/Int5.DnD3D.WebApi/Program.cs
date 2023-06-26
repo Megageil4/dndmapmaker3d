@@ -96,7 +96,7 @@ static async Task Echo(WebSocket webSocket,string username)
 {
    
     var buffer = new byte[1024 * 4];
-    Guid guid = DnDController._connectionManager.AddWebSocket(webSocket);
+    Guid guid = DnDController.ConnectionManager.AddWebSocket(webSocket);
     await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
     Console.WriteLine("Neuer Client " + guid);
     while (webSocket.State == WebSocketState.Open) {

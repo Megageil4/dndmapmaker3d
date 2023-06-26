@@ -1,10 +1,15 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace DefaultNamespace
+namespace MapTools
 {
+    /// <summary>
+    /// Tool to extrude squares the map
+    /// </summary>
     public class Extrude : IMapTool
     {
+        /// <summary>
+        /// The mesh spawner to change values in the mesh
+        /// </summary>
         public PlaneSpawner Spawner { get; set; }
 
         public Extrude(PlaneSpawner spawner)

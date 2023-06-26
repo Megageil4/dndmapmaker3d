@@ -1,18 +1,36 @@
-﻿using System;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace DefaultNamespace
+namespace MapTools
 {
+    /// <summary>
+    /// Tool used to move objects in the map
+    /// </summary>
     public class Select : IMapTool
     {
-        private Vector3 _lastPosition;
+        /// <summary>
+        /// Camara used to cast the rays
+        /// </summary>
         public Camera Camera { get; set; }
+        /// <summary>
+        /// The tag of the object that is being moved
+        /// </summary>
         private string _lastHit;
+        /// <summary>
+        /// A bool that is used to check if the user is holding down the mouse
+        /// </summary>
         private bool _isHoldingDown;
+        /// <summary>
+        /// The object that is currently selected
+        /// </summary>
         public GameObject Selected;
-        private int _delay = 0;
+        /// <summary>
+        /// A delay that is used to make sure the user doesn't move the object too fast
+        /// </summary>
+        private int _delay;
+        /// <summary>
+        /// An offset that is used to make sure the object doesn' move too early when the user clicks
+        /// </summary>
         private const double _AREAOFDEATH = .25;
 
         public Select(Camera camera)
@@ -25,7 +43,6 @@ namespace DefaultNamespace
             if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse))
             {
                 _isHoldingDown = false;
-                _lastPosition = Camera.ScreenToViewportPoint(Input.mousePosition);
                 Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 Debug.DrawRay(ray.origin, ray.direction, Color.red, 100f);
@@ -60,8 +77,9 @@ namespace DefaultNamespace
                     return;
                 }
                 _delay = 0;
-                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(Selected.transform.position, Camera.transform.position ) - 1));
-                Vector3 delta = mousePosition - Selected.transform.position;
+                var position = Selected.transform.position;
+                Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(position, Camera.transform.position ) - 1));
+                Vector3 delta = mousePosition - position;
                 
                 if ((delta.x < _AREAOFDEATH && delta.x > -_AREAOFDEATH) && (delta.y < _AREAOFDEATH && delta.y > -_AREAOFDEATH))
                 {
@@ -83,12 +101,13 @@ namespace DefaultNamespace
                         Selected.transform.Translate(Mathf.CeilToInt(delta.x), 0, Mathf.CeilToInt(delta.z));
                         break;
                 }
-
-                _lastPosition = Camera.ScreenToViewportPoint(Input.mousePosition);
-                //DataContainer.Conn.ChangeGameObject(
-                 //       DataContainer.GameObjects.First(g => g.Value.gameObject. == Selected).Key
-                 //   );
-                 //TODO send changes
+                
+                Debug.Log(Selected);
+                foreach (var keys in DataContainer.Guids.Keys)
+                {
+                    Debug.Log("Key: " + keys);
+                }
+                DataContainer.Conn.ChangeGameObject(DataContainer.Guids[Selected]);
             }
         }
     }

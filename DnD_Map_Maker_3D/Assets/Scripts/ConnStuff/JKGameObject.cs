@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ConnStuff
@@ -10,6 +11,13 @@ namespace ConnStuff
         private float[] _scale3;
         private string _modeltype;
         public Guid ClientId;
+        private string _color;
+
+        public string Color
+        {
+            get => _color;
+            set { _color = value; }
+        }
 
         public float[] pos3
         {
@@ -43,18 +51,19 @@ namespace ConnStuff
             LastChanged = DateTime.Now;
         }
         
-        public JKGameObject(float[] pos3, float[] rot3, float[] scale3, string modeltype, Guid guid)
+        public JKGameObject(float[] pos3, float[] rot3, float[] scale3, string modeltype, string color,Guid guid)
         {
             this.pos3 = pos3;
             this.rot3 = rot3;
             this.scale3 = scale3;
             this.Guid = guid;
-            Modeltype = modeltype;
+            Modeltype = modeltype; 
+            Color = color;
             LastChanged = DateTime.Now;
             ClientId = DataContainer.ClientId;
         }
 
-        public JKGameObject(GameObject go) :this(go, new Guid())
+        public JKGameObject(GameObject go) :this(go, Guid.NewGuid())
         {}
 
         public JKGameObject(GameObject go, Guid guid)
@@ -69,10 +78,13 @@ namespace ConnStuff
             this.scale3 = new []{localScale[0], localScale[1], localScale[2]};
 
             this.Modeltype = go.name.Replace("(Clone)", "");
-            
+
+            Color = go.transform.GetChild(0).GetChild(0).gameObject.GetComponent<MeshRenderer>().material.color.ToHexString();
+
             this.Guid = guid;
 
             LastChanged = DateTime.Now;
+            ClientId = DataContainer.ClientId;
         }
 
         public JKGameObject()

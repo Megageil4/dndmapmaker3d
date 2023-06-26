@@ -1,53 +1,134 @@
 using System;
 using System.IO;
 using System.Net;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
+using Debug = UnityEngine.Debug;
+using System.Collections;
 
+/// <summary>
+/// Class for the login screen
+/// </summary>
 public class Login : MonoBehaviour
 {
-    // Was ist inF??? -> bessere Namen
-    [FormerlySerializedAs("InF")] public TMP_InputField inF;
+    [SerializeField] private TMP_InputField serverIp;
 
-    public void SubmitName()
+    [SerializeField] private PopupController popup;
+
+    [SerializeField] private TMP_InputField username;
+    [SerializeField] private ButtonPopupController buttonPopup;
+
+    /// <summary>
+    /// Gets called when the user clicks the connect button.
+    /// Test the server connection and if it works, loads the next scene
+    /// </summary>
+    public void ConnectToServer()
     {
         try
         {
-            // Bitte bessere Variablen Namen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            // Kein v / v1 / t !!!!!!!!
-            // Und bitte keinen code mit syntax error pushen, findet unity nicht toll
-            // doch
-            var webRequest = WebRequest.Create("http://" + inF.text + ":5180/GameObject/TestConnection");
+            Debug.Log("http://" + serverIp.text + ":443/DnD/TestConnection");
+            var webRequest = WebRequest.Create("http://" + serverIp.text + ":443/DnD/TestConnection");
             webRequest.Proxy = null;
-            // Task<string> d = ;
-            var responseString =  Connect(webRequest);
+            var responseString = Connect(webRequest);
+            Debug.Log(responseString);
             if ("Connection erstellt" == responseString)
             {
-                inF.image.color = Color.green;
-                DataContainer.ServerIP = inF.text;
-                SceneManager.LoadScene("SampleScene");
+                DataContainer.ServerIP = serverIp.text;
+                string arg = DataContainer.ServerIP + " " + username.text;
+                DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
+                DataContainer.WebserviceConnection.StartInfo.FileName =
+                    @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
+                DataContainer.WebserviceConnection.Start();
+
+                while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")) && DataContainer.UserNameValid)
+                {
+                }
+
+                Debug.Log(DataContainer.UserNameValid);
+                if (DataContainer.UserNameValid)
+                {
+                    string content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
+                    content = content.Substring(1, content.Length - 1);
+                    if (content == "nu")
+                    {
+                        buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User",
+                            () =>
+                            {
+                                StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
+                                    JsonConvert.SerializeObject(username.text), "POST"));
+                                DataContainer.WebserviceConnection.Close();
+                                DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
+                                DataContainer.WebserviceConnection.StartInfo.FileName =
+                                    @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
+                            });
+                    }
+
+                    while (content == "nu")
+                    {
+                        content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
+                        content = content.Substring(1, content.Length - 1);
+                    }
+
+                    DataContainer.ClientId = Guid.Parse(content);
+
+                    File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
+                    SceneManager.LoadScene("SampleScene");
+                }
             }
             else
             {
-                inF.image.color = Color.red;
+                popup.ShowPopup("Server responded with invalid message. " +
+                                "Please check if the server is running the correct version.");
             }
+        }
+        catch (IOException _)
+        {
+            // sometimes a file gets accessed by to programms at the same time
         }
         catch (Exception e)
         {
             Debug.Log(e.Message);
-            inF.image.color = Color.red;
+            popup.ShowPopup("Server not found. Please check if the server is running and the ip is correct.");
         }
     }
-    public string Connect(WebRequest webRequest)
+
+    private string Connect(WebRequest webRequest)
     {
-        using (var response = webRequest.GetResponse())
+        using var response = webRequest.GetResponse();
+        using StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
+        return streamReader.ReadLine();
+    }
+    
+    /// <summary>
+    /// Sends A WebRequest to a Webserver
+    /// </summary>
+    /// <param name="url">URL of the Webserver</param>
+    /// <param name="json">JSON string that will be sent to the server</param>
+    /// <param name="method">Request Type (POST/PUT)</param>
+    /// <returns></returns>
+    IEnumerator PostRequest(string url, string json, string method)
+    {
+        // Debug.Log($"Sending data to {url}");
+        using UnityWebRequest www = new UnityWebRequest(url, method);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        www.uploadHandler = new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = new DownloadHandlerBuffer();
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        yield return www.SendWebRequest();
+        if (www.result != UnityWebRequest.Result.Success)
         {
-            using (StreamReader streamReader = new StreamReader(response.GetResponseStream()!))
-            {
-                return streamReader.ReadLine();   
-            }
+            Debug.Log($"Error while Sending: {www.error} , {url}");
         }
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Upload complete!");
+            
+        }
+        
     }
 }

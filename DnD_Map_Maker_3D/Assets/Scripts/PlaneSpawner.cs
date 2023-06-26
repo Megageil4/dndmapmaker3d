@@ -2,18 +2,39 @@ using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Class responsible for spawning and updating the map 
+/// </summary>
 public class PlaneSpawner : MonoBehaviour
 {
-    public int sizeX;
+    /// <summary>
+    /// The x size of the map
+    /// </summary>
+    public int sizeX; 
+    /// <summary>
+    /// The y size of the map
+    /// </summary>
     public int sizeY;
+    /// <summary>
+    /// The mesh used by unity in the background
+    /// </summary>
     private Mesh _mesh;
+    /// <summary>
+    /// All vertices of the map
+    /// </summary>
     [FormerlySerializedAs("Vertices")] public Vector3[] vertices;
+    /// <summary>
+    /// All triangles connecting the vertices of the map
+    /// </summary>
     private int[] _triangles;
+    /// <summary>
+    /// The UVs used to map the texture (grid) onto the map
+    /// </summary>
     private Vector2[] _uvs;
-    void Start()
-    {
-        //RegenerateMeshFromStart();
-    }
+
+    /// <summary>
+    /// Method used to generate a completely new map with the X and Y size
+    /// </summary>
 
     public void RegenerateMeshFromStart()
     {
@@ -23,7 +44,10 @@ public class PlaneSpawner : MonoBehaviour
         ReloadMesh();
     }
     
-    public void ReloadMesh()
+    /// <summary>
+    /// Used to reload an already existing map after the vertices and triangles have been changed
+    /// </summary>
+    public void ReloadMesh(bool sendMap = true)
     {
         _mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = _mesh;
@@ -33,10 +57,15 @@ public class PlaneSpawner : MonoBehaviour
         _mesh.uv = _uvs;
         _mesh.RecalculateNormals();
         GetComponent<MeshCollider>().sharedMesh = _mesh;
-        
-        DataContainer.Conn.SendMap(Util.MeshToMapData(_mesh, sizeX, sizeY));
+        if (sendMap)
+        {
+            DataContainer.Conn.SendMap(Util.MeshToMapData(_mesh, sizeX, sizeY));   
+        }
     }
 
+    /// <summary>
+    /// Creates all vertices of the map according to the X and Y size
+    /// </summary>
     private void CreateVertices()
     {
         vertices = new Vector3[(sizeX + 1) * (sizeY + 1)];
@@ -51,7 +80,9 @@ public class PlaneSpawner : MonoBehaviour
         }
     }
     
-    
+    /// <summary>
+    /// Creates all triangles connecting the vertices of the map 
+    /// </summary>
     private void CreateTriangles()
     {
         _triangles = new int[sizeX * sizeY * 6];
@@ -76,7 +107,9 @@ public class PlaneSpawner : MonoBehaviour
             vert++;
         }
     }
-
+    /// <summary>
+    /// Generates the UVs used to map the texture (grid) onto the map
+    /// </summary>
     private void GenerateUVs()
     {
         _uvs = new Vector2[vertices.Length];
@@ -91,6 +124,9 @@ public class PlaneSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets spheres at the position of all vertices
+    /// </summary>
     private void OnDrawGizmos()
     {
         if (vertices != null)
@@ -101,7 +137,13 @@ public class PlaneSpawner : MonoBehaviour
             }
         }
     }
-    public void SetNewMap(MapData map)
+
+    /// <summary>
+    /// Makes a new map from a provided map data
+    /// </summary>
+    /// <param name="map">The map data the map should be made of</param>
+    /// <param name="sendMap">If the map data should be uploaded to server</param>
+    public void SetNewMap(MapData map, bool sendMap = true)
     {
         sizeX = map.sizeX;
         sizeY = map.sizeY;
@@ -113,7 +155,7 @@ public class PlaneSpawner : MonoBehaviour
             vertices[i] = new Vector3(v[0], v[1], v[2]);
             i++;
         }
-        _triangles = map.Triangles;
-        ReloadMesh();
+        _triangles = map.triangles;
+        ReloadMesh(sendMap);
     }
 }

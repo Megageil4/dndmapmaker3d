@@ -1,64 +1,126 @@
 using System.Collections.Generic;
-using DefaultNamespace;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class Toolbar : MonoBehaviour
+namespace MapTools
 {
-    public PlaneSpawner PlaneSpawner;
-    public static IMapTool MapTool;
-    public List<Button> Buttons;
-    public ObjectController Controller;
-    public GameObject ModelContainer;
-    
-    public void OnSelect(Camera playerCamera)
+    /// <summary>
+    /// Controller for the toolbar that is used to select the tools
+    /// </summary>
+    public class Toolbar : MonoBehaviour
     {
-        ClearButtons();
-        MapTool = new Select(playerCamera);
-        Buttons[0].GetComponent<Image>().color = Color.gray;
-    }
+        /// <summary>
+        /// The mesh spawner. Some tools need it
+        /// </summary>
+        [FormerlySerializedAs("PlaneSpawner")] public PlaneSpawner planeSpawner;
+        /// <summary>
+        /// Currently selected tool
+        /// </summary>
+        public static IMapTool MapTool;
+        /// <summary>
+        /// All map tools that can be selected
+        /// </summary>
+        [FormerlySerializedAs("Buttons")] public List<Button> buttons;
+        /// <summary>
+        /// The object controller. Some tools need it
+        /// </summary>
+        [FormerlySerializedAs("Controller")] public ObjectController controller;
+        /// <summary>
+        /// The container for the models on the right side of the screen
+        /// </summary>
+        [FormerlySerializedAs("ModelContainer")] public GameObject modelContainer;
+        /// <summary>
+        /// The color picker used in the paint tool
+        /// </summary>
+        [FormerlySerializedAs("ColorPicker")] public GameObject colorPicker;
 
-    public void onErhoehen()
-    {
-        ClearButtons();
-        MapTool = new Extrude(PlaneSpawner);
-        Buttons[1].GetComponent<Image>().color = Color.gray;
-    }
+        private readonly Color _colorPressed;
+        private Color _colorBase;
 
-    public void onErniedrigen()
-    {
-        ClearButtons();
-        MapTool = new Intrude(PlaneSpawner);
-        Buttons[2].GetComponent<Image>().color = Color.gray;
-    }
-
-    public void onPlace()
-    {
-        ClearButtons();
-        MapTool = new Place(Controller);
-        Buttons[3].GetComponent<Image>().color = Color.gray;
-        ModelContainer.SetActive(true);
-    }
-    
-    private void ClearButtons()
-    {
-        if (MapTool is Select select)
+        public Toolbar()
         {
-            if (select.Selected != null)
+            _colorPressed = new Color(83.0f/255.0f, 109.0f/255.0f, 254.0f/255.0f);
+            _colorBase = new Color(255f/255.0f, 255f/255.0f, 255f/255.0f);
+        }
+        
+        /// <summary>
+        /// Tool handler for the select tool
+        /// </summary>
+        /// <param name="playerCamera">Player camara the tool needs</param>
+        public void OnSelect(Camera playerCamera)
+        {
+            ClearButtons();
+            MapTool = new Select(playerCamera);
+            buttons[0].GetComponent<Image>().color = _colorPressed;
+        }
+
+        /// <summary>
+        /// Tool handler for the Extrude tool
+        /// </summary>
+        public void OnExtrude()
+        {
+            ClearButtons();
+            MapTool = new Extrude(planeSpawner);
+            buttons[1].GetComponent<Image>().color = _colorPressed;
+        }
+
+        /// <summary>
+        /// Tool handler for the intrude tool
+        /// </summary>
+        public void OnIntrude()
+        {
+            ClearButtons();
+            MapTool = new Intrude(planeSpawner);
+            buttons[2].GetComponent<Image>().color = _colorPressed;
+        }
+
+        /// <summary>
+        /// Tool handler for the place tool
+        /// </summary>
+        public void OnPlace()
+        {
+            ClearButtons();
+            MapTool = new Place(controller);
+            buttons[3].GetComponent<Image>().color = _colorPressed;
+            modelContainer.SetActive(true);
+        }
+
+        /// <summary>
+        /// Tool handler for the paint tool
+        /// </summary>
+        /// <param name="playerCamera">Player camara the tool needs</param>
+        public void OnPaint(Camera playerCamera)
+        {
+            ClearButtons();
+            MapTool = new Paint(playerCamera, colorPicker);
+            buttons[4].GetComponent<Image>().color = _colorPressed;
+            colorPicker.SetActive(true);
+        }
+        /// <summary>
+        /// Sets the toolbar and other things to before a tool was selected
+        /// </summary>
+        private void ClearButtons()
+        {
+            if (MapTool is Select select)
             {
-                select.Selected.transform.GetChild(1).transform.gameObject.SetActive(false);       
+                if (select.Selected != null)
+                {
+                    select.Selected.transform.GetChild(1).transform.gameObject.SetActive(false);       
+                }
             }
-        }
-        for (var index = 0; index < Buttons.Count; index++)
-        {
-            var button = Buttons[index];
-            button.GetComponent<Image>().color = Color.white;
-        }
+            for (var index = 0; index < buttons.Count; index++)
+            {
+                var button = buttons[index];
+                button.GetComponent<Image>().color = _colorBase;
+            }
 
-        if (ModelContainer != null)
-        {
-            ModelContainer.SetActive(false);
-        }
-    } 
+            if (modelContainer != null)
+            {
+                modelContainer.SetActive(false);
+            }
+        
+            colorPicker.SetActive(false);
+        } 
+    }
 }

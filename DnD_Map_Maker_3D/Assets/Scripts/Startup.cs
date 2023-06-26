@@ -1,29 +1,39 @@
+using ConnStuff;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+/// <summary>
+/// Class for the startup of the program and the connection to the server
+/// </summary>
 public class Startup : MonoBehaviour
 {
+    /// <summary>
+    /// Controller used to send map and gameobject data to the server
+    /// </summary>
     [FormerlySerializedAs("MenuController")] public GameObject menuController;
 
-    [FormerlySerializedAs("MeshSpawner")] public GameObject meshSpawner;
-
-    public GameObject Conn;
+    /// <summary>
+    /// The object containing the connection to the server
+    /// </summary>
+    [FormerlySerializedAs("Conn")] public GameObject connection;
     // Start is called before the first frame update
 
     public void Start()
     {
-        DataContainer.CreateConn(Conn.GetComponent<WsConn>());
+        DataContainer.CreateConn(connection.GetComponent<WsConn>());
         // Debug.Log(DataContainer.Conn.MapExists());
+        menuController.GetComponent<CurrentUserController>().UpdateUsers(DataContainer.Conn.GetUsers());
         if (DataContainer.Conn.MapExists())
         {
-            var map = DataContainer.Conn.OnConnectMap();
-            Debug.Log(map);
-            menuController.GetComponent<MenuBarController>().MapFromMapData(map);
+            menuController.GetComponent<MenuBarController>().MapFromMapData();
             menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
         }
         else
         {
             menuController.GetComponent<MenuBarController>().MakeGridSizePopUpVisible();
         }
+
+        Debug.Log("start " + DataContainer.ClientId);
     }
 }
