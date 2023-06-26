@@ -43,7 +43,7 @@ public class FileListener : MonoBehaviour
                     menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
                     break;
                 case "np":
-                    menuController.GetComponent<CurrentUserController>().UpdateUsers(connController.GetComponent<WsConn>().GetUsers());
+                    menuController.GetComponent<CurrentUserController>().UpdateUsers(DataContainer.Conn.GetUsers());
                     break;
             }
             File.Delete(Path.Combine(_tmpPath, $"{_iterator}"));
