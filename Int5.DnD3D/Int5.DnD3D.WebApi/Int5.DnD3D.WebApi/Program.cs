@@ -82,7 +82,7 @@ static async Task Echo(WebSocket webSocket,string username)
     var buffer = new byte[1024 * 4];
     Guid guid = DnDController._connectionManager.AddUser(new Int5.DnD3D.WebApi.Model.User(username, webSocket));
     await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
-    DnDController._connectionManager.AnAlle("np", guid+"");
+    DnDController._connectionManager.MessageAll("np", guid+"");
     Console.WriteLine("Neuer Client " + guid + ": " + username);
     while (webSocket.State == WebSocketState.Open)
     {
