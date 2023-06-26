@@ -2,9 +2,17 @@
 
 namespace Int5.DnD3D.WebApi.Util
 {
+    /// <summary>
+    /// Manages the Sqlite Database for a given DataSource
+    /// </summary>
     public class DatabaseManager
     {
         public string? DataSource { get; set; }
+        /// <summary>
+        /// Inserts a new User to the Database
+        /// </summary>
+        /// <param name="username">Username of the newly added User</param>
+        /// <returns>True if user was succesfully added, false if not</returns>
         public bool AddUser(string username)
         {
             using (var connection = new SqliteConnection(DataSource))
@@ -22,6 +30,10 @@ namespace Int5.DnD3D.WebApi.Util
             }
            
         }
+        /// <summary>
+        /// Selects all Users in the sqlite database
+        /// </summary>
+        /// <returns>A list of all Users</returns>
         public List<string> GetAllUsernames()
         {
             List<string> usernames = new();
@@ -47,7 +59,11 @@ namespace Int5.DnD3D.WebApi.Util
             return usernames;
 
         }
-
+        /// <summary>
+        /// Tests if a User exists in the sqlite databse
+        /// </summary>
+        /// <param name="username">Username to be searched</param>
+        /// <returns>True if user exists, false if not</returns>
         public bool UserExists(string username)
         {
 
@@ -71,7 +87,10 @@ namespace Int5.DnD3D.WebApi.Util
             }
             return false;
         }
-
+        /// <summary>
+        /// Creates a new instance of the DatabaseManager
+        /// </summary>
+        /// <param name="dataSource">path to the .db file</param>
         public DatabaseManager(string? dataSource)
         {
             DataSource = dataSource;
