@@ -70,6 +70,17 @@ public class MenuBarController : MonoBehaviour
     {
         meshSpawner.GetComponent<PlaneSpawner>().SetNewMap(DataContainer.Conn.FetchMap(),false);
     }
+
+    public void FixCamaraRotation(Camera playerCamera)
+    {
+        // reset the misaligned camera rotation
+        var cameraTransform = playerCamera.transform;
+        var rotation = cameraTransform.rotation;
+        var rotationEulerAngles = rotation.eulerAngles;
+        rotationEulerAngles.z = 0;
+        rotation.eulerAngles = rotationEulerAngles;
+        cameraTransform.rotation = rotation;
+    }
     
     /// <summary>
     /// DECPRECATED - Was used to send the map to the server on exit.
