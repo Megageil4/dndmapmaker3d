@@ -39,8 +39,15 @@ public class Login : MonoBehaviour
                 DataContainer.ServerIP = serverIp.text;
                 string arg = DataContainer.ServerIP + " " + username.text;
                 DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
+                
+#if DEBUG
                 DataContainer.WebserviceConnection.StartInfo.FileName =
                     @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
+#else
+                DataContainer.WebserviceConnection.StartInfo.FileName =
+                    @".\WebClient\Int5.DnD3D.WebClient.exe";
+#endif
+                
                 DataContainer.WebserviceConnection.Start();
 
                 while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")) && DataContainer.UserNameValid)
@@ -54,15 +61,21 @@ public class Login : MonoBehaviour
                     content = content.Substring(1, content.Length - 1);
                     if (content == "nu")
                     {
-                        buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User",
+                        buttonPopup.ShowPopup("User does not exist. Do you want to create it?", "Save User",
                             () =>
                             {
                                 StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
                                     JsonConvert.SerializeObject(username.text), "POST"));
-                                DataContainer.WebserviceConnection.Close();
-                                DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
-                                DataContainer.WebserviceConnection.StartInfo.FileName =
-                                    @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
+//                                DataContainer.WebserviceConnection.Close();
+//                                DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
+//                                
+//#if DEBUG
+//                                DataContainer.WebserviceConnection.StartInfo.FileName =
+//                                    @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
+//#else
+//                DataContainer.WebserviceConnection.StartInfo.FileName =
+//                    @".\WebClient\Int5.DnD3D.WebClient.exe";
+//#endif
                             });
                     }
 
@@ -84,9 +97,10 @@ public class Login : MonoBehaviour
                                 "Please check if the server is running the correct version.");
             }
         }
-        catch (IOException _)
+        catch (IOException e)
         {
-            // sometimes a file gets accessed by to programms at the same time
+            // sometimes a file gets accessed by to programs at the same time
+            Debug.Log(e);
         }
         catch (Exception e)
         {
