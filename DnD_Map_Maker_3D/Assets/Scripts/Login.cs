@@ -19,6 +19,7 @@ public class Login : MonoBehaviour
     [SerializeField] private PopupController popup;
 
     [SerializeField] private TMP_InputField username;
+    [SerializeField] private ButtonPopupController buttonPopup;
 
     /// <summary>
     /// Gets called when the user clicks the connect button.
@@ -42,29 +43,33 @@ public class Login : MonoBehaviour
                     @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
                 DataContainer.WebserviceConnection.Start();
                 
-                while (!File.Exists(Path.GetTempPath() + @$"/DnD/0") && DataContainer.UserNameValid)
+                while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")) && DataContainer.UserNameValid)
                 {}
 
                 Debug.Log(DataContainer.UserNameValid);
                 if (DataContainer.UserNameValid)
                 {
-                    string content = File.ReadAllText(Path.GetTempPath() + "/DnD/0" );
+                    string content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                     content = content.Substring(1, content.Length - 1);
                     if (content == "nu")
                     {
-                        // popup.ShowPopup("User does not exist. Do you wannt to create it?");
-                        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User", JsonConvert.SerializeObject(username.text), "POST"));
+                        buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User", 
+                            () =>
+                            {
+                                StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
+                                    JsonConvert.SerializeObject(username.text), "POST"));
+                            });
                     }
 
                     while (content == "nu")
                     {
-                        content = File.ReadAllText(Path.GetTempPath() + "/DnD/" + 0);
+                        content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                         content = content.Substring(1, content.Length - 1);
                     } 
                     
                     DataContainer.ClientId = Guid.Parse(content);
                     
-                    File.Delete(Path.GetTempPath() + "/DnD/0");
+                    File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                     SceneManager.LoadScene("SampleScene");
                 }
             }
