@@ -42,9 +42,10 @@ public class Login : MonoBehaviour
                 DataContainer.WebserviceConnection.StartInfo.FileName =
                     @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
                 DataContainer.WebserviceConnection.Start();
-                
+
                 while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")) && DataContainer.UserNameValid)
-                {}
+                {
+                }
 
                 Debug.Log(DataContainer.UserNameValid);
                 if (DataContainer.UserNameValid)
@@ -53,11 +54,15 @@ public class Login : MonoBehaviour
                     content = content.Substring(1, content.Length - 1);
                     if (content == "nu")
                     {
-                        buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User", 
+                        buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User",
                             () =>
                             {
                                 StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
                                     JsonConvert.SerializeObject(username.text), "POST"));
+                                DataContainer.WebserviceConnection.Close();
+                                DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
+                                DataContainer.WebserviceConnection.StartInfo.FileName =
+                                    @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
                             });
                     }
 
@@ -65,10 +70,10 @@ public class Login : MonoBehaviour
                     {
                         content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                         content = content.Substring(1, content.Length - 1);
-                    } 
-                    
+                    }
+
                     DataContainer.ClientId = Guid.Parse(content);
-                    
+
                     File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                     SceneManager.LoadScene("SampleScene");
                 }
@@ -78,6 +83,10 @@ public class Login : MonoBehaviour
                 popup.ShowPopup("Server responded with invalid message. " +
                                 "Please check if the server is running the correct version.");
             }
+        }
+        catch (IOException _)
+        {
+            // sometimes a file gets accessed by to programms at the same time
         }
         catch (Exception e)
         {

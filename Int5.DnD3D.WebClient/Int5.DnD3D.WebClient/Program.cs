@@ -37,5 +37,7 @@
         using FileStream fsDatei = File.Open(tempPath + (count), FileMode.Create, FileAccess.Write, FileShare.None);
         using BinaryWriter writer = new BinaryWriter(fsDatei);
         writer.Write(cont);
+        writer.Close();
+        fsDatei.Close();
         count++;
     }
