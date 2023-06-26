@@ -43,50 +43,45 @@ public class Login : MonoBehaviour
                     @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
                 DataContainer.WebserviceConnection.Start();
 
-                while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")) && DataContainer.UserNameValid)
+                while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")))
                 {
                 }
 
-                Debug.Log(DataContainer.UserNameValid);
-                if (DataContainer.UserNameValid)
-                {
-                    string content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
-                    content = content.Substring(1, content.Length - 1);
-                    if (content == "nu")
-                    {
-                        buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User",
-                            () =>
-                            {
-                                StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
-                                    JsonConvert.SerializeObject(username.text), "POST"));
-                                DataContainer.WebserviceConnection.Close();
-                                DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
-                                DataContainer.WebserviceConnection.StartInfo.FileName =
-                                    @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
-                            });
-                    }
 
-                    while (content == "nu")
-                    {
-                        content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
-                        content = content.Substring(1, content.Length - 1);
-                    }
+                string content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
+                content = content.Substring(1, content.Length - 1);
 
-                    DataContainer.ClientId = Guid.Parse(content);
-
+                if (content == "nu")
+                { 
+                    buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User",
+                        () =>
+                        {
+                            StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
+                                JsonConvert.SerializeObject(username.text), "POST"));
+                            DataContainer.WebserviceConnection.Close();
+                            Debug.Log("cmd geschlossen");
+                            // DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
+                            // DataContainer.WebserviceConnection.StartInfo.FileName =
+                            //     @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
+                            // DataContainer.WebserviceConnection.Start();
+                        });
                     File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
-                    SceneManager.LoadScene("SampleScene");
                 }
+
+                while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0"))) 
+                {}
+
+                DataContainer.ClientId = Guid.Parse(content);
+
+                File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
+                SceneManager.LoadScene("SampleScene");
+
             }
             else
             {
                 popup.ShowPopup("Server responded with invalid message. " +
                                 "Please check if the server is running the correct version.");
             }
-        }
-        catch (IOException _)
-        {
-            // sometimes a file gets accessed by to programms at the same time
         }
         catch (Exception e)
         {
@@ -101,7 +96,7 @@ public class Login : MonoBehaviour
         using StreamReader streamReader = new StreamReader(response.GetResponseStream()!);
         return streamReader.ReadLine();
     }
-    
+
     /// <summary>
     /// Sends A WebRequest to a Webserver
     /// </summary>
@@ -127,8 +122,8 @@ public class Login : MonoBehaviour
         if (www.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Upload complete!");
-            
+
         }
-        
+
     }
 }
