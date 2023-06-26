@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 using System.Collections;
+using System.Threading;
 
 /// <summary>
 /// Class for the login screen
@@ -45,11 +46,15 @@ public class Login : MonoBehaviour
 
                 while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")))
                 {
+                    Debug.Log("while 1");
                 }
 
 
                 string content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                 content = content.Substring(1, content.Length - 1);
+                
+                Debug.Log(content);
+                Thread.Sleep(100);
 
                 if (content == "nu")
                 { 
@@ -60,16 +65,18 @@ public class Login : MonoBehaviour
                                 JsonConvert.SerializeObject(username.text), "POST"));
                             DataContainer.WebserviceConnection.Close();
                             Debug.Log("cmd geschlossen");
-                            // DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
-                            // DataContainer.WebserviceConnection.StartInfo.FileName =
-                            //     @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
-                            // DataContainer.WebserviceConnection.Start();
+                            DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
+                            DataContainer.WebserviceConnection.StartInfo.FileName =
+                                @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
+                            DataContainer.WebserviceConnection.Start();
                         });
                     File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                 }
 
-                while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0"))) 
-                {}
+                while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")))
+                {
+                    Debug.Log("while 2");
+                }
 
                 DataContainer.ClientId = Guid.Parse(content);
 
