@@ -15,9 +15,6 @@ public class FileListener : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject menuController;
-    
-    [SerializeField]
-    private GameObject connController;
 
     /// <summary>
     /// the current path of the temp folder

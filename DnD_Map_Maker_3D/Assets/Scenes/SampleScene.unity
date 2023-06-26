@@ -6135,7 +6135,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuController: {fileID: 1465804799}
-  connController: {fileID: 0}
 --- !u!1 &1091927846
 GameObject:
   m_ObjectHideFlags: 0
@@ -7891,7 +7890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1499271387
 RectTransform:
   m_ObjectHideFlags: 0
