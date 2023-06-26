@@ -13,9 +13,11 @@ namespace Int5.DnD3D.WebApi.Util
                 var command = connection.CreateCommand();
                 command.CommandText =
                     @"
-                    INSERT INTO User VALUES (0,$username);
+                    INSERT INTO User (username) VALUES ($username);
 ";
                 command.Parameters.AddWithValue("$username", username);
+                Console.WriteLine("POST: " + username+" added");
+                GetAllUsernames();
                 return command.ExecuteNonQuery() == 1;
             }
            
@@ -37,6 +39,7 @@ namespace Int5.DnD3D.WebApi.Util
                     while (reader.Read())
                     {
                         var result = reader.GetString(1);
+                        Console.WriteLine(result);
                         usernames.Add(result);
                     }
                 }

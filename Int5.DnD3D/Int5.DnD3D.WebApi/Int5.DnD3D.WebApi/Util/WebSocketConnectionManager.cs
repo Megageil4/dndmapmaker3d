@@ -18,6 +18,7 @@ namespace FinalTest.ConnectionManager
         public void KillConnection(Guid guid)
         {
             Connections.Remove(guid, out _);
+            AnAlle("np", Guid.NewGuid()+"");
         }
         
         // Added einen WebSocket zum Connectionmanager und returned die erstellte Guid für die Connection

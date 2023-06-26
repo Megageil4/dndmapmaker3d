@@ -60,11 +60,13 @@ app.Use(async (context, next) =>
             }
             else
             {
+                Console.WriteLine("Response 403");
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
             }
         }
         else
         {
+            Console.WriteLine("Response 400");
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
             
         }
@@ -80,7 +82,8 @@ static async Task Echo(WebSocket webSocket,string username)
     var buffer = new byte[1024 * 4];
     Guid guid = DnDController._connectionManager.AddUser(new Int5.DnD3D.WebApi.Model.User(username, webSocket));
     await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(guid + "")), WebSocketMessageType.Text, 0, CancellationToken.None);
-    Console.WriteLine("Neuer Client " + guid);
+    DnDController._connectionManager.AnAlle("np", guid+"");
+    Console.WriteLine("Neuer Client " + guid + ": " + username);
     while (webSocket.State == WebSocketState.Open)
     {
         var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);

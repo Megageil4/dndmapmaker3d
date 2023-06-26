@@ -171,6 +171,7 @@ namespace FinalTest.Controllers
         [Route("[action]")]
         public string RegisterUser([FromBody] string username)
         {
+            Console.WriteLine("In Register User");
             _databaseManager.AddUser(username);
             return "User added";
         }
