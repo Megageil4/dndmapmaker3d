@@ -7,7 +7,7 @@ using Debug = UnityEngine.Debug;
 /// </summary>
 public class FileListener : MonoBehaviour
 {
-    private int _iterator = 1;
+    private int _iterator;
     
     /// <summary>
     /// controller used to get map and gameobject data to the server
@@ -21,19 +21,19 @@ public class FileListener : MonoBehaviour
     /// <summary>
     /// the current path of the temp folder
     /// </summary>
-    private readonly string _tmpPath = Path.GetTempPath() + "/DnD/" + DataContainer.ClientId + "/";
+    private string _tmpPath = Path.Combine(Path.GetTempPath(),"DnD", DataContainer.ClientId.ToString());
     
-
+    
     // Update is called once per frame
     /// <summary>
     /// checks if a file exists and if it does, it reads the content and does something with it
     /// </summary>
     void Update()
     {
-        if (File.Exists(_tmpPath + _iterator))
+        if (File.Exists(Path.Combine(_tmpPath, $"{_iterator}")))
         {
             Debug.Log("File found!");
-            switch (File.ReadAllText(_tmpPath + _iterator))
+            switch (File.ReadAllText(Path.Combine(_tmpPath, $"{_iterator}")).Substring(1))
             {
                 case "nm":
                     menuController.GetComponent<MenuBarController>().MapFromMapData();
@@ -45,7 +45,7 @@ public class FileListener : MonoBehaviour
                     menuController.GetComponent<CurrentUserController>().UpdateUsers(connController.GetComponent<WsConn>().GetUsers());
                     break;
             }
-            File.Delete(_tmpPath + _iterator);
+            File.Delete(Path.Combine(_tmpPath, $"{_iterator}"));
             _iterator++;
         }
     }

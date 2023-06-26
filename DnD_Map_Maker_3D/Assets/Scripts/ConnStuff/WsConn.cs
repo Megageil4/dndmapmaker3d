@@ -91,14 +91,9 @@ public class WsConn : MonoBehaviour, IDnDConnection
        return JsonConvert.DeserializeObject<MapData>(v.Result);
    }
 
-   public void Connect()
-   {
-       
-   }
 
 
-   
-    // debricated
+   // debricated
     // public MapData OnConnectMap()
     // {
     //     var request = (HttpWebRequest)WebRequest.Create($"http://{DataContainer.ServerIP}:443/DnD/Map");
@@ -147,6 +142,28 @@ public class WsConn : MonoBehaviour, IDnDConnection
     //     StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
     //     // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:443/GameObject/GetMap"));
     // }
+
+    public void Connect()
+    {
+        
+    }
+
+    public List<string> GetUsers()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Logout()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void TestConn(MapData mapData)
+    {
+        var json = JsonConvert.SerializeObject(mapData);
+        StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/Map", json, "POST"));
+        // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:443/GameObject/GetMap"));
+    }
 
     /// <summary>
     /// Sends A WebRequest to a Webserver

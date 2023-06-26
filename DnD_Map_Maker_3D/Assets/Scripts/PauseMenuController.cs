@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuController : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PauseMenuController : MonoBehaviour
     
     public void ShowPauseMenu()
     {
-        pauseMenu.SetActive(true);
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
     }
 
     public void Resume()
@@ -26,11 +27,13 @@ public class PauseMenuController : MonoBehaviour
     
     public void Logout() 
     {
-        throw new NotImplementedException();
+        DataContainer.Conn.Logout();
+        SceneManager.LoadScene("SampleScene");
     }
     
     public void Quit()
     {
+        DataContainer.Conn.Logout();
         Util.Exit();
     }
 }
