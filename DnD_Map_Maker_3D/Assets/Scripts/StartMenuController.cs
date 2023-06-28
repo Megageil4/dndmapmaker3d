@@ -37,6 +37,9 @@ public class StartMenuController : MonoBehaviour
         Application.Quit();
     }
     
+    /// <summary>
+    /// Disables all menus
+    /// </summary>
     private void DisableAllMenus()
     {
         foreach (var menu in menus)

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Class to controll a specific popup window to display errors or other messages
+/// Class to control a specific popup window to display errors or other messages
 /// </summary>
 public class ErrorPopupController : PopupController
 {
@@ -24,6 +24,9 @@ public class ErrorPopupController : PopupController
         popup.SetActive(true);
     }
     
+    /// <summary>
+    /// Closes the Popup and clears the text.
+    /// </summary>
     public override void ClosePopup()
     {
         popupText.text = "";
