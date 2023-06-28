@@ -110,8 +110,8 @@ namespace FinalTest.Controllers
         {
             if (_connectionManager.Connections.Keys.Contains(gameObject.ClientId))
             {
-                var old = GameObjects.Find(g => g.Guid == gameObject.Guid);
-                if (old != null)
+                GameObject? old = GameObjects.Find(g => g.Guid == gameObject.Guid);
+                if (old is not null)
                 {
                     GameObjects.Remove(old);
                     GameObjects.Add(gameObject);
