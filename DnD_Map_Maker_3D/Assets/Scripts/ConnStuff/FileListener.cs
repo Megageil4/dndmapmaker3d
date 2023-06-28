@@ -8,16 +8,13 @@ using Debug = UnityEngine.Debug;
 /// </summary>
 public class FileListener : MonoBehaviour
 {
-    private int _iterator;
+    private int _iterator = 1;
     
     /// <summary>
     /// controller used to get map and gameobject data to the server
     /// </summary>
     [SerializeField]
     private GameObject menuController;
-    
-    [SerializeField]
-    private GameObject connController;
 
     /// <summary>
     /// the current path of the temp folder
@@ -43,7 +40,7 @@ public class FileListener : MonoBehaviour
                     menuController.GetComponent<MenuBarController>().GameObjectsIntoDict();
                     break;
                 case "np":
-                    menuController.GetComponent<CurrentUserController>().UpdateUsers(connController.GetComponent<WsConn>().GetUsers());
+                    menuController.GetComponent<CurrentUserController>().UpdateUsers(DataContainer.Conn.GetUsers());
                     break;
             }
             File.Delete(Path.Combine(_tmpPath, $"{_iterator}"));

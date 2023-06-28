@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Class to controll a specific popup window to display errors or other messages
+/// Class to control a specific popup window to display errors or other messages.
+/// This version of the popup contains an extra button that can be defined.
 /// </summary>
 public class ButtonPopupController : PopupController
 {
@@ -20,7 +21,8 @@ public class ButtonPopupController : PopupController
     private Button button;
     
     /// <summary>
-    /// Shows the popup with the specified text
+    /// Shows the button popup with the specified text.
+    /// The default button displays the text "OK" and closes the popup
     /// </summary>
     /// <param name="text">The text the popup should contain</param>
     public override void ShowPopup(string text)
@@ -31,6 +33,12 @@ public class ButtonPopupController : PopupController
         popup.SetActive(true);
     }
 
+    /// <summary>
+    /// Shows the popup with the specified text, button text and action
+    /// </summary>
+    /// <param name="text">The text the popup should contain</param>
+    /// <param name="textOnButton">The text of the button</param>
+    /// <param name="buttonAction">The action that should be done when the button is clicked</param>
     public void ShowPopup(string text, string textOnButton, Action buttonAction)
     {
         popupText.text = textOnButton;
@@ -40,6 +48,9 @@ public class ButtonPopupController : PopupController
         popup.SetActive(true);
     }
 
+    /// <summary>
+    /// Closes the Popup and clears the text and button as well as the action
+    /// </summary>
     public override void ClosePopup()
     {
         popupText.text = "";
