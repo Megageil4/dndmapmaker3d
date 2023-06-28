@@ -46,6 +46,5 @@ public class DataContainer
     public static void CreateConn(IDnDConnection con)
     {
         Conn = con;
-        Conn.Connect();
     }
 }

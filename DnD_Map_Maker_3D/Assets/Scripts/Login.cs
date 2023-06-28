@@ -30,13 +30,17 @@ public class Login : MonoBehaviour
         try
         {
             Debug.Log("http://" + serverIp.text + ":443/DnD/TestConnection");
+            // sets up the request
             var webRequest = WebRequest.Create("http://" + serverIp.text + ":443/DnD/TestConnection");
             webRequest.Proxy = null;
             var responseString = Connect(webRequest);
             Debug.Log(responseString);
+            // if the connection was successful
             if ("Connection erstellt" == responseString)
             {
+                // saves the server ip
                 DataContainer.ServerIP = serverIp.text;
+                // starts the websocket connection
                 string arg = DataContainer.ServerIP + " " + username.text;
                 DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
                 
@@ -50,6 +54,7 @@ public class Login : MonoBehaviour
                 
                 DataContainer.WebserviceConnection.Start();
 
+                // waits for the first message from the Socket
                 while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")))
                 {
                 }
@@ -59,6 +64,7 @@ public class Login : MonoBehaviour
                 File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                 content = content.Substring(1, content.Length - 1);
 
+                // if the user does not exist
                 if (content == "nu")
                 { 
                     buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User",
@@ -68,6 +74,7 @@ public class Login : MonoBehaviour
                                 JsonConvert.SerializeObject(username.text), "POST"));
                             DataContainer.WebserviceConnection.Close();
                             Debug.Log("cmd geschlossen");
+                            // sets up the socket connection with the now created user
                             DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
 #if DEBUG
                             DataContainer.WebserviceConnection.StartInfo.FileName =
@@ -79,6 +86,7 @@ public class Login : MonoBehaviour
                             DataContainer.WebserviceConnection.Start();
                             //Change path on build
                             
+                            // waits for the initail message from the Socket
                             while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0"))) 
                             {}
 
@@ -118,6 +126,11 @@ public class Login : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// sends a WebRequest to a Webserver to check if it is up and running and returns the response
+    /// </summary>
+    /// <param name="webRequest">WebRequest to be sent to the Server</param>
+    /// <returns>the answer from the webRequest</returns>
     private string Connect(WebRequest webRequest)
     {
         using var response = webRequest.GetResponse();

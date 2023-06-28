@@ -143,16 +143,6 @@ public class WsConn : MonoBehaviour, IDnDConnection
     //     // StartCoroutine(GetRequest($"http://{DataContainer.ServerIP}:443/GameObject/GetMap"));
     // }
 
-    public void Connect()
-    {
-        
-    }
-
-    public void Logout()
-    {
-        
-    }
-
     public void TestConn(MapData mapData)
     {
         var json = JsonConvert.SerializeObject(mapData);

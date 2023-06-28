@@ -27,13 +27,11 @@ public class PauseMenuController : MonoBehaviour
     
     public void Logout() 
     {
-        DataContainer.Conn.Logout();
         SceneManager.LoadScene("SampleScene");
     }
     
     public void Quit()
     {
-        DataContainer.Conn.Logout();
         Util.Exit();
     }
 
