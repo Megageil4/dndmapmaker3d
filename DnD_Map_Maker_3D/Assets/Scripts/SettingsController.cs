@@ -21,19 +21,12 @@ public class SettingsController : MonoBehaviour
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
         int currentResolutionIndex = 0;
-        Resolution? lastResolution = null;
         foreach (var resolution in resolutions)
         {
-            if (lastResolution != null && lastResolution.Value.width == resolution.width &&
-                lastResolution.Value.height == resolution.height)
-            {
-                continue;
-            }
-            options.Add(resolution.width + " x " + resolution.height);
+            options.Add(resolution.width + " x " + resolution.height + " " + resolution.refreshRate + "Hz");
             if (resolution.width == Screen.currentResolution.width &&
                 resolution.height == Screen.currentResolution.height)
                 currentResolutionIndex = Array.IndexOf(resolutions, resolution);
-            lastResolution = resolution;
         }
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
