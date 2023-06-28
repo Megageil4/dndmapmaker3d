@@ -74,7 +74,7 @@ public class Login : MonoBehaviour
                             StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
                                 JsonConvert.SerializeObject(username.text), "POST"));
                             // closes the old socket connection
-                            DataContainer.WebserviceConnection.Close();
+                            DataContainer.WebserviceConnection.Kill();
                             Debug.Log("cmd geschlossen");
                             // sets up the socket connection with the now created user
                             DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
