@@ -106,17 +106,15 @@ namespace FinalTest.Controllers
         [HttpPut]
         [ActionName("GameObject")]
         [Route("[action]")]
-        public void PutGameObjekt([FromBody] GameObject gameObject)
+        public void PutGameObject([FromBody] GameObject gameObject)
         {
             if (_connectionManager.Connections.Keys.Contains(gameObject.ClientId))
             {
-                int old = 
-                GameObjects.FindIndex(g => g.Guid == gameObject.Guid);
-                if (old == -1)
+                int old = GameObjects.FindIndex(g => g.Guid == gameObject.Guid);
+                if (old != -1)
                 {
-                    GameObjects.RemoveAt(old);
-                    GameObjects.Add(gameObject);
-                    
+                    GameObjects[old] = gameObject;
+
                 }
                 _connectionManager.MessageAll("ngo", gameObject.ClientId + "");
 
@@ -124,7 +122,7 @@ namespace FinalTest.Controllers
             }
             else
             {
-                // throw new Exception("Keine gültige Id");
+                throw new Exception("Keine gültige Id");
             }
         }
         // Postet eine Map welche die alte aMap überschreibt
