@@ -95,7 +95,7 @@ namespace FinalTest.Controllers
             {
                 GameObjects.Add(gameObject);
                 // Informiert alle Connections darüber dass ein neues GameObject geposted wurde
-                _connectionManager.AnAlle("ngo", gameObject.ClientId + "");
+                _connectionManager.MessageAll("ngo", gameObject.ClientId + "");
                 Console.WriteLine("Post Change");
             }
             else
@@ -120,7 +120,7 @@ namespace FinalTest.Controllers
                 }
                 // Informiert alle Connections dass ein GameObject geändert wurde
                 Console.WriteLine("Put GameObject");
-                _connectionManager.AnAlle("ngo", gameObject.ClientId + "");
+                _connectionManager.MessageAll("ngo", gameObject.ClientId + "");
             }
             else
             {
@@ -138,7 +138,7 @@ namespace FinalTest.Controllers
                 Console.WriteLine("Map geändert");
                 Map = map;
                 // Informiert alle Connections dass neue Map Geposted wurde
-                _connectionManager.AnAlle("nm", map.ClientId + "");
+                _connectionManager.MessageAll("nm", map.ClientId + "");
             }
             else
             {
