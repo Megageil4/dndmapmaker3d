@@ -8,5 +8,8 @@ public abstract class PopupController : MonoBehaviour
     /// <param name="text">The text the popup should contain</param>
     public abstract void ShowPopup(string text);
 
+    /// <summary>
+    /// Closes the Popup.
+    /// </summary>
     public abstract void ClosePopup();
 }

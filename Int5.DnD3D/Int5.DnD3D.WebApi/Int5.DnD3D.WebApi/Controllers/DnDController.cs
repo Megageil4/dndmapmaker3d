@@ -151,6 +151,7 @@ namespace FinalTest.Controllers
         {
             var users
             = new List<string>();
+            Console.WriteLine("Users:");
             foreach (var sessionKey in _connectionManager.Connections.Keys)
             {
                 if (_connectionManager.Connections[sessionKey].WebSocket.State == WebSocketState.Open)
@@ -161,6 +162,8 @@ namespace FinalTest.Controllers
                 {
                     _connectionManager.KillConnection(sessionKey);
                 }
+
+                Console.WriteLine(sessionKey);
             }
             return users;
         }

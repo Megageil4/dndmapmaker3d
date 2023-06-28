@@ -150,7 +150,7 @@ public class WsConn : MonoBehaviour, IDnDConnection
 
     public void Logout()
     {
-        throw new NotImplementedException();
+        DataContainer.WebserviceConnection.Kill();
     }
 
     public void TestConn(MapData mapData)
