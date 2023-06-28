@@ -115,12 +115,11 @@ namespace FinalTest.Controllers
                 {
                     GameObjects.Remove(old);
                     GameObjects.Add(gameObject);
-                    Console.WriteLine(gameObject);
-                    Console.WriteLine(GameObjects.Count);
+                    _connectionManager.MessageAll("ngo", gameObject.ClientId + "");
                 }
                 // Informiert alle Connections dass ein GameObject geändert wurde
-                Console.WriteLine("Put GameObject");
-                _connectionManager.MessageAll("ngo", gameObject.ClientId + "");
+              
+  
             }
             else
             {
