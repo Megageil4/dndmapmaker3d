@@ -123,7 +123,7 @@ namespace FinalTest.Controllers
             }
             else
             {
-                throw new Exception("Keine gültige Id");
+                // throw new Exception("Keine gültige Id");
             }
         }
         // Postet eine Map welche die alte aMap überschreibt
