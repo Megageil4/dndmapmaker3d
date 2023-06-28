@@ -110,16 +110,17 @@ namespace FinalTest.Controllers
         {
             if (_connectionManager.Connections.Keys.Contains(gameObject.ClientId))
             {
-                GameObject? old = GameObjects.Find(g => g.Guid == gameObject.Guid);
-                if (old is not null)
+                int old = 
+                GameObjects.FindIndex(g => g.Guid == gameObject.Guid);
+                if (old == -1)
                 {
-                    GameObjects.Remove(old);
+                    GameObjects.RemoveAt(old);
                     GameObjects.Add(gameObject);
-                    _connectionManager.MessageAll("ngo", gameObject.ClientId + "");
+                    
                 }
-                // Informiert alle Connections dass ein GameObject geändert wurde
-              
-  
+                _connectionManager.MessageAll("ngo", gameObject.ClientId + "");
+
+
             }
             else
             {
