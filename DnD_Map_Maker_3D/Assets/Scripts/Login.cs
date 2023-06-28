@@ -30,16 +30,20 @@ public class Login : MonoBehaviour
         try
         {
             Debug.Log("http://" + serverIp.text + ":443/DnD/TestConnection");
+            // sets up the request
             var webRequest = WebRequest.Create("http://" + serverIp.text + ":443/DnD/TestConnection");
             webRequest.Proxy = null;
             var responseString = Connect(webRequest);
             Debug.Log(responseString);
+            // if the connection was successful
             if ("Connection erstellt" == responseString)
             {
+                // saves the server ip
                 DataContainer.ServerIP = serverIp.text;
+                // starts the websocket connection
                 string arg = DataContainer.ServerIP + " " + username.text;
                 DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
-                
+// to check if its a build or executen in unity environment, for file path                
 #if DEBUG
                 DataContainer.WebserviceConnection.StartInfo.FileName =
                     @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
@@ -50,24 +54,29 @@ public class Login : MonoBehaviour
                 
                 DataContainer.WebserviceConnection.Start();
 
+                // waits for the first message from the Socket
                 while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")))
                 {
                 }
-
-
+                
+                // reads the message from the socket and formats it
                 string content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                 File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                 content = content.Substring(1, content.Length - 1);
 
+                // if the user does not exist
                 if (content == "nu")
                 { 
+                    // shows a popup to create the user
                     buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User",
                         () =>
                         {
                             StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
                                 JsonConvert.SerializeObject(username.text), "POST"));
-                            DataContainer.WebserviceConnection.Kill();
+                            // closes the old socket connection
+                            DataContainer.WebserviceConnection.Close();
                             Debug.Log("cmd geschlossen");
+                            // sets up the socket connection with the now created user
                             DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
 #if DEBUG
                             DataContainer.WebserviceConnection.StartInfo.FileName =
@@ -79,29 +88,36 @@ public class Login : MonoBehaviour
                             DataContainer.WebserviceConnection.Start();
                             //Change path on build
                             
+                            // waits for the initail message from the Socket
                             while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0"))) 
                             {}
 
+                            // reads the message from the socket and formats it
                             content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                             File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                             content = content.Substring(1, content.Length - 1);
                             
+                            // saves the client id
                             DataContainer.ClientId = Guid.Parse(content);
 
+                            // deletes the file and loads the next scene
                             File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                             SceneManager.LoadScene("SampleScene");
                         });
                 }
                 else
                 {
+                    // saves the client id
                     DataContainer.ClientId = Guid.Parse(content);
 
+                    // deletes the file and loads the next scene
                     File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                     SceneManager.LoadScene("SampleScene");
                 }
             }
             else
             {
+                // when the server could not be found
                 popup.ShowPopup("Server responded with invalid message. " +
                                 "Please check if the server is running the correct version.");
             }
@@ -113,11 +129,17 @@ public class Login : MonoBehaviour
         }
         catch (Exception e)
         {
+            // if anything goes wrong
             Debug.Log(e.Message);
             popup.ShowPopup("Server not found. Please check if the server is running and the ip is correct.");
         }
     }
 
+    /// <summary>
+    /// sends a WebRequest to a Webserver to check if it is up and running and returns the response
+    /// </summary>
+    /// <param name="webRequest">WebRequest to be sent to the Server</param>
+    /// <returns>the answer from the webRequest</returns>
     private string Connect(WebRequest webRequest)
     {
         using var response = webRequest.GetResponse();
