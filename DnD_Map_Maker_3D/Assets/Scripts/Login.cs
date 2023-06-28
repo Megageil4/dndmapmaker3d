@@ -43,7 +43,7 @@ public class Login : MonoBehaviour
                 // starts the websocket connection
                 string arg = DataContainer.ServerIP + " " + username.text;
                 DataContainer.WebserviceConnection.StartInfo.Arguments = arg;
-                
+// to check if its a build or executen in unity environment, for file path                
 #if DEBUG
                 DataContainer.WebserviceConnection.StartInfo.FileName =
                     @"..\Int5.DnD3D.WebClient\Int5.DnD3D.WebClient\bin\Debug\net6.0\Int5.DnD3D.WebClient.exe";
@@ -58,8 +58,8 @@ public class Login : MonoBehaviour
                 while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0")))
                 {
                 }
-
-
+                
+                // reads the message from the socket and formats it
                 string content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                 File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                 content = content.Substring(1, content.Length - 1);
@@ -67,11 +67,13 @@ public class Login : MonoBehaviour
                 // if the user does not exist
                 if (content == "nu")
                 { 
+                    // shows a popup to create the user
                     buttonPopup.ShowPopup("User does not exist. Do you wannt to create it?", "Save User",
                         () =>
                         {
                             StartCoroutine(PostRequest($"http://{DataContainer.ServerIP}:443/DnD/User",
                                 JsonConvert.SerializeObject(username.text), "POST"));
+                            // closes the old socket connection
                             DataContainer.WebserviceConnection.Close();
                             Debug.Log("cmd geschlossen");
                             // sets up the socket connection with the now created user
@@ -90,26 +92,32 @@ public class Login : MonoBehaviour
                             while (!File.Exists(Path.Combine(Path.GetTempPath(), "DnD", "0"))) 
                             {}
 
+                            // reads the message from the socket and formats it
                             content = File.ReadAllText(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                             File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                             content = content.Substring(1, content.Length - 1);
                             
+                            // saves the client id
                             DataContainer.ClientId = Guid.Parse(content);
 
+                            // deletes the file and loads the next scene
                             File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                             SceneManager.LoadScene("SampleScene");
                         });
                 }
                 else
                 {
+                    // saves the client id
                     DataContainer.ClientId = Guid.Parse(content);
 
+                    // deletes the file and loads the next scene
                     File.Delete(Path.Combine(Path.GetTempPath(), "DnD", "0"));
                     SceneManager.LoadScene("SampleScene");
                 }
             }
             else
             {
+                // when the server could not be found
                 popup.ShowPopup("Server responded with invalid message. " +
                                 "Please check if the server is running the correct version.");
             }
@@ -121,6 +129,7 @@ public class Login : MonoBehaviour
         }
         catch (Exception e)
         {
+            // if anything goes wrong
             Debug.Log(e.Message);
             popup.ShowPopup("Server not found. Please check if the server is running and the ip is correct.");
         }
