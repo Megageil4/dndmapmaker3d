@@ -1,6 +1,5 @@
 ﻿using Int5.DnD3D.WebClient.DnDWebSocketClient;
 
-
     Console.WriteLine("I am a WebSocketClient");
     Console.WriteLine(args[0]);
     Console.WriteLine(args[1]);
