@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Class to control behaviour of the settings menu
@@ -15,6 +16,8 @@ public class SettingsController : MonoBehaviour
     Resolution[] resolutions;
     [SerializeField]
     private TMP_Dropdown resolutionDropdown;
+    [SerializeField]
+    private Toggle fullscreenToggle;
     private void Start()
     {
         resolutions = Screen.resolutions;
@@ -31,6 +34,8 @@ public class SettingsController : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+        
+        fullscreenToggle.isOn = Screen.fullScreen;
     }
 
     /// <summary>

@@ -3016,6 +3016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolutionDropdown: {fileID: 2390740244081164480}
+  fullscreenToggle: {fileID: 7425129672263806925}
 --- !u!224 &2083842728352248431 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8871096910950782678, guid: b3d83eea0c30c1d409522ef4517f1a57, type: 3}

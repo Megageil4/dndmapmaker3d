@@ -47,4 +47,9 @@ public class StartMenuController : MonoBehaviour
             menu.SetActive(false);
         }
     }
+
+    public void GotoGitlab()
+    {
+        Application.OpenURL("https://gl.edvschule-plattling.de/bfs2021fi/jkaufman/dndmapmaker3d");
+    }
 }
