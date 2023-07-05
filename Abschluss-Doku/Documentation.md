@@ -24,19 +24,23 @@
 | Map creation and modification             | Lekomzew Daniel  |
 | Object creation and modification          | Lekomzew Daniel  |
 
+<div style="page-break-after: always;"></div>
+
 ### 1.2. Technical requirements
 <a name=12></a>
 - Use-Case Diagram \
 ![](https://hackmd.io/_uploads/Hych3hMY3.png) \
-**Abb. 1** Use-Case diagram
 
+**Picture 1** Use-Case diagram
+
+<div style="page-break-after: always;"></div>
 
 ### 1.3. Implementation 
 <a name=13></a>
 #### 1.3.1. Overview Diagram
 
 ![](https://hackmd.io/_uploads/BJzW3gDP3.png) \
-**Abb. 2** Overview Diagram 
+**Picture 2** Overview Diagram 
     
 - The database stores user data.
 - The web server reads and writes to the database.
@@ -105,10 +109,17 @@ The WebSocket server was implemented as part of the existing ASP.NET Web server.
 | GET | /Map | returns the currently saved map object |
 | POST | /Map | overwrites the currently save map object |
 
-##### 2.1.4.6. Flow Diagram
-![](https://hackmd.io/_uploads/HyiA1ext3.png)
-**Abb. 3**  Flow Diagram
+<div style="page-break-after: always;"></div>
 
+##### 2.1.4.6. Flow Diagram
+
+<img 
+  src='https://hackmd.io/_uploads/HyiA1ext3.png' 
+  style='width:90%;' />
+
+**Picture 3**  Flow Diagram
+
+<div style="page-break-after: always;"></div>
 
 ##### 2.1.4.7. Sample Code
 
@@ -152,6 +163,8 @@ This sample code represents a HTTP PUT endpoint for updating a game object.
 - A new if-clause verifies whether the variable *old* is "null" or not. If it is not nothing is done and the method ends.
 - If a object was found, it is overwritten by the passed GameObject. Then the method MessageAll from the WebSocketConnectionManager _connectionManager is called to inform all open WebSocket connections, except the one that made the request, that a new Change was made.
 
+<div style="page-break-after: always;"></div>
+
 ###### 2.1.4.5.7.2. MessageAll
 
 ```csharp
@@ -193,13 +206,15 @@ The above code represents an asynchronous method named MessageAll that sends a m
 - It then checks if the WebSocket object is in an open state. If it is, the method prepares and sends the specified text message to the client using UTF-8 encoding. 
 - If the WebSocket is not open, it handles the termination of the connection, by calling the method *KillConnection*.
 
+
+<div style="page-break-after: always;"></div>
+
 ###### 2.1.4.5.7.3. app.use + Echo
 <a name=use></a>
 
 ```csharp
 app.Use(async (context, next) =>
 {
-    //if (Regex.IsMatch(context.Request.Path,"[^/ws]"))
     if(context.Request.Path.StartsWithSegments("/ws"))
     {
         if (context.WebSockets.IsWebSocketRequest)
@@ -222,7 +237,6 @@ app.Use(async (context, next) =>
         {
             Console.WriteLine("Response 400");
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            
         }
     }
     else
@@ -230,7 +244,6 @@ app.Use(async (context, next) =>
         await next(context);
     }
 });
-
 static async Task Echo(WebSocket webSocket,string username)
 {
     var buffer = new byte[1024 * 4];
@@ -249,7 +262,6 @@ static async Task Echo(WebSocket webSocket,string username)
         Console.WriteLine(message);
     }
 }
-
 ```
 
 The above sample code is a middleware function that is executed for each HTTP request received by the application. 
@@ -294,7 +306,7 @@ Following the approach described in section  [2.1.4.5.7.3](#use), the username i
 ##### 2.2.4.4. ER diagram
 
 ![](https://hackmd.io/_uploads/rJQiU1eFh.png) \
-**Abb. 4** ER diagram of user database
+**Picture 4** ER diagram of user database
 
 
 ##### 2.2.4.5. Provided Interfaces
@@ -303,6 +315,8 @@ Following the approach described in section  [2.1.4.5.7.3](#use), the username i
 | -------- | -------- | -------- |
 | GET | /User | returns all Users that currently have a open connection |
 | POST |/User | inserts a new User into the database |
+
+<div style="page-break-after: always;"></div>
 
 ##### 2.2.4.6. Sample Code
 
@@ -335,6 +349,8 @@ The above sample code represents the potential creation of a new database inside
 - Inside that code block, a SqliteConnection object is created with the connection string "Data Source=user.db" to specify the database file. The SqliteConnection is wrapped in a using statement to ensure proper resource management and automatic disposal of the connection.
 - The connection is opened, and a SqliteCommand object is created. The command's *CommandText* property is set with a string containing SQL statements to create the "User" table and insert a default user with a username of "default". The table creation statement defines two columns: "id" as an integer primary key managed as an auto-increment key, and "username" as a non-null text column.
 - The command.ExecuteNonQuery() method is called to execute the SQL statements. This method is used for executing non-query SQL statements like table creation and data insertion. It returns the number of rows affected, but in this case, it is not relevant.
+
+<div style="page-break-after: always;"></div>
 
 ###### 2.2.4.6.2. AddUser
 
@@ -382,7 +398,7 @@ The programming language used for this project is C#, and the chosen IDE is [Rid
 ##### 2.3.2.2. Diagramm
 
 ![](https://hackmd.io/_uploads/ryRJnklY2.png)\
-**Abb. 5** *Simplified Sequenzdiagram of the Websocketclient*
+**Picture 5** *Simplified Sequenzdiagram of the Websocketclient*
 
 
 ##### 2.3.2.3. Used Interfaces
@@ -447,6 +463,9 @@ The SendWebRequest method returns a UnityWebRequestAsyncOperation, which can be 
 Finally, the success or failure of the request is logged. If the result is negative, an error message along with the URL is displayed. On a positive result, an acknowledgment message is logged.
 
 In summary, the *PostRequest* method is used for transferring all information by sending data to the Web server.
+
+<div style="page-break-after: always;"></div>
+
 ``` csharp
 public void GameObjectsIntoDict()
 {
@@ -457,7 +476,6 @@ public void GameObjectsIntoDict()
             Debug.Log("jkGameObject is null");
             continue;
         }
-
         if (!DataContainer.GameObjects.ContainsKey(jkGameObject.Guid))
         {
             GameObject newObject = 
@@ -465,7 +483,6 @@ public void GameObjectsIntoDict()
             DataContainer.GameObjects.Add(jkGameObject.Guid, newObject);
             DataContainer.Guids.Add(newObject,jkGameObject.Guid);   
         }
-
         DataContainer.GameObjects[jkGameObject.Guid].transform.position = 
             new Vector3(
             jkGameObject.pos3[0], 
@@ -479,21 +496,15 @@ public void GameObjectsIntoDict()
                 jkGameObject.rot3[2]
             )
         );
-
         DataContainer.GameObjects[jkGameObject.Guid].transform.localScale = 
             new Vector3(
             jkGameObject.scale3[0], 
             jkGameObject.scale3[1], 
             jkGameObject.scale3[2]
         );
-        
         int r = Convert.ToInt32(jkGameObject.Color.Substring(0,2),16);
         int g = Convert.ToInt32(jkGameObject.Color.Substring(2,2),16);
         int b = Convert.ToInt32(jkGameObject.Color.Substring(4,2),16);
-        
-        Debug.Log(jkGameObject.Modeltype);
-        Debug.Log("Object GUID :" +jkGameObject.Guid);
-
 
         DataContainer.GameObjects[jkGameObject.Guid].transform.GetChild(0).GetChild(0)
             .GetComponent<MeshRenderer>().material.color = 
@@ -548,23 +559,26 @@ The program utilizes an interface from the backend to transmit the updated map t
 ##### 2.4.3.4. Class diagrams  <a name=class_diagram_tools/>
 
 ![](https://hackmd.io/_uploads/BJ8tZvZY2.png)
-**Abb. 6** Class diagram of the maptool structure
+**Picture 6** Class diagram of the maptool structure
 
 
 ##### 2.4.3.5. Tests <a name=test_tools/>
 
 To ensure the reliability and functionality of the program, a comprehensive testing approach was adopted. Internal team members conducted white-box testing, which involved examining the program's internal logic and components. External individuals were also involved in performing black-box testing, where the focus was on assessing the program's behavior without detailed knowledge of its internal workings. These testing methodologies were employed to identify and address any unintended behavior or potential issues within the program.
 
+<div style="page-break-after: always;"></div>
 
 ##### 2.4.3.6. User Interface
 
 ![](https://hackmd.io/_uploads/SkcvEZwPn.png)
-**Abb. 7** Map scene user interface
+**Picture 7** Map scene user interface
 
 - \[1\] Map Dimension Window: This window is automatically opened when no map is found, allowing the user to set the dimensions of the map.
 - \[2\] Extrude Tool: Clicking on a tile with this tool selected will increment its height.
 - \[3\] Intrude Tool: Clicking on a tile with this tool selected will decrement its height.
 - \[4\] Button used to make \[1\] visible when a map already exists to set new dimensions.
+
+<div style="page-break-after: always;"></div>
 
 ##### 2.4.3.7. Code Examples
 
@@ -586,17 +600,14 @@ private void Update()
         _delay = 0;
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            // Check if the raycast hit the mesh
             if (hit.collider.gameObject == meshFilter.gameObject)
             {
-                // Get the mouse position on the mesh
                 Vector3 mousePosition = hit.point;
 
-                // Convert the mouse position to local space
                 mousePosition = meshFilter.transform.InverseTransformPoint(mousePosition);
                 try
                 {
-                    Toolbar.MapTool.ChangeMap(mousePosition); // Calls ChangeMap on the currently selected tool
+                    Toolbar.MapTool.ChangeMap(mousePosition);
                 }
                 catch (Exception e)
                 {
@@ -609,6 +620,7 @@ private void Update()
 ``` 
 This code is responsible for detecting if the user has clicked on the map and applying the appropriate tool at that position. It continuously checks if the left mouse button is clicked each frame. If it is, a raycast is cast from the mouse position, and if it hits the map, the position is converted to local space. The ChangeMap() method of the currently selected tool is then called with the converted mouse position. Additionally, a delay is implemented to ensure the sensitivity of the click detection. Any exceptions that occur during the process are logged in the console for debugging purposes.
 
+<div style="page-break-after: always;"></div>
 
 Part of the intrude tool:
 ``` csharp
@@ -691,17 +703,19 @@ See [2.4.3.4](#class_diagram_tools)
 
 See [2.4.3.4](#test_tools)
 
+<div style="page-break-after: always;"></div>
 
 ##### 2.5.3.8. User Interface
 
 ![](https://hackmd.io/_uploads/Hk-ComxFn.png) \
-**Abb. 8** Figure select menu
+**Picture 8** Figure select menu
 
 ![](https://hackmd.io/_uploads/BJWCsXlKh.png)
-**Abb. 9** Move arrows
+**Picture 9** Move arrows
 ![](https://hackmd.io/_uploads/rJ-Rj7ltn.png)
-**Abb. 10** Color picker menu
+**Picture 10** Color picker menu
 
+<div style="page-break-after: always;"></div>
 
 ##### 2.5.3.9. Code Examples
 
@@ -712,30 +726,21 @@ public void ChangeMap(Vector3 location)
 {
     if (Input.GetMouseButtonDown((int)MouseButton.LeftMouse))
     {
-        _isHoldingDown = false;
-        Ray ray = Camera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
+        [...] // Define ray
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            // Check if the raycast hit the mesh
             if (hit.transform.CompareTag("PrefabObject"))
             {
-                if (Selected != null)
-                {
-                    Selected.transform.GetChild(1).gameObject.SetActive(false);
-                }
+                [...] // Deactivate on second click
                 hit.transform.GetChild(1).gameObject.SetActive(true);
                 Selected = hit.transform.gameObject;
             }
 
-            if (hit.transform.CompareTag("X") || hit.transform.CompareTag("Y") 
-                || hit.transform.CompareTag("Z") || hit.transform.CompareTag("All")
-                || hit.transform.CompareTag("PrefabObject"))
+            if ([...]) // Check for tag
             {
                 _lastHit = hit.transform.tag;
                 _isHoldingDown = true;
             }
-
         }
     }
     else if (Input.GetMouseButton((int)MouseButton.LeftMouse) && _isHoldingDown)
@@ -744,25 +749,17 @@ public void ChangeMap(Vector3 location)
         var position = Selected.transform.position;
         Vector3 mousePosition = Camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Vector3.Distance(position, Camera.transform.position ) - 1));
         Vector3 delta = mousePosition - position;
-
         [...] // Area of death
         switch (_lastHit)
         {
             case "X":
                 Selected.transform.Translate(Mathf.CeilToInt(delta.x), 0, 0);
                 break;
-            case "Y":
-                Selected.transform.Translate(0, Mathf.CeilToInt(delta.y), 0);
-                break;
-            case "Z":
-                Selected.transform.Translate(0, 0, Mathf.CeilToInt(delta.z));
-                break;
-            case "All":
+            [...] // Same for Y and Z
             case "PrefabObject":
                 Selected.transform.Translate(Mathf.CeilToInt(delta.x), 0, Mathf.CeilToInt(delta.z));
                 break;
         }
-
         [...] // Info logs
         DataContainer.Conn.ChangeGameObject(DataContainer.Guids[Selected]);
     }
@@ -798,6 +795,8 @@ The above code is responsible for placing new figures on the map. When the left 
 | Mimic Collection! by mz4250 | https://www.thingiverse.com/thing:2843119 |
 | Minotaur - Tabletop Miniature by Yasashii | https://www.thingiverse.com/thing:3633926 |
     
+<div style="page-break-after: always;"></div>
+
 ## 3. Appendix <Albrecht Andreas, Kaufmann Johann, Lekomzew Daniel\> <a name=3></a>    
 
 ### 3.1. Glossary
@@ -820,6 +819,9 @@ The above code is responsible for placing new figures on the map. When the left 
 #### U
 - *UV*
     > UV coordinates, also known as texture coordinates, are a two-dimensional mapping system applied to the vertices of a 3D model. They define how textures or images are wrapped onto the surface of the object, allowing for precise mapping and manipulation. UV coordinates are crucial for texture mapping, light baking, and creating visually detailed and realistic materials in Unity's rendering pipeline.
+
+<div style="page-break-after: always;"></div>
+
 #### V
 - *Vertex (Plural: Vertices)*
     > A point in 3D space that defines the position of a specific point on a mesh or model. Used in conjunction with triangles or polygons to construct the surface of a 3D object.
