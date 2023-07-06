@@ -1,17 +1,18 @@
 # Project Documentation -- ***Int -5***
 ## Table of Content
-1. [Introduction](#1) \
-    1.1 [Allocation of tasks](#11) \
-    1.2 [Technical requirements](#12) \
-    1.3 [Implementation](#13)
-2. [Subprojects](#2) \
-    2.1 [Webservice with integrated Websocket](#21) \
-    2.2 [User-Managment](#22)  \
-    2.3 [Unity-server connection and communication](#23) \
-    2.4 [Map creation and modification](#24) \
-    2.5 [Object creation and modification](#25) 
-3. [Appendix](#3) \
-    3.1 [Glossary](#31)   
+1. [Introduction...........................................................................................................................................................................1](#1) \
+    1.1 [Allocation of tasks.......................................................................................................................................................1](#11) \
+    1.2 [Technical requirements..............................................................................................................................................2](#12) \
+    1.3 [Implementation............................................................................................................................................................3](#13)
+2. [Subprojects............................................................................................................................................................................3](#2) \
+    2.1 [Webservice with integrated Websocket..............................................................................................................3](#21) \
+    2.2 [User-Managment.......................................................................................................................................................10](#22)  \
+    2.3 [Unity-server connection and communication................................................................................................13](#23) \
+    2.4 [Map creation and modification............................................................................................................................18](#24) \
+    2.5 [Object creation and modification........................................................................................................................22](#25) 
+3. [Appendix...............................................................................................................................................................................30](#3) \
+    3.1 [Glossary..........................................................................................................................................................................30](#31) \
+    3.2 [Sources............................................................................................................................................................................31](#32)   
 ## 1. Introduction <Albrecht Andreas, Kaufmann Johann, Lekomzew Daniel>
 <a name=1></a>
 ### 1.1 Allocation of tasks
@@ -117,7 +118,7 @@ The WebSocket server was implemented as part of the existing ASP.NET Web server.
   src='https://hackmd.io/_uploads/HyiA1ext3.png' 
   style='width:90%;' />
 
-**Picture 3**  Flow Diagram
+**Picture 3**  Flow Diagram for establishing a connection
 
 <div style="page-break-after: always;"></div>
 
@@ -550,7 +551,7 @@ We chose to use C# as the programming language for this project, as it is the pr
 
 ##### 2.4.3.2. Used libraries + version number 
 
-The libraries utilized in this subproject were all components of Unity 2021.3.18f1, along with the built-in libraries of C# 6.0. No external libraries were used.
+The libraries utilized in this subproject were all components of Unity 2021.3.18f1, along with the built-in libraries of C# 6.0. No external code libraries were used. [Skybox Series Free](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633) was used for the skybox. 
 
 ##### 2.4.3.3. Used Interfaces
 
@@ -828,8 +829,10 @@ The above code is responsible for placing new figures on the map. When the left 
 
 
 ### 3.2 Sources
+<a name=32></a>
 
 | Name   | Source             |
 | ------ | ------------------ |
 | Hackmd | https://hackmd.io/ |
 | ChatGPT| https://chat.openai.com/ |
+| Skybox Series Free | https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633 |
